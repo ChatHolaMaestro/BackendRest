@@ -29,6 +29,7 @@ BASE_APPS=[
 LOCAL_APPS=[
     'apps.shared',
     'apps.users',
+    'apps.students',
     
 ]
 
