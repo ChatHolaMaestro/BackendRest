@@ -33,6 +33,7 @@ LOCAL_APPS=[
     'apps.teachers',
     'apps.schools',
     'apps.subjects',
+    'apps.auth',
     
 ]
 
