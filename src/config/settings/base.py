@@ -27,6 +27,7 @@ BASE_APPS=[
 ]
 
 LOCAL_APPS=[
+    'apps.shared',
     
 ]
 
