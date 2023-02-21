@@ -32,6 +32,7 @@ LOCAL_APPS=[
     'apps.students',
     'apps.teachers',
     'apps.schools',
+    'apps.subjects',
     
 ]
 
