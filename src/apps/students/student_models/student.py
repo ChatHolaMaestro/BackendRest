@@ -1,6 +1,6 @@
 from django.db import models
 from apps.shared.shared_models.GenericModels import SharedModelHistorical
-from apps.shared.shared_models.IdentificationType import IDENTIFICATION_TYPES
+from apps.shared.shared_models.shared_choices.IdentificationType import IDENTIFICATION_TYPES
 from apps.students.student_models.studentChoices import STUDENT_GRADE, STUDENT_WORKING_HOURS
 from apps.students.student_models.relative import Relative
 

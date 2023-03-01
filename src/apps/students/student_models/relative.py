@@ -1,6 +1,6 @@
 from django.db import models
 from apps.shared.shared_models.GenericModels import SharedModelHistorical
-from apps.shared.shared_models.IdentificationType import IDENTIFICATION_TYPES
+from apps.shared.shared_models.shared_choices.IdentificationType import IDENTIFICATION_TYPES
 
 class Relative(SharedModelHistorical):
     #Model which represents a relative
