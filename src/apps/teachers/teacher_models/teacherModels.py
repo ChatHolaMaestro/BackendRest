@@ -25,7 +25,7 @@ class Schedule(SharedModelHistorical):
     request_type = models.CharField(max_length=10, choices=REQUEST_TYPE_CHOICES, blank=False, null=False)
     
     #Teacher field
-    teacher = models.ForeignKey(Teacher, related_name='schedules')
+    teacher = models.ForeignKey(Teacher, related_name='schedules', on_delete=models.CASCADE, blank=False, null=False)
     
     class Meta:
         verbose_name = 'Horario'
