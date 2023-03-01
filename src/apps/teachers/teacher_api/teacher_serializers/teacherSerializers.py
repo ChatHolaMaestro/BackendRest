@@ -21,9 +21,10 @@ class TeacherCreationSerializer(serializers.ModelSerializer):
     '''
     Teacher serializer for creation
         - subjects (ids)
+        - schedules (ids)
     '''
     class Meta:
         model = Teacher
         #TODO add user field
-        fields = ('subjects',)
+        fields = ('subjects', 'schedules')
 
