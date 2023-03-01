@@ -2,7 +2,9 @@ from rest_framework import serializers
 from apps.students.student_models.student import Student
 from apps.students.student_models.relative import Relative
 
-class RelativeSerializerForStudent(serializers.ModelSerializer):
+from apps.schools.school_api.school_serializers.schoolSerializers import SchoolSerializerShort
+
+class RelativeSerializerShort(serializers.ModelSerializer):
     '''
     Relative Serializer for Student View:
         - id
@@ -27,8 +29,11 @@ class StudentViewSerializer(serializers.ModelSerializer):
         - age
         - working_hours
         - relatives (object)
+        - school (object)
     '''
-    relatives = RelativeSerializerForStudent(many=True, read_only=True)
+    relatives = RelativeSerializerShort(many=True, read_only=True)
+    school = SchoolSerializerShort(read_only=True)
+    
     class Meta:
         model = Student
         exclude = ['is_active', 'created_date', 'modified_date', 'deleted_date']
@@ -45,7 +50,8 @@ class StudentCreationSerializer(serializers.ModelSerializer):
         - sex
         - age
         - working_hours
-        - relatives (numbers) 
+        - relatives (ids) 
+        - school (id)
     '''
     class Meta:
         model = Student

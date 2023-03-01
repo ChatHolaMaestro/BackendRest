@@ -4,6 +4,8 @@ from apps.shared.shared_models.IdentificationType import IDENTIFICATION_TYPES
 from apps.students.student_models.studentChoices import STUDENT_GRADE, STUDENT_WORKING_HOURS
 from apps.students.student_models.relative import Relative
 
+from apps.schools.school_models.schoolModels import School
+
 class Student(SharedModelHistorical):
     #Model which represents a student
     name = models.CharField('Nombre', max_length=100, blank=False)
@@ -18,6 +20,9 @@ class Student(SharedModelHistorical):
     #Many to many relationship with Relative
     relatives = models.ManyToManyField(Relative, related_name='students', blank=True)
     
+    #Student's school
+    school = models.ForeignKey(School, on_delete=models.CASCADE, related_name='students', blank=False)
+        
     class Meta:
         verbose_name = "Estudiante"
         verbose_name_plural = "Estudiantes"

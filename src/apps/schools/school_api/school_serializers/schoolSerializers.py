@@ -14,7 +14,7 @@ class SchoolSerializer(serializers.ModelSerializer):
         model = School
         fields = ('id', 'name', 'address', 'has_morning_hours', 'has_afternoon_hours')
 
-class SchoolSerializerForSchoolManager(serializers.ModelSerializer):
+class SchoolSerializerShort(serializers.ModelSerializer):
     '''
     School serializer for School Manager
         - id
@@ -31,7 +31,7 @@ class SchoolManagerSerializer(serializers.ModelSerializer):
         - school
         - user
     '''
-    school = SchoolSerializerForSchoolManager()
+    school = SchoolSerializerShort()
     #TODO: Add user field
     class Meta:
         model = SchoolManager
