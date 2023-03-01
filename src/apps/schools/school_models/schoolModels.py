@@ -10,6 +10,9 @@ class School(SharedModelHistorical):
     has_morning_hours = models.BooleanField("Jornada de mañana", default=True, blank = False)
     has_afternoon_hours = models.BooleanField("Jornada de tarde", default=False, blank = False)
     
+    def __str__(self):
+        return self.name
+    
 class SchoolManager(SharedModelHistorical):
     '''
     Model which represents a school manager
