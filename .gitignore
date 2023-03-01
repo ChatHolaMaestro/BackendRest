@@ -51,3 +51,4 @@ docs/_build/
 migrations/
 
 #production.py
+db.sqlite3

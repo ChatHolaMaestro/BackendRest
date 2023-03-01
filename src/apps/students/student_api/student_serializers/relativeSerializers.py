@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from apps.students.student_models.studentModels import Student, Relative
+from apps.students.student_models.student import Student
+from apps.students.student_models.relative import Relative
 
 class StudentSerializerForRelative(serializers.ModelSerializer):
     '''
