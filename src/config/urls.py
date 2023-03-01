@@ -31,6 +31,7 @@ schema_view = get_schema_view(
 #Importing apps urls
 from apps.students.student_api.student_routers import urlpatterns as students_urls
 from apps.schools.school_api.school_routers import urlpatterns as schools_urls
+from apps.subjects.subject_api.subject_routers import urlpatterns as subjects_urls
 
 #API urls
 urlpatterns = [
@@ -46,6 +47,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/students/', include(students_urls)),
     path('api/schools/', include(schools_urls)),
+    path('api/subjects/', include(subjects_urls)),
+    
 ]
 
 #Media files
