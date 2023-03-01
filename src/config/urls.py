@@ -28,6 +28,10 @@ schema_view = get_schema_view(
    permission_classes=[permissions.AllowAny],
 )
 
+#Importing apps urls
+from apps.students.student_api.student_routers import urlpatterns as students_urls
+
+
 #API urls
 urlpatterns = [
     #JWT authentication
@@ -40,6 +44,7 @@ urlpatterns = [
     re_path(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
    
     path('admin/', admin.site.urls),
+    path('api/', include(students_urls)),
 ]
 
 #Media files
