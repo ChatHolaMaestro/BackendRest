@@ -1,5 +1,5 @@
 from django.db import models
-from shared.shared_models.GenericModels import SharedModelHistorical
+from apps.shared.shared_models.GenericModels import SharedModelHistorical
 from apps.requests.request_models.requestChoices import REQUEST_STATUS_CHOICES
 from apps.shared.shared_models.shared_choices.RequestType import REQUEST_TYPE_CHOICES
 from apps.students.student_models.student import Student

@@ -9,7 +9,7 @@ class RequestViewSerializer(serializers.ModelSerializer):
         - id
         - status
         - request_type
-        - creation_date
+        - created_date
         - contact_times
         - student (object)
         - teacher (object)
@@ -21,7 +21,7 @@ class RequestViewSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Request
-        fields = ['id', 'status', 'request_type','creation_date', 'contact_times', 'student', 'teacher', 'subject']
+        fields = ['id', 'status', 'request_type','created_date', 'contact_times', 'student', 'teacher', 'subject']
 
 class RequestCreationSerializer(serializers.ModelSerializer):
     '''
