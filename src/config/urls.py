@@ -30,7 +30,7 @@ schema_view = get_schema_view(
 
 #Importing apps urls
 from apps.students.student_api.student_routers import urlpatterns as students_urls
-
+from apps.schools.school_api.school_routers import urlpatterns as schools_urls
 
 #API urls
 urlpatterns = [
@@ -44,7 +44,8 @@ urlpatterns = [
     re_path(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
    
     path('admin/', admin.site.urls),
-    path('api/', include(students_urls)),
+    path('api/students/', include(students_urls)),
+    path('api/schools/', include(schools_urls)),
 ]
 
 #Media files
