@@ -1,20 +1,6 @@
 from rest_framework import serializers
 from apps.students.student_models.student import Student
-from apps.students.student_models.relative import Relative
-
-from apps.schools.school_api.school_serializers.schoolSerializers import SchoolSerializerShort
-
-class RelativeSerializerShort(serializers.ModelSerializer):
-    '''
-    Relative Serializer for Student View:
-        - id
-        - name
-        - last_name 
-    '''
-    class Meta:
-        model = Relative
-        fields = ['id', 'name', 'last_name']
-
+from apps.shared.shared_api.shared_serializers.ShortSerializers import RelativeSerializerShort, SchoolSerializerShort
 
 class StudentViewSerializer(serializers.ModelSerializer):
     '''

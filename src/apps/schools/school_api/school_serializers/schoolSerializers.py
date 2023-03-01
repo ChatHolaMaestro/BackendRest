@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from apps.schools.school_models.schoolModels import School, SchoolManager
+from apps.shared.shared_api.shared_serializers.ShortSerializers import SchoolSerializerShort
 
 class SchoolSerializer(serializers.ModelSerializer):
     '''
@@ -13,16 +14,6 @@ class SchoolSerializer(serializers.ModelSerializer):
     class Meta:
         model = School
         fields = ('id', 'name', 'address', 'has_morning_hours', 'has_afternoon_hours')
-
-class SchoolSerializerShort(serializers.ModelSerializer):
-    '''
-    School serializer for School Manager
-        - id
-        - name
-    '''
-    class Meta:
-        model = School
-        fields = ('id', 'name')
 
 class SchoolManagerSerializer(serializers.ModelSerializer):
     '''

@@ -1,16 +1,6 @@
 from rest_framework import serializers
-from apps.teachers.teacher_models.teacherModels import Schedule, Teacher
-
-
-class TeacherSerializerShort(serializers.ModelSerializer):
-    '''
-    Teacher serializer short
-        - id
-    '''
-    class Meta:
-        model = Teacher
-        #TODO add user field
-        fields = ('id',)
+from apps.teachers.teacher_models.teacherModels import Schedule
+from apps.shared.shared_api.shared_serializers.ShortSerializers import TeacherSerializerShort
 
 class ScheduleViewSerializer(serializers.ModelSerializer):
     '''

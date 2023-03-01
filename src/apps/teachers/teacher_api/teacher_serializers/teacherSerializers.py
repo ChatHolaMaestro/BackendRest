@@ -1,19 +1,7 @@
 from rest_framework import serializers
-from apps.teachers.teacher_models.teacherModels import Teacher, Schedule
+from apps.teachers.teacher_models.teacherModels import Teacher
 from apps.subjects.subject_api.subject_serializers.subjectSerializer import SubjectSerializer
-
-class ScheduleSerializerShort(serializers.ModelSerializer):
-    '''
-    Schedule serializer short
-        - id
-        - day
-        - start_hour
-        - end_hour
-        - request_type
-    '''
-    class Meta:
-        model = Schedule
-        fields = ('id', 'day', 'start_hour', 'end_hour', 'request_type')
+from apps.shared.shared_api.shared_serializers.ShortSerializers import ScheduleSerializerShort
 
 class TeacherViewSerializer(serializers.ModelSerializer):
     '''
