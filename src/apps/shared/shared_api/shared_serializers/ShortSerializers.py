@@ -11,6 +11,12 @@ from apps.schools.school_models.schoolModels import School
 #Teacher and Schedule models
 from apps.teachers.teacher_models.teacherModels import Teacher, Schedule
 
+#Request Model
+from apps.requests.request_models.requestModels import Request
+
+#Homework Model
+from apps.homeworks.homework_models.homeworkModels import Homework
+
 #Student and Relative serializers
 class StudentSerializerShort(serializers.ModelSerializer):
     '''
@@ -70,5 +76,30 @@ class ScheduleSerializerShort(serializers.ModelSerializer):
         model = Schedule
         fields = ('id', 'day', 'start_hour', 'end_hour', 'request_type')
 
+#Request serializer
+class RequestSerializerShort(serializers.ModelSerializer):
+    '''
+    Request serializer short
+        - id
+        - status
+        - request_type
+        - contact_times
+    '''
+    class Meta:
+        model = Request
+        fields = ('id', 'status', 'request_type', 'contact_times')
 
-
+#Homework serializer
+class HomeworkSerializerShort(serializers.ModelSerializer):
+    '''
+    Homework serializer short
+        - id
+        - status
+        - topic
+        - details
+        - time_spent
+        - scheduled_date
+    '''
+    class Meta:
+        model = Homework
+        fields = ('id', 'status', 'topic', 'details', 'time_spent', 'scheduled_date')
