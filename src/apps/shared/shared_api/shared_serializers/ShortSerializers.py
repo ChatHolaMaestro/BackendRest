@@ -17,6 +17,8 @@ from apps.requests.request_models.requestModels import Request
 #Homework Model
 from apps.homeworks.homework_models.homeworkModels import Homework
 
+#--------------------------------------------SHORT SERIALIZERS--------------------------------------------
+
 #Student and Relative serializers
 class StudentSerializerShort(serializers.ModelSerializer):
     '''
