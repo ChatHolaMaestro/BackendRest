@@ -17,9 +17,12 @@ class Request(SharedModelHistorical):
     
     # Foreign Keys
     student = models.ForeignKey(Student, on_delete=models.CASCADE, null=False, blank=False)
-    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, null=False, blank=False)
+    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, null=True, blank=False)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE, null=False, blank=False)
     
     class Meta:
         verbose_name = 'Solicitud'
         verbose_name_plural = 'Solicitudes'
+    
+    def __str__(self):
+        return f'{self.student} - {self.teacher} - {self.subject}'

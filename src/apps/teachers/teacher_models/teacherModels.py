@@ -15,6 +15,11 @@ class Teacher(SharedModelHistorical):
         verbose_name = 'Profesor'
         verbose_name_plural = 'Profesores'
         
+    def __str__(self):
+        #TODO return user name
+        #return f'{self.user.first_name} {self.user.last_name}'
+        return f'Profesor {self.id}'
+        
 class Schedule(SharedModelHistorical):
     '''
     Model which represents a schedule for a teacher
