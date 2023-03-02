@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from apps.requests.request_models.requestModels import Request
-from apps.shared.shared_api.shared_serializers.ShortSerializers import StudentSerializerShort, TeacherSerializerShort
+from apps.shared.shared_api.shared_serializers.ShortSerializers import StudentSerializerShort, TeacherSerializerShort, HomeworkSerializerShort
 from apps.subjects.subject_api.subject_serializers.subjectSerializer import SubjectSerializer
 
 class RequestViewSerializer(serializers.ModelSerializer):
@@ -18,10 +18,11 @@ class RequestViewSerializer(serializers.ModelSerializer):
     student = StudentSerializerShort()
     teacher = TeacherSerializerShort()
     subject = SubjectSerializer()
-    
+    homework = HomeworkSerializerShort() #could be null
+            
     class Meta:
         model = Request
-        fields = ['id', 'status', 'request_type','created_date', 'contact_times', 'student', 'teacher', 'subject']
+        fields = ['id', 'status', 'request_type','created_date', 'contact_times', 'student', 'teacher', 'subject', 'homework']
 
 class RequestCreationSerializer(serializers.ModelSerializer):
     '''

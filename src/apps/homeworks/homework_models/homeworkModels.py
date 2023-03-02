@@ -13,6 +13,6 @@ class Homework(SharedModelHistorical):
     time_spent = models.IntegerField("Tiempo invertido", default=0, blank=False, null=False)
     scheduled_date = models.DateField("Fecha programada", blank=False, null=False)
     # Foreign Keys
-    request = models.ForeignKey(Request, on_delete=models.CASCADE, related_name='homeworks')
+    request = models.OneToOneField(Request, on_delete=models.CASCADE, related_name='homework')
     
     
