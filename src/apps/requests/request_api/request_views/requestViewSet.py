@@ -5,6 +5,11 @@ from apps.requests.request_api.request_serializers.requestSerializer import Requ
 class RequestViewSet(GenericModelViewSet):
     '''
     Generic Request View Set
+        - GET: list all requests
+        - POST: create a request
+        - GET(id): get a request by id
+        - PUT(id): update a request by id
+        - DELETE(id): delete a request by id
     '''
     serializer_class = RequestViewSerializer
     serializerCreation = RequestCreationSerializer
