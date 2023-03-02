@@ -6,6 +6,11 @@ from apps.teachers.teacher_api.teacher_serializers.scheduleSerializer import Sch
 class TeacherViewSet(GenericModelViewSet):
     '''
     Generic viewset for teacher model
+        - GET: list all teachers
+        - POST: create a teacher
+        - GET(id): get a teacher by id
+        - PUT(id): update a teacher by id
+        - DELETE(id): delete a teacher by id
     '''
     serializer_class = TeacherViewSerializer
     serializerCreation = TeacherCreationSerializer
@@ -14,6 +19,11 @@ class TeacherViewSet(GenericModelViewSet):
 class ScheduleViewSet(GenericModelViewSet):
     '''
     Generic viewset for schedule model
+        - GET: list all schedules
+        - POST: create a schedule
+        - GET(id): get a schedule by id
+        - PUT(id): update a schedule by id
+        - DELETE(id): delete a schedule by id
     '''
     serializer_class = ScheduleViewSerializer
     serializerCreation = ScheduleCreationSerializer
