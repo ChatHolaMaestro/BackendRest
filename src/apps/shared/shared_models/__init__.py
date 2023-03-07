@@ -1,2 +1,2 @@
-from person import Person
-from generic_models import SharedModelHistorical
+from .person import Person
+from .generic_models import SharedModelHistorical

@@ -10,6 +10,7 @@ from apps.shared.shared_api.shared_serializers.ShortSerializers import (
 class StudentViewSerializer(serializers.ModelSerializer):
     """
     Student Serializer for view:
+        - id
         - name
         - last_name
         - identification_type

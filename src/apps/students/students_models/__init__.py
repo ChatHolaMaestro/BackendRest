@@ -1,2 +1,2 @@
-from student import Student
-from relative import Relative
+from .student import Student
+from .relative import Relative

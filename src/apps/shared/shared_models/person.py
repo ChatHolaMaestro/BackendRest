@@ -1,7 +1,5 @@
 from django.db import models
 
-from shared.shared_models.shared_choices import IDENTIFICATION_TYPE_CHOICES
-
 
 class Person(models.Model):
     """
@@ -9,8 +7,20 @@ class Person(models.Model):
     All other models that represent a person should inherit from this class.
     """
 
-    first_name = models.CharField("Nombres", max_length=100, blank=True)
-    last_name = models.CharField("Apellidos", max_length=100, blank=True)
+    IDENTIFICATION_TYPE_CHOICES = (
+        ("TI", "Tarjeta de Identidad"),
+        ("CC", "Cédula de Ciudadanía"),
+        ("CE", "Cédula de Extranjería"),
+        ("NUIP", "Número Único de Identificación Personal"),
+        ("PA", "Pasaporte"),
+    )
+
+    first_name = models.CharField(
+        "Nombre", max_length=100, blank=True, help_text="Nombre de pila"
+    )
+    last_name = models.CharField(
+        "Apellidos", max_length=100, blank=True, help_text="Apellidos completos"
+    )
     identification_type = models.CharField(
         "Tipo de identificación",
         max_length=4,
@@ -18,7 +28,7 @@ class Person(models.Model):
         blank=True,
     )
     identification_number = models.CharField(
-        "Número de identificación", max_length=20, blank=True
+        "Número de identificación", max_length=20, blank=True, unique=True
     )
     phone_number = models.CharField("Número de teléfono", max_length=20, blank=True)
 
@@ -28,7 +38,7 @@ class Person(models.Model):
         Returns:
             str: first_name + last_name separated by a space.
         """
-        full_name = "{} {}".format(self.name, self.last_name)
+        full_name = "{} {}".format(self.first_name, self.last_name)
         return full_name.strip()
 
     def get_short_name(self) -> str:

@@ -1,8 +1,9 @@
 from django.db import models
 
 from apps.shared.shared_models import SharedModelHistorical, Person
-from apps.students.students_models import Relative
 from apps.schools.school_models.schoolModels import School
+
+from .relative import Relative
 
 
 class Student(SharedModelHistorical, Person):

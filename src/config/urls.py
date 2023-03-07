@@ -30,7 +30,6 @@ schema_view = get_schema_view(
 
 # Importing apps urls
 from apps.students.students_api.students_routers import urlpatterns as students_urls
-from apps.schools.school_api.school_routers import urlpatterns as schools_urls
 from apps.subjects.subject_api.subject_routers import urlpatterns as subjects_urls
 from apps.teachers.teacher_api.teacher_routers import urlpatterns as teachers_urls
 from apps.requests.request_api.request_routers import urlpatterns as requests_urls
@@ -39,9 +38,6 @@ from apps.homeworks.homework_api.homework_routers import urlpatterns as homework
 
 # API urls
 urlpatterns = [
-    # JWT authentication
-    # path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    # path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     # Swagger urls
     re_path(
         r"^swagger(?P<format>\.json|\.yaml)$",
@@ -57,8 +53,10 @@ urlpatterns = [
         r"^redoc/$", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"
     ),
     path("admin/", admin.site.urls),
+    path("api/auth/", include("apps.authentication.api.urls")),
+    path("api/users/", include("apps.users.api.urls")),
     path("api/students/", include(students_urls)),
-    path("api/schools/", include(schools_urls)),
+    path("api/schools/", include("apps.schools.school_api.school_urls")),
     path("api/subjects/", include(subjects_urls)),
     path("api/teachers/", include(teachers_urls)),
     path("api/requests/", include(requests_urls)),
