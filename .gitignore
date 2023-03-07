@@ -50,5 +50,8 @@ coverage.xml
 docs/_build/
 migrations/
 
+# venv
+venv
+
 #production.py
 db.sqlite3
