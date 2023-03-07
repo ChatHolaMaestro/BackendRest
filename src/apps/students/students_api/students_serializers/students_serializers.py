@@ -1,9 +1,14 @@
 from rest_framework import serializers
-from apps.students.student_models.student import Student
-from apps.shared.shared_api.shared_serializers.ShortSerializers import RelativeSerializerShort, SchoolSerializerShort
+
+from apps.students.students_models import Student
+from apps.shared.shared_api.shared_serializers.ShortSerializers import (
+    RelativeSerializerShort,
+    SchoolSerializerShort,
+)
+
 
 class StudentViewSerializer(serializers.ModelSerializer):
-    '''
+    """
     Student Serializer for view:
         - name
         - last_name
@@ -16,16 +21,18 @@ class StudentViewSerializer(serializers.ModelSerializer):
         - working_hours
         - relatives (object)
         - school (object)
-    '''
+    """
+
     relatives = RelativeSerializerShort(many=True, read_only=True)
     school = SchoolSerializerShort(read_only=True)
-    
+
     class Meta:
         model = Student
-        exclude = ['is_active', 'created_date', 'modified_date', 'deleted_date']
+        exclude = ["is_active", "created_date", "modified_date", "deleted_date"]
+
 
 class StudentCreationSerializer(serializers.ModelSerializer):
-    '''
+    """
     Student Serializer for creation:
         - name
         - last_name
@@ -36,10 +43,10 @@ class StudentCreationSerializer(serializers.ModelSerializer):
         - sex
         - age
         - working_hours
-        - relatives (ids) 
+        - relatives (ids)
         - school (id)
-    '''
+    """
+
     class Meta:
         model = Student
-        exclude = ['is_active', 'created_date', 'modified_date', 'deleted_date']
-        
+        exclude = ["is_active", "created_date", "modified_date", "deleted_date"]

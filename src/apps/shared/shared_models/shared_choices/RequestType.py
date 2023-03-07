@@ -1,5 +1,5 @@
-#Request Type choices
+# Request Type choices
 REQUEST_TYPE_CHOICES = (
-    ('TAREAS', 'Apoyo en Tareas'),
-    ('REFUERZO', 'Refuerzo Académico'),
+    ("TAREAS", "Apoyo en Tareas"),
+    ("REFUERZO", "Refuerzo Académico"),
 )

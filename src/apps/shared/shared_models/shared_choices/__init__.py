@@ -1,0 +1,1 @@
+from identification_type import IDENTIFICATION_TYPE_CHOICES
