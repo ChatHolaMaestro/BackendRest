@@ -36,6 +36,7 @@ LOCAL_APPS = [
     "apps.authentication",
     "apps.requests",
     "apps.homeworks",
+    "apps.services",
 ]
 
 THIRD_APPS = [
