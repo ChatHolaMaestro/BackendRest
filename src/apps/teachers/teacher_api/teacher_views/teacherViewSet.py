@@ -14,7 +14,7 @@ class TeacherViewSet(GenericModelViewSet):
         - GET(id): get a teacher by id
         - PUT(id): update a teacher by id
         - DELETE(id): delete a teacher by id
-        - GET (subject): search teacher by subject
+        - /search_subject: GET (subject): search teacher by subject
     '''
     serializer_class = TeacherViewSerializer
     serializerCreation = TeacherCreationSerializer
