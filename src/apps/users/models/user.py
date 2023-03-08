@@ -11,7 +11,7 @@ class UserManager(BaseUserManager):
 
     use_in_migrations = True
 
-    def _create_user(self, email, password, **extra_fields) -> "User":
+    def _create_user(self, email="email", password="password", **extra_fields) -> "User":
         """
         Default method to create and save users. Email and password are required.
         Extra fields may be provided.
@@ -32,7 +32,7 @@ class UserManager(BaseUserManager):
             raise ValueError("User must have a password")
 
         email = self.normalize_email(email)
-        user = self.model(email=email, **extra_fields)
+        user = self.model(email, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
         return user
@@ -54,7 +54,7 @@ class UserManager(BaseUserManager):
         """
         extra_fields.setdefault("is_admin", False)
         extra_fields.setdefault("is_superuser", False)
-        return self._create_user(email, password, **extra_fields)
+        return self._create_user(email=email, password=password, **extra_fields)
 
     def create_superuser(self, email: str, password: str, **extra_fields) -> "User":
         """
@@ -79,7 +79,7 @@ class UserManager(BaseUserManager):
         if extra_fields.get("is_superuser") is not True:
             raise ValueError("Superuser must have is_superuser=True.")
 
-        return self._create_user(email, password, **extra_fields)
+        return self._create_user(email=email, password=password, **extra_fields)
 
 
 class User(AbstractBaseUser, SharedModelHistorical, Person):

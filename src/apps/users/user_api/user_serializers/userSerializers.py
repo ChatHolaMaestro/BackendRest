@@ -2,8 +2,7 @@ from django.contrib.auth import get_user_model
 
 from rest_framework import serializers
 
-User = get_user_model()
-
+from apps.users.models.user import User
 
 class UserViewSerializer(serializers.ModelSerializer):
     """
@@ -54,7 +53,11 @@ class UserCreationSerializer(serializers.ModelSerializer):
         Returns:
             User: User object.
         """
+        email = validated_data["email"]
+        password = validated_data["password"]
+        validated_data.pop("email")
+        validated_data.pop("password")
         user = User.objects.create_user(
-            validated_data["email"], validated_data["password"], **validated_data
+            email=email, password=password, **validated_data
         )
         return user
