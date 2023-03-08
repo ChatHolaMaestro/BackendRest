@@ -26,9 +26,9 @@ class UserManager(BaseUserManager):
         Raises:
             ValueError: If email or password are not provided.
         """
-        if not email:
+        if not email or email =="":
             raise ValueError("User must have an email address")
-        if not password:
+        if not password or password=="":
             raise ValueError("User must have a password")
 
         email = self.normalize_email(email)

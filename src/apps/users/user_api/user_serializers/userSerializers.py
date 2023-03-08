@@ -54,9 +54,12 @@ class UserCreationSerializer(serializers.ModelSerializer):
             User: User object.
         """
         email = validated_data["email"]
+        print("email: ", email)
         password = validated_data["password"]
-        validated_data.pop("email")
-        validated_data.pop("password")
+        print("password: ", password)
+        #validated_data.pop("email")
+        #validated_data.pop("password")
+        print(validated_data)
         user = User.objects.create_user(
             email=email, password=password, **validated_data
         )

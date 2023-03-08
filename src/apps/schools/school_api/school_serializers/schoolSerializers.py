@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from apps.schools.school_models.schoolModels import School, SchoolManager
-from apps.shared.shared_api.shared_serializers.ShortSerializers import SchoolSerializerShort
+from apps.shared.shared_api.shared_serializers.ShortSerializers import SchoolSerializerShort, SchoolManagerSerializerShort, UserSerializerShort
+from apps.users.models.user import User
 
 class SchoolSerializer(serializers.ModelSerializer):
     '''
@@ -10,10 +11,13 @@ class SchoolSerializer(serializers.ModelSerializer):
         - address
         - has_morning_hours
         - has_afternoon_hours
+        - SchoolManagers (list)
     '''
+    school_managers = SchoolManagerSerializerShort(many=True, read_only=True)
+    
     class Meta:
         model = School
-        fields = ('id', 'name', 'address', 'has_morning_hours', 'has_afternoon_hours')
+        fields = ('id', 'name', 'address', 'has_morning_hours', 'has_afternoon_hours', 'school_managers')
 
 class SchoolManagerViewSerializer(serializers.ModelSerializer):
     '''
@@ -23,10 +27,10 @@ class SchoolManagerViewSerializer(serializers.ModelSerializer):
         - user (object)
     '''
     school = SchoolSerializerShort()
-    #TODO: Add user field
+    user = UserSerializerShort()
     class Meta:
         model = SchoolManager
-        fields = ['id','school']
+        fields = ['id','user','school']
 
 class SchoolManagerCreationSerializer(serializers.ModelSerializer):
     '''
@@ -38,4 +42,4 @@ class SchoolManagerCreationSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = SchoolManager
-        fields = ['id','school',]
+        fields = ['id','user','school',]
