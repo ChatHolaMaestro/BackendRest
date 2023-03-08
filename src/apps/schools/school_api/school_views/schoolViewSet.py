@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from apps.shared.shared_api.shared_views.GenericModelViewSets import GenericModelViewSet
-from apps.schools.school_api.school_serializers.schoolSerializers import SchoolSerializer, SchoolManagerSerializer
+from apps.schools.school_api.school_serializers.schoolSerializers import SchoolSerializer, SchoolManagerViewSerializer, SchoolManagerCreationSerializer
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import status
@@ -39,4 +39,6 @@ class SchoolManagerViewset(GenericModelViewSet):
         - PUT(id): update a school manager by id
         - DELETE(id): delete a school manager by id
     '''
-    serializer_class = SchoolManagerSerializer
+    serializer_class = SchoolManagerViewSerializer
+    serializerCreation = SchoolManagerCreationSerializer
+    serializerUpdate = SchoolManagerCreationSerializer

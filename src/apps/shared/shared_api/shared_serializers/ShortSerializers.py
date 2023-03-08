@@ -24,27 +24,27 @@ class StudentSerializerShort(serializers.ModelSerializer):
     """
     Student Serializer SHORT:
         - id
-        - name
+        - first_name
         - last_name
 
     """
 
     class Meta:
         model = Student
-        fields = ["id", "name", "last_name"]
+        fields = ["id", "first_name", "last_name"]
 
 
 class RelativeSerializerShort(serializers.ModelSerializer):
     """
     Relative Serializer SHORT:
         - id
-        - name
+        - first_name
         - last_name
     """
 
     class Meta:
         model = Relative
-        fields = ["id", "name", "last_name"]
+        fields = ["id", "first_name", "last_name"]
 
 
 # School serializer
