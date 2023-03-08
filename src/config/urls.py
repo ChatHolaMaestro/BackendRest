@@ -35,7 +35,6 @@ from apps.teachers.teacher_api.teacher_routers import urlpatterns as teachers_ur
 from apps.requests.request_api.request_routers import urlpatterns as requests_urls
 from apps.homeworks.homework_api.homework_routers import urlpatterns as homeworks_urls
 from apps.schools.school_api.school_routers import urlpatterns as schools_urls
-from apps.users.user_api.user_routers import urlpatterns as users_urls
 
 
 # API urls
@@ -56,7 +55,7 @@ urlpatterns = [
     ),
     path("admin/", admin.site.urls),
     path("api/auth/", include("apps.authentication.api.urls")),
-    path("api/users/", include(users_urls)),
+    path("api/users/", include("apps.users.api.urls")),
     path("api/students/", include(students_urls)),
     path("api/schools/", include(schools_urls)),
     path("api/subjects/", include(subjects_urls)),
