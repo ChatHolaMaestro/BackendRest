@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import RegexValidator
 
 
 class Person(models.Model):
@@ -7,30 +8,58 @@ class Person(models.Model):
     All other models that represent a person should inherit from this class.
     """
 
+    TI = 1
+    CC = 2
+    CE = 3
+    NUIP = 4
+    PA = 5
     IDENTIFICATION_TYPE_CHOICES = (
-        ("TI", "Tarjeta de Identidad"),
-        ("CC", "Cédula de Ciudadanía"),
-        ("CE", "Cédula de Extranjería"),
-        ("NUIP", "Número Único de Identificación Personal"),
-        ("PA", "Pasaporte"),
+        (TI, "Tarjeta de Identidad"),
+        (CC, "Cédula de Ciudadanía"),
+        (CE, "Cédula de Extranjería"),
+        (NUIP, "Número Único de Identificación Personal"),
+        (PA, "Pasaporte"),
     )
 
     first_name = models.CharField(
-        "Nombre", max_length=100, blank=True, help_text="Nombre de pila"
+        "Nombre(s)", max_length=100, blank=True, help_text="Nombre de pila"
     )
     last_name = models.CharField(
         "Apellidos", max_length=100, blank=True, help_text="Apellidos completos"
     )
-    identification_type = models.CharField(
+    identification_type = models.PositiveSmallIntegerField(
         "Tipo de identificación",
-        max_length=4,
         choices=IDENTIFICATION_TYPE_CHOICES,
         blank=True,
+        null=True,
     )
     identification_number = models.CharField(
-        "Número de identificación", max_length=20, blank=True, unique=True
+        "Número de identificación",
+        max_length=20,
+        blank=True,
+        null=True,
+        unique=True,
+        help_text="Número de identificación sin puntos ni guiones",
+        validators=[
+            RegexValidator(
+                regex=r"^\d+$",
+                message="El número de identificación debe ser solo números sin puntos, guiones o espacios.",
+                code="invalid_identification_number",
+            )
+        ],
     )
-    phone_number = models.CharField("Número de teléfono", max_length=20, blank=True)
+    phone_number = models.CharField(
+        "Número de teléfono",
+        max_length=20,
+        blank=True,
+        validators=[
+            RegexValidator(
+                regex=r"^\d+$",
+                message="El número de teléfono debe ser solo números sin puntos, guiones o espacios.",
+                code="invalid_phone_number",
+            )
+        ],
+    )
 
     def get_full_name(self) -> str:
         """Formats the full name of the user.
@@ -64,7 +93,7 @@ class Person(models.Model):
             and self.identification_number is not None
         ):
             return "{} {}".format(
-                self.identification_type,
+                self.get_identification_type_display(),
                 self.identification_number,
             )
         elif self.identification_number is not None:

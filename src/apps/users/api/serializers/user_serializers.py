@@ -20,13 +20,12 @@ class UserViewSerializer(serializers.ModelSerializer):
             "identification_type",
             "identification_number",
             "phone_number",
-            "is_admin",
             "is_superuser",
             "is_active",
         ]
 
 
-class UserCreationSerializer(serializers.ModelSerializer):
+class UserCreateSerializer(serializers.ModelSerializer):
     """
     User serializer for creation.
     """
@@ -43,18 +42,23 @@ class UserCreationSerializer(serializers.ModelSerializer):
             "identification_number",
             "phone_number",
         ]
-        extra_kwargs = {"password": {"write_only": True}}
 
     def create(self, validated_data: dict) -> User:
         """Creates a new user with the given data.
 
         Args:
-            validated_data (dict): serialized data after validation.
+            validated_data (dict): Data to create the user.
 
         Returns:
             User: User object.
         """
-        user = User.objects.create_user(
-            validated_data["email"], validated_data["password"], **validated_data
+
+        email = validated_data.pop("email")
+        password = validated_data.pop("password")
+
+        user = User.objects.create_user_with_password(
+            email=email,
+            password=password,
+            **validated_data,
         )
         return user

@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 
+
 from apps.shared.shared_models import SharedModelHistorical, Person
 
 
@@ -11,7 +12,33 @@ class UserManager(BaseUserManager):
 
     use_in_migrations = True
 
-    def _create_user(self, email, password, **extra_fields) -> "User":
+    def _create_user_without_password(self, email: str, **extra_fields) -> "User":
+        """
+        Default method to create and save users without password. Email is required.
+        Extra fields may be provided.
+
+        Args:
+            email (str): Email address.
+
+        Returns:
+            User: User object.
+
+        Raises:
+            ValueError: If email is not provided.
+        """
+
+        if not email:
+            raise ValueError("User must have an email address")
+
+        email = self.normalize_email(email)
+        user = self.model(email=email, **extra_fields)
+        user.set_unusable_password()
+        user.save(using=self._db)
+        return user
+
+    def _create_user_with_password(
+        self, email: str, password: str, **extra_fields
+    ) -> "User":
         """
         Default method to create and save users. Email and password are required.
         Extra fields may be provided.
@@ -24,20 +51,41 @@ class UserManager(BaseUserManager):
             User: User object.
 
         Raises:
-            ValueError: If email or password are not provided.
+            ValueError: If email or password aren't provided.
         """
+
         if not email:
             raise ValueError("User must have an email address")
         if not password:
             raise ValueError("User must have a password")
 
         email = self.normalize_email(email)
+        print("email after normalization", email)
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_user(self, email: str, password: str, **extra_fields) -> "User":
+    def create_user_without_password(self, email: str, **extra_fields) -> "User":
+        """
+        Creates and saves an user without password. Email is required.
+        Extra fields may be provided.
+
+        Args:
+            email (str): Email address.
+
+        Returns:
+            User: User object.
+
+        Raises:
+            ValueError: If email is not provided.
+        """
+
+        return self._create_user_without_password(email, **extra_fields)
+
+    def create_user_with_password(
+        self, email: str, password: str, **extra_fields
+    ) -> "User":
         """
         Creates and saves an user with the given email and password.
         Extra fields may be provided.
@@ -52,9 +100,8 @@ class UserManager(BaseUserManager):
         Raises:
             ValueError: If email or password are not provided.
         """
-        extra_fields.setdefault("is_admin", False)
-        extra_fields.setdefault("is_superuser", False)
-        return self._create_user(email, password, **extra_fields)
+
+        return self._create_user_with_password(email, password, **extra_fields)
 
     def create_superuser(self, email: str, password: str, **extra_fields) -> "User":
         """
@@ -71,15 +118,12 @@ class UserManager(BaseUserManager):
         Raises:
             ValueError: If email or password are not provided.
         """
-        extra_fields.setdefault("is_admin", True)
-        extra_fields.setdefault("is_superuser", True)
 
-        if extra_fields.get("is_admin") is not True:
-            raise ValueError("Superuser must have is_admin=True.")
+        extra_fields.setdefault("is_superuser", True)
         if extra_fields.get("is_superuser") is not True:
             raise ValueError("Superuser must have is_superuser=True.")
 
-        return self._create_user(email, password, **extra_fields)
+        return self._create_user_with_password(email, password, **extra_fields)
 
 
 class User(AbstractBaseUser, SharedModelHistorical, Person):
@@ -88,14 +132,15 @@ class User(AbstractBaseUser, SharedModelHistorical, Person):
     It uses the email address as the username.
     """
 
+    ADMIN = 1
+    TEACHER = 2
+    SCHOOL_MANAGER = 3
+    CHATBOT = 4
+
     email = models.EmailField(
         "Correo electrónico",
         unique=True,
         max_length=255,
-    )
-    is_admin = models.BooleanField(
-        "Administrador",
-        default=False,
     )
     is_superuser = models.BooleanField(
         "Superusuario",

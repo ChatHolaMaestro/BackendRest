@@ -3,13 +3,6 @@ from django.urls import path, include, re_path
 from django.conf import settings
 from django.views.static import serve
 
-# JWT authentication
-"""
-from rest_framework_simplejwt.views import (
-    TokenObtainPairView,
-    TokenRefreshView,
-)
-"""
 # Swagger
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
