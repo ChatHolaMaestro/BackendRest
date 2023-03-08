@@ -1,5 +1,6 @@
 from django.db import models
 from apps.shared.shared_models import SharedModelHistorical
+from apps.users.models.user import User
 
 
 class School(SharedModelHistorical):
@@ -24,6 +25,6 @@ class SchoolManager(SharedModelHistorical):
     """
     Model which represents a school manager
     """
-
+    #Could be null uf the user has not been created yet
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
     school = models.ForeignKey(School, on_delete=models.CASCADE)
-    # TODO: Add user field

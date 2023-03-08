@@ -60,7 +60,6 @@ class UserManager(BaseUserManager):
             raise ValueError("User must have a password")
 
         email = self.normalize_email(email)
-        print("email after normalization", email)
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)

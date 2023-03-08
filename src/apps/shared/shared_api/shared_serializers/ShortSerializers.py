@@ -8,8 +8,8 @@ from apps.users.models.user import User, Person
 from apps.students.students_models import Student
 from apps.students.students_models import Relative
 
-# School Model
-from apps.schools.school_models.schoolModels import School
+# School and SchoolManager Model
+from apps.schools.school_models.schoolModels import School, SchoolManager
 
 # Teacher and Schedule models
 from apps.teachers.teacher_models.teacherModels import Teacher, Schedule
@@ -86,7 +86,7 @@ class RelativeSerializerShort(serializers.ModelSerializer):
         fields = ["id", "first_name", "last_name"]
 
 
-# School serializer
+# School and School Manager serializer
 class SchoolSerializerShort(serializers.ModelSerializer):
     """
     School serializer SHORT:
@@ -97,6 +97,17 @@ class SchoolSerializerShort(serializers.ModelSerializer):
     class Meta:
         model = School
         fields = ("id", "name")
+        
+class SchoolManagerSerializerShort(serializers.ModelSerializer):
+    '''
+    School Manager serializer SHORT
+        - id
+        - user (object)
+    '''
+    
+    class Meta:
+        model = SchoolManager
+        fields = ('id', 'user')
 
 
 # Teacher and Schedule serializers
@@ -104,12 +115,12 @@ class TeacherSerializerShort(serializers.ModelSerializer):
     """
     Teacher serializer short
         - id
+        - user (object)
     """
-
+    user = UserSerializerShort()
     class Meta:
         model = Teacher
-        # TODO add user field
-        fields = ("id",)
+        fields = ("id", 'user')
 
 
 class ScheduleSerializerShort(serializers.ModelSerializer):
