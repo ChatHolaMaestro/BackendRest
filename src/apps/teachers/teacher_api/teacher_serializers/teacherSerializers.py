@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from apps.teachers.teacher_models.teacherModels import Teacher
 from apps.subjects.subject_api.subject_serializers.subjectSerializer import SubjectSerializer
-from apps.shared.shared_api.shared_serializers.ShortSerializers import ScheduleSerializerShort
+from apps.shared.shared_api.shared_serializers.ShortSerializers import ScheduleSerializerShort, UserSerializerShort
 
 class TeacherViewSerializer(serializers.ModelSerializer):
     '''
@@ -10,12 +10,12 @@ class TeacherViewSerializer(serializers.ModelSerializer):
         - subjects (objects)
         - schedules (objects)
     '''
+    user = UserSerializerShort(read_only=True)
     subjects = SubjectSerializer(many=True, read_only=True)
     schedules = ScheduleSerializerShort(many=True, read_only=True)
     class Meta:
         model = Teacher
-        #TODO add user field
-        fields = ('id', 'subjects', 'schedules')
+        fields = ('id', 'user', 'subjects', 'schedules')
 
 class TeacherCreationSerializer(serializers.ModelSerializer):
     '''
@@ -25,6 +25,5 @@ class TeacherCreationSerializer(serializers.ModelSerializer):
     '''
     class Meta:
         model = Teacher
-        #TODO add user field
-        fields = ('subjects', 'schedules')
+        fields = ('user', 'subjects', 'schedules')
 

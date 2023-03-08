@@ -3,14 +3,14 @@ from apps.shared.shared_models import SharedModelHistorical
 from apps.subjects.subject_models.subjectModels import Subject
 from apps.shared.shared_models.shared_choices.WeekDays import WEEK_DAYS_CHOICES
 from apps.shared.shared_models.shared_choices.RequestType import REQUEST_TYPE_CHOICES
-
+from apps.users.models.user import User
 
 class Teacher(SharedModelHistorical):
     """
     Model which represents a teacher
     """
 
-    # TODO add user field
+    user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True) #Could be blank and null
     subjects = models.ManyToManyField(Subject, related_name="teachers")
 
     class Meta:
@@ -18,9 +18,7 @@ class Teacher(SharedModelHistorical):
         verbose_name_plural = "Profesores"
 
     def __str__(self):
-        # TODO return user name
-        # return f'{self.user.first_name} {self.user.last_name}'
-        return f"Profesor {self.id}"
+        return f"Profesor {self.user}"
 
 
 class Schedule(SharedModelHistorical):
