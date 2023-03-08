@@ -26,7 +26,7 @@ class UserViewSerializer(serializers.ModelSerializer):
         ]
 
 
-class UserCreateSerializer(serializers.ModelSerializer):
+class UserCreationSerializer(serializers.ModelSerializer):
     """
     User serializer for creation.
     """

@@ -1,1 +1,0 @@
-from .user_serializers import UserViewSerializer, UserCreateSerializer
