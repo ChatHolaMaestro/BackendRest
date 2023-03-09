@@ -15,12 +15,41 @@ class TeacherViewSet(GenericModelViewSet):
         - GET(id): get a teacher by id
         - PUT(id): update a teacher by id
         - DELETE(id): delete a teacher by id
-        - /search_subject: GET (subject): search teacher by subject
+        - /search_identification_number: GET (identification_number): search teacher by identification number
         - /search_name: GET (name): search teacher by name
+        - /search_subject: GET (subject): search teacher by subject
+        - /search_email: GET (email): search teacher by email
     '''
     serializer_class = TeacherViewSerializer
     serializerCreation = TeacherCreationSerializer
     serializerUpdate = TeacherCreationSerializer
+    
+    @action(detail=False, methods=['get'])
+    def search_identification_number(self, request):
+        '''
+        Search teacher by identification number
+        '''
+        identification_number = request.query_params.get('identification_number')
+        if identification_number:
+            queryset = self.get_queryset().filter(user__identification_number__icontains=identification_number)
+            serializer = self.get_serializer(queryset, many=True)
+            if serializer.data:
+                return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response({'detail': 'No teacher found'}, status=status.HTTP_400_BAD_REQUEST)
+    
+    
+    @action(detail=False, methods=['get'])
+    def search_name(self, request):
+        '''
+        Search teacher by name (first_name or last_name)
+        '''
+        name = request.query_params.get('name')
+        if name:
+            queryset = self.get_queryset().filter(Q(user__first_name__icontains=name) | Q(user__last_name__icontains=name))
+            serializer = self.get_serializer(queryset, many=True)
+            if serializer.data:
+                return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response({'detail': 'No teacher found'}, status=status.HTTP_400_BAD_REQUEST)
     
     @action(detail=False, methods=['get'])
     def search_subject(self, request):
@@ -36,18 +65,17 @@ class TeacherViewSet(GenericModelViewSet):
         return Response({'detail': 'No teacher found'}, status=status.HTTP_400_BAD_REQUEST)
     
     @action(detail=False, methods=['get'])
-    def search_name(self, request):
+    def search_email(self, request):
         '''
-        Search teacher by name (first_name or last_name)
+        Search teacher by email
         '''
-        name = request.query_params.get('name')
-        if name:
-            queryset = self.get_queryset().filter(Q(user__first_name__icontains=name) | Q(user__last_name__icontains=name))
+        email = request.query_params.get('email')
+        if email:
+            queryset = self.get_queryset().filter(user__email__icontains=email)
             serializer = self.get_serializer(queryset, many=True)
             if serializer.data:
                 return Response(serializer.data, status=status.HTTP_200_OK)
         return Response({'detail': 'No teacher found'}, status=status.HTTP_400_BAD_REQUEST)
-    
 
 class ScheduleViewSet(GenericModelViewSet):
     '''
