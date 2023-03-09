@@ -7,14 +7,7 @@ class Person(models.Model):
     Abstract model that represents a person's basic information.
     All other models that represent a person should inherit from this class.
     """
-
-    '''
-    TI = 1
-    CC = 2
-    CE = 3
-    NUIP = 4
-    PA = 5
-    '''
+    
     IDENTIFICATION_TYPE_CHOICES = (
         ("TI", "Tarjeta de Identidad"),
         ("CC", "Cédula de Ciudadanía"),
