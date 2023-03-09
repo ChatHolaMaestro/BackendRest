@@ -8,17 +8,19 @@ class Person(models.Model):
     All other models that represent a person should inherit from this class.
     """
 
+    '''
     TI = 1
     CC = 2
     CE = 3
     NUIP = 4
     PA = 5
+    '''
     IDENTIFICATION_TYPE_CHOICES = (
-        (TI, "Tarjeta de Identidad"),
-        (CC, "Cédula de Ciudadanía"),
-        (CE, "Cédula de Extranjería"),
-        (NUIP, "Número Único de Identificación Personal"),
-        (PA, "Pasaporte"),
+        ("TI", "Tarjeta de Identidad"),
+        ("CC", "Cédula de Ciudadanía"),
+        ("CE", "Cédula de Extranjería"),
+        ("NUIP", "Número Único de Identificación Personal"),
+        ("PA", "Pasaporte"),
     )
 
     first_name = models.CharField(
@@ -27,12 +29,15 @@ class Person(models.Model):
     last_name = models.CharField(
         "Apellidos", max_length=100, blank=True, help_text="Apellidos completos"
     )
-    identification_type = models.PositiveSmallIntegerField(
+    identification_type = models.CharField(
         "Tipo de identificación",
-        choices=IDENTIFICATION_TYPE_CHOICES,
+        max_length=5,
         blank=True,
         null=True,
+        choices=IDENTIFICATION_TYPE_CHOICES,
     )
+    
+    
     identification_number = models.CharField(
         "Número de identificación",
         max_length=20,
