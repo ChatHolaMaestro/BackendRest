@@ -32,14 +32,13 @@ class UserSerializerShort(serializers.ModelSerializer):
         - last_name
         - email
         - phone_number
-        - is_admin
         - identification_type
         - identification_number
     '''
     
     class Meta:
         model = User
-        fields = ('id', 'first_name', 'last_name', 'email', 'phone_number', 'is_admin', 'identification_type', 'identification_number')
+        fields = ('id', 'first_name', 'last_name', 'email', 'phone_number', 'identification_type', 'identification_number')
         
 class PersonSerializerShort(serializers.ModelSerializer):
     '''

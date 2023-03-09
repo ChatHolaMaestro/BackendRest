@@ -18,7 +18,9 @@ class Teacher(SharedModelHistorical):
         verbose_name_plural = "Profesores"
 
     def __str__(self):
-        return f"Profesor {self.user}"
+        if self.user:
+            return f"Profesor {self.user}"
+        return f"Profesor {self.id}"
 
 
 class Schedule(SharedModelHistorical):

@@ -5,6 +5,7 @@ from apps.teachers.teacher_api.teacher_serializers.scheduleSerializer import Sch
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import status
+from django.db.models import Q
 
 class TeacherViewSet(GenericModelViewSet):
     '''
@@ -15,6 +16,7 @@ class TeacherViewSet(GenericModelViewSet):
         - PUT(id): update a teacher by id
         - DELETE(id): delete a teacher by id
         - /search_subject: GET (subject): search teacher by subject
+        - /search_name: GET (name): search teacher by name
     '''
     serializer_class = TeacherViewSerializer
     serializerCreation = TeacherCreationSerializer
@@ -28,6 +30,19 @@ class TeacherViewSet(GenericModelViewSet):
         subject = request.query_params.get('subject')
         if subject:
             queryset = self.get_queryset().filter(subjects__name__icontains=subject)
+            serializer = self.get_serializer(queryset, many=True)
+            if serializer.data:
+                return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response({'detail': 'No teacher found'}, status=status.HTTP_400_BAD_REQUEST)
+    
+    @action(detail=False, methods=['get'])
+    def search_name(self, request):
+        '''
+        Search teacher by name (first_name or last_name)
+        '''
+        name = request.query_params.get('name')
+        if name:
+            queryset = self.get_queryset().filter(Q(user__first_name__icontains=name) | Q(user__last_name__icontains=name))
             serializer = self.get_serializer(queryset, many=True)
             if serializer.data:
                 return Response(serializer.data, status=status.HTTP_200_OK)
