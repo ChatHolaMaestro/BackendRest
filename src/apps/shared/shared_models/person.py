@@ -7,7 +7,7 @@ class Person(models.Model):
     Abstract model that represents a person's basic information.
     All other models that represent a person should inherit from this class.
     """
-    
+
     IDENTIFICATION_TYPE_CHOICES = (
         ("TI", "Tarjeta de Identidad"),
         ("CC", "Cédula de Ciudadanía"),
@@ -26,16 +26,12 @@ class Person(models.Model):
         "Tipo de identificación",
         max_length=5,
         blank=True,
-        null=True,
         choices=IDENTIFICATION_TYPE_CHOICES,
     )
-    
-    
     identification_number = models.CharField(
         "Número de identificación",
         max_length=20,
         blank=True,
-        null=True,
         unique=True,
         help_text="Número de identificación sin puntos ni guiones",
         validators=[
