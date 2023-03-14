@@ -13,6 +13,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.db.models import Q
 
+
 class StudentViewSet(GenericModelViewSet):
     """
     Generic ViewSet for Student Model
@@ -26,36 +27,44 @@ class StudentViewSet(GenericModelViewSet):
     """
 
     serializer_class = StudentViewSerializer
-    serializerCreation = StudentCreationSerializer
-    serializerUpdate = StudentCreationSerializer
-    
-    @action(detail=False, methods=['get'])
+    serializer_create_class = StudentCreationSerializer
+    serializer_update_class = StudentCreationSerializer
+
+    @action(detail=False, methods=["get"])
     def search_identification_number(self, request):
         """
         Search a student by identification_number
         """
-        identification_number = request.query_params.get('identification_number')
+        identification_number = request.query_params.get("identification_number")
         if identification_number:
-            queryset = self.get_queryset().filter(identification_number__icontains=identification_number)
+            queryset = self.get_queryset().filter(
+                identification_number__icontains=identification_number
+            )
             serializer = self.get_serializer(queryset, many=True)
             if serializer.data:
                 return Response(serializer.data, status=status.HTTP_200_OK)
-        return Response({'detail': 'No student found'}, status=status.HTTP_400_BAD_REQUEST)
+        return Response(
+            {"detail": "No student found"}, status=status.HTTP_400_BAD_REQUEST
+        )
 
-    @action(detail=False, methods=['get'])
+    @action(detail=False, methods=["get"])
     def search_name(self, request):
         """
         Search a student by name (first_name or last_name)
         """
-        name = request.query_params.get('name')
+        name = request.query_params.get("name")
         if name:
-            queryset = self.get_queryset().filter(Q(first_name__icontains=name) | Q(last_name__icontains=name))
+            queryset = self.get_queryset().filter(
+                Q(first_name__icontains=name) | Q(last_name__icontains=name)
+            )
             serializer = self.get_serializer(queryset, many=True)
             if serializer.data:
                 return Response(serializer.data, status=status.HTTP_200_OK)
-        return Response({'detail': 'No student found'}, status=status.HTTP_400_BAD_REQUEST)
-        
-        
+        return Response(
+            {"detail": "No student found"}, status=status.HTTP_400_BAD_REQUEST
+        )
+
+
 class RelativeViewSet(GenericModelViewSet):
     """
     Generic ViewSet for Relative Model
@@ -67,5 +76,5 @@ class RelativeViewSet(GenericModelViewSet):
     """
 
     serializer_class = RelativeViewSerializer
-    serializerCreation = RelativeCreationSerializer
-    serializerUpdate = RelativeCreationSerializer
+    serializer_create_class = RelativeCreationSerializer
+    serializer_update_class = RelativeCreationSerializer
