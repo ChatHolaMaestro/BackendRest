@@ -6,4 +6,4 @@ from apps.users.api.serializers import UserViewSerializer, UserCreateSerializer
 class UserViewSet(GenericModelViewSet):
     serializer_class = UserViewSerializer
     serializerCreation = UserCreateSerializer
-    serializerUpdate = None
+    serializerUpdate = UserCreateSerializer
