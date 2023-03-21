@@ -1,0 +1,6 @@
+#!/bin/bash
+
+set -o errexit
+set -o nounset
+
+python -m celery -A config worker -l ${CELERY_LOG_LEVEL:-INFO}

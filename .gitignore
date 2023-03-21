@@ -50,8 +50,10 @@ coverage.xml
 docs/_build/
 migrations/
 
-# venv
+# environments
 venv
+.env
 
-#production.py
+# Databases
 db.sqlite3
+celerybeat-schedule
