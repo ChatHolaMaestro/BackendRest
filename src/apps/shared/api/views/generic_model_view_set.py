@@ -21,19 +21,11 @@ class GenericModelViewSet(viewsets.ModelViewSet):
 
     def get_serializer_class(self) -> serializers.Serializer:
         if self.action == "create":
-            assert self.serializer_class is not None, (
-                "'%s' should either include a `create_serializer_class` attribute, "
-                "or override the `get_serializer_class()` method."
-                % self.__class__.__name__
-            )
-            return self.create_serializer_class
+            if self.create_serializer_class:
+                return self.create_serializer_class
         elif self.action == "update":
-            assert self.serializer_class is not None, (
-                "'%s' should either include a `update_serializer_class` attribute, "
-                "or override the `get_serializer_class()` method."
-                % self.__class__.__name__
-            )
-            return self.update_serializer_class
+            if self.update_serializer_class:
+                return self.update_serializer_class
 
         return super().get_serializer_class()
 
