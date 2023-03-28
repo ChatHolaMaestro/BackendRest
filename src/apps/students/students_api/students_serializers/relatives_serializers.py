@@ -1,9 +1,7 @@
 from rest_framework import serializers
 
 from apps.students.students_models import Relative
-from apps.shared.shared_api.shared_serializers.ShortSerializers import (
-    StudentSerializerShort,
-)
+from apps.shared.api.serializers import StudentSerializerShort
 
 
 class RelativeViewSerializer(serializers.ModelSerializer):

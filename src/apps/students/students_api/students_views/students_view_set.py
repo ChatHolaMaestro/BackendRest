@@ -1,5 +1,10 @@
-from django.shortcuts import render
-from apps.shared.shared_api.shared_views.GenericModelViewSets import GenericModelViewSet
+from rest_framework import status
+from rest_framework.decorators import action
+from rest_framework.response import Response
+
+from django.db.models import Q
+
+from apps.shared.api.views import GenericModelViewSet
 from apps.students.students_api.students_serializers.students_serializers import (
     StudentViewSerializer,
     StudentCreationSerializer,
@@ -8,10 +13,6 @@ from apps.students.students_api.students_serializers.relatives_serializers impor
     RelativeViewSerializer,
     RelativeCreationSerializer,
 )
-from rest_framework.decorators import action
-from rest_framework.response import Response
-from rest_framework import status
-from django.db.models import Q
 
 
 class StudentViewSet(GenericModelViewSet):
@@ -27,8 +28,8 @@ class StudentViewSet(GenericModelViewSet):
     """
 
     serializer_class = StudentViewSerializer
-    serializer_create_class = StudentCreationSerializer
-    serializer_update_class = StudentCreationSerializer
+    create_serializer_class = StudentCreationSerializer
+    update_serializer_class = StudentCreationSerializer
 
     @action(detail=False, methods=["get"])
     def search_identification_number(self, request):
@@ -76,5 +77,5 @@ class RelativeViewSet(GenericModelViewSet):
     """
 
     serializer_class = RelativeViewSerializer
-    serializer_create_class = RelativeCreationSerializer
-    serializer_update_class = RelativeCreationSerializer
+    create_serializer_class = RelativeCreationSerializer
+    update_serializer_class = RelativeCreationSerializer

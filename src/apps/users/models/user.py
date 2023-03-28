@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 
-from apps.shared.shared_models import SharedModelHistorical, Person
+from apps.shared.models import SharedModelHistorical, Person
 
 
 class UserManager(BaseUserManager):

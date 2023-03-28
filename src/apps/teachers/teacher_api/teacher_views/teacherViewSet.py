@@ -1,5 +1,10 @@
-from django.shortcuts import render
-from apps.shared.shared_api.shared_views.GenericModelViewSets import GenericModelViewSet
+from rest_framework import status
+from rest_framework.decorators import action
+from rest_framework.response import Response
+
+from django.db.models import Q
+
+from apps.shared.api.views import GenericModelViewSet
 from apps.teachers.teacher_api.teacher_serializers.teacherSerializers import (
     TeacherViewSerializer,
     TeacherCreationSerializer,
@@ -8,10 +13,6 @@ from apps.teachers.teacher_api.teacher_serializers.scheduleSerializer import (
     ScheduleViewSerializer,
     ScheduleCreationSerializer,
 )
-from rest_framework.decorators import action
-from rest_framework.response import Response
-from rest_framework import status
-from django.db.models import Q
 
 
 class TeacherViewSet(GenericModelViewSet):
@@ -29,8 +30,8 @@ class TeacherViewSet(GenericModelViewSet):
     """
 
     serializer_class = TeacherViewSerializer
-    serializer_create_class = TeacherCreationSerializer
-    serializer_update_class = TeacherCreationSerializer
+    create_serializer_class = TeacherCreationSerializer
+    update_serializer_class = TeacherCreationSerializer
 
     @action(detail=False, methods=["get"])
     def search_identification_number(self, request):
@@ -108,5 +109,5 @@ class ScheduleViewSet(GenericModelViewSet):
     """
 
     serializer_class = ScheduleViewSerializer
-    serializer_create_class = ScheduleCreationSerializer
-    serializer_update_class = ScheduleCreationSerializer
+    create_serializer_class = ScheduleCreationSerializer
+    update_serializer_class = ScheduleCreationSerializer

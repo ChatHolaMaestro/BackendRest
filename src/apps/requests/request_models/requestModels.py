@@ -1,7 +1,7 @@
 from django.db import models
-from apps.shared.shared_models import SharedModelHistorical
-from apps.requests.request_models.requestChoices import REQUEST_STATUS_CHOICES
-from apps.shared.shared_models.shared_choices.RequestType import REQUEST_TYPE_CHOICES
+
+from apps.shared.models import SharedModelHistorical
+from apps.shared.models.choices import RequestType
 from apps.students.students_models import Student
 from apps.teachers.teacher_models.teacherModels import Teacher
 from apps.subjects.subject_models.subjectModels import Subject
@@ -12,6 +12,17 @@ class Request(SharedModelHistorical):
     Model which represents a request
     """
 
+    STATUS_PENDING = "PENDIENTE"
+    STATUS_COMPLETED = "COMPLETADO"
+    STATUS_CONTACTED = "CONTACTADO"
+    STATUS_CANCELLED = "CANCELADO"
+    REQUEST_STATUS_CHOICES = (
+        (STATUS_PENDING, "Pendiente"),
+        (STATUS_COMPLETED, "Completado"),
+        (STATUS_CONTACTED, "Contactado"),
+        (STATUS_CANCELLED, "Cancelado"),
+    )
+
     status = models.CharField(
         max_length=20,
         choices=REQUEST_STATUS_CHOICES,
@@ -21,8 +32,8 @@ class Request(SharedModelHistorical):
     )
     request_type = models.CharField(
         max_length=20,
-        choices=REQUEST_TYPE_CHOICES,
-        default="TAREAS",
+        choices=RequestType.CHOICES,
+        default=RequestType.HOMEWORK,
         null=False,
         blank=False,
     )

@@ -1,6 +1,6 @@
 from django.db import models
-from apps.shared.shared_models import SharedModelHistorical
-from apps.homeworks.homework_models.homeworkChoices import HOMEWORK_STATUS_CHOICES
+
+from apps.shared.models import SharedModelHistorical
 from apps.requests.request_models.requestModels import Request
 
 
@@ -9,11 +9,20 @@ class Homework(SharedModelHistorical):
     Model which represents a homework
     """
 
+    COMPLETED = "COMPLETADO"
+    PENDING = "PENDIENTE"
+    NO_ANSWER = "SIN RESPUESTA"
+    HOMEWORK_STATUS_CHOICES = (
+        (COMPLETED, "Completado"),
+        (PENDING, "Pendiente"),
+        (NO_ANSWER, "Sin Respuesta"),
+    )
+
     status = models.CharField(
         "Estado de la Tarea",
         max_length=20,
         choices=HOMEWORK_STATUS_CHOICES,
-        default="PENDIENTE",
+        default=PENDING,
         blank=False,
         null=False,
     )
@@ -23,7 +32,6 @@ class Homework(SharedModelHistorical):
         "Tiempo invertido", default=0, blank=False, null=False
     )
     scheduled_date = models.DateField("Fecha programada", blank=False, null=False)
-    # Foreign Keys
     request = models.OneToOneField(
         Request, on_delete=models.CASCADE, related_name="homework"
     )

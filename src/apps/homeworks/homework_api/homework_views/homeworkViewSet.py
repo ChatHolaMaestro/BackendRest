@@ -1,5 +1,4 @@
-from django.shortcuts import render
-from apps.shared.shared_api.shared_views.GenericModelViewSets import GenericModelViewSet
+from apps.shared.api.views import GenericModelViewSet
 from apps.homeworks.homework_api.homework_serializers.homeworkSerializer import (
     HomeworkViewSerializer,
     HomeworkCreationSerializer,
@@ -17,5 +16,5 @@ class HomeworkViewSet(GenericModelViewSet):
     """
 
     serializer_class = HomeworkViewSerializer
-    serializer_create_class = HomeworkCreationSerializer
-    serializer_update_class = HomeworkCreationSerializer
+    create_serializer_class = HomeworkCreationSerializer
+    update_serializer_class = HomeworkCreationSerializer

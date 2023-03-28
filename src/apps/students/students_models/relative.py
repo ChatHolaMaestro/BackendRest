@@ -1,4 +1,4 @@
-from apps.shared.shared_models import SharedModelHistorical, Person
+from apps.shared.models import SharedModelHistorical, Person
 
 
 class Relative(SharedModelHistorical, Person):

@@ -1,13 +1,13 @@
-from django.shortcuts import render
-from apps.shared.shared_api.shared_views.GenericModelViewSets import GenericModelViewSet
+from rest_framework import status
+from rest_framework.decorators import action
+from rest_framework.response import Response
+
+from apps.shared.api.views import GenericModelViewSet
 from apps.schools.school_api.school_serializers.schoolSerializers import (
     SchoolSerializer,
     SchoolManagerViewSerializer,
     SchoolManagerCreationSerializer,
 )
-from rest_framework.decorators import action
-from rest_framework.response import Response
-from rest_framework import status
 
 
 class SchoolViewset(GenericModelViewSet):
@@ -50,5 +50,5 @@ class SchoolManagerViewset(GenericModelViewSet):
     """
 
     serializer_class = SchoolManagerViewSerializer
-    serializer_create_class = SchoolManagerCreationSerializer
-    serializer_update_class = SchoolManagerCreationSerializer
+    create_serializer_class = SchoolManagerCreationSerializer
+    update_serializer_class = SchoolManagerCreationSerializer

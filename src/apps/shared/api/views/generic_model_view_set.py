@@ -1,16 +1,13 @@
-from rest_framework import status
-from rest_framework.request import Request
+from rest_framework import status, request, serializers, viewsets
 from rest_framework.response import Response
-from rest_framework.viewsets import ModelViewSet
-from rest_framework.serializers import Serializer
 
-from apps.shared.shared_api.permissions.shared_permissions import BasePermission
+from apps.shared.api.permissions import BasePermission
 
 
-class GenericModelViewSet(ModelViewSet):
+class GenericModelViewSet(viewsets.ModelViewSet):
     serializer_class = None
-    serializer_create_class = None
-    serializer_update_class = None
+    create_serializer_class = None
+    update_serializer_class = None
 
     list_permission_classes = []
     retrieve_permission_classes = []
@@ -22,21 +19,21 @@ class GenericModelViewSet(ModelViewSet):
         model = self.get_serializer().Meta.model
         return model.objects.filter(is_active=True)
 
-    def get_serializer_class(self) -> Serializer:
+    def get_serializer_class(self) -> serializers.Serializer:
         if self.action == "create":
             assert self.serializer_class is not None, (
-                "'%s' should either include a `serializer_create_class` attribute, "
+                "'%s' should either include a `create_serializer_class` attribute, "
                 "or override the `get_serializer_class()` method."
                 % self.__class__.__name__
             )
-            return self.serializer_create_class
+            return self.create_serializer_class
         elif self.action == "update":
             assert self.serializer_class is not None, (
-                "'%s' should either include a `serializer_update_class` attribute, "
+                "'%s' should either include a `update_serializer_class` attribute, "
                 "or override the `get_serializer_class()` method."
                 % self.__class__.__name__
             )
-            return self.serializer_update_class
+            return self.update_serializer_class
 
         return super().get_serializer_class()
 
@@ -79,11 +76,11 @@ class GenericModelViewSet(ModelViewSet):
 
         return super().get_permissions()
 
-    def list(self, request: Request, *args, **kwargs) -> Response:
+    def list(self, request: request.Request, *args, **kwargs) -> Response:
         """Get all objects of the model.
 
         Args:
-            request (Request): HTTP request information
+            request (request.Request): HTTP request information
 
         Returns:
             Response: HTTP response with the objects
@@ -93,11 +90,11 @@ class GenericModelViewSet(ModelViewSet):
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    def retrieve(self, request: Request, *args, **kwargs) -> Response:
+    def retrieve(self, request: request.Request, *args, **kwargs) -> Response:
         """Get an object of the model by id.
 
         Args:
-            request (Request): HTTP request information with the id of the object
+            request (request.Request): HTTP request information with the id of the object
 
         Returns:
             Response: HTTP response with the object or 404 if the object is not found
@@ -110,11 +107,11 @@ class GenericModelViewSet(ModelViewSet):
             )
         return Response({"error": "Object not found"}, status=status.HTTP_404_NOT_FOUND)
 
-    def create(self, request: Request, *args, **kwargs) -> Response:
+    def create(self, request: request.Request, *args, **kwargs) -> Response:
         """Create an object of the model.
 
         Args:
-            request (Request): HTTP request information
+            request (request.Request): HTTP request information
 
         Returns:
             Response: HTTP response with the created object
@@ -128,11 +125,11 @@ class GenericModelViewSet(ModelViewSet):
         self.perform_create(serializer)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-    def update(self, request: Request, *args, **kwargs) -> Response:
+    def update(self, request: request.Request, *args, **kwargs) -> Response:
         """Update an object of the model.
 
         Args:
-            request (Request): HTTP request information with the id of the object
+            request (request.Request): HTTP request information with the id of the object
 
         Returns:
             Response: HTTP response with the updated object or 404 if the object is not found
@@ -149,12 +146,12 @@ class GenericModelViewSet(ModelViewSet):
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response({"error": "Object not found"}, status=status.HTTP_404_NOT_FOUND)
 
-    def destroy(self, request: Request, *args, **kwargs) -> Response:
+    def destroy(self, request: request.Request, *args, **kwargs) -> Response:
         """
         Delete an object of the model (logical delete).
 
         Args:
-            request (Request): HTTP request information with the id of the object
+            request (request.Request): HTTP request information with the id of the object
 
         Returns:
             Response: HTTP response 200 if the object is deleted or 404 if the object is not found

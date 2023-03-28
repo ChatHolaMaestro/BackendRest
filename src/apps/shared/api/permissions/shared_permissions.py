@@ -1,10 +1,10 @@
-from rest_framework.permissions import BasePermission as RestBasePermission
+from rest_framework import permissions
 from rest_framework.request import Request
 
 from apps.users.models import User
 
 
-class BasePermission(RestBasePermission):
+class BasePermission(permissions.BasePermission):
     """
     Base permission class for all permissions.
     By default, if the request has an user that is authenticated and is a superuser,

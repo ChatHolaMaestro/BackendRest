@@ -1,10 +1,18 @@
 from rest_framework import serializers
+
 from apps.requests.request_models.requestModels import Request
-from apps.shared.shared_api.shared_serializers.ShortSerializers import StudentSerializerShort, TeacherSerializerShort, HomeworkSerializerShort
-from apps.subjects.subject_api.subject_serializers.subjectSerializer import SubjectSerializer
+from apps.shared.api.serializers import (
+    StudentSerializerShort,
+    TeacherSerializerShort,
+    HomeworkSerializerShort,
+)
+from apps.subjects.subject_api.subject_serializers.subjectSerializer import (
+    SubjectSerializer,
+)
+
 
 class RequestViewSerializer(serializers.ModelSerializer):
-    '''
+    """
     Request Serializer for View
         - id
         - status
@@ -14,18 +22,30 @@ class RequestViewSerializer(serializers.ModelSerializer):
         - student (object)
         - teacher (object)
         - subject (object)
-    '''
+    """
+
     student = StudentSerializerShort()
     teacher = TeacherSerializerShort()
     subject = SubjectSerializer()
-    homework = HomeworkSerializerShort() #could be null
-            
+    homework = HomeworkSerializerShort()  # could be null
+
     class Meta:
         model = Request
-        fields = ['id', 'status', 'request_type','created_date', 'contact_times', 'student', 'teacher', 'subject', 'homework']
+        fields = [
+            "id",
+            "status",
+            "request_type",
+            "created_date",
+            "contact_times",
+            "student",
+            "teacher",
+            "subject",
+            "homework",
+        ]
+
 
 class RequestCreationSerializer(serializers.ModelSerializer):
-    '''
+    """
     Request Serializer for Creation
         - status
         - request_type
@@ -33,7 +53,15 @@ class RequestCreationSerializer(serializers.ModelSerializer):
         - student (id)
         - teacher (id)
         - subject (id)
-    '''
+    """
+
     class Meta:
         model = Request
-        fields = ['status', 'request_type', 'contact_times', 'student', 'teacher', 'subject']
+        fields = [
+            "status",
+            "request_type",
+            "contact_times",
+            "student",
+            "teacher",
+            "subject",
+        ]

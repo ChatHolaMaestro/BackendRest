@@ -1,12 +1,12 @@
-from django.shortcuts import render
-from apps.shared.shared_api.shared_views.GenericModelViewSets import GenericModelViewSet
+from rest_framework import status
+from rest_framework.decorators import action
+from rest_framework.response import Response
+
+from apps.shared.api.views import GenericModelViewSet
 from apps.requests.request_api.request_serializers.requestSerializer import (
     RequestViewSerializer,
     RequestCreationSerializer,
 )
-from rest_framework.decorators import action
-from rest_framework.response import Response
-from rest_framework import status
 
 
 class RequestViewSet(GenericModelViewSet):
@@ -21,8 +21,8 @@ class RequestViewSet(GenericModelViewSet):
     """
 
     serializer_class = RequestViewSerializer
-    serializer_create_class = RequestCreationSerializer
-    serializer_update_class = RequestCreationSerializer
+    create_serializer_class = RequestCreationSerializer
+    update_serializer_class = RequestCreationSerializer
 
     @action(detail=False, methods=["get"])
     def search_teacher(self, request):
