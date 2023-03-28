@@ -8,12 +8,17 @@ class Person(models.Model):
     All other models that represent a person should inherit from this class.
     """
 
+    TI = "TI"
+    CC = "CC"
+    CE = "CE"
+    NUIP = "NUIP"
+    PA = "PA"
     IDENTIFICATION_TYPE_CHOICES = (
-        ("TI", "Tarjeta de Identidad"),
-        ("CC", "Cédula de Ciudadanía"),
-        ("CE", "Cédula de Extranjería"),
-        ("NUIP", "Número Único de Identificación Personal"),
-        ("PA", "Pasaporte"),
+        (TI, "Tarjeta de Identidad"),
+        (CC, "Cédula de Ciudadanía"),
+        (CE, "Cédula de Extranjería"),
+        (NUIP, "Número Único de Identificación Personal"),
+        (PA, "Pasaporte"),
     )
 
     first_name = models.CharField(
@@ -46,13 +51,6 @@ class Person(models.Model):
         "Número de teléfono",
         max_length=20,
         blank=True,
-        validators=[
-            RegexValidator(
-                regex=r"^\d+$",
-                message="El número de teléfono debe ser solo números sin puntos, guiones o espacios.",
-                code="invalid_phone_number",
-            )
-        ],
     )
 
     def get_full_name(self) -> str:
