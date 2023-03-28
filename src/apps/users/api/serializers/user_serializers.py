@@ -22,6 +22,7 @@ class UserViewSerializer(serializers.ModelSerializer):
             "phone_number",
             "is_superuser",
             "is_active",
+            "role",
         ]
 
 
@@ -41,6 +42,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
             "identification_type",
             "identification_number",
             "phone_number",
+            "role",
         ]
 
     def create(self, validated_data: dict) -> User:

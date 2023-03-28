@@ -3,6 +3,12 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from apps.shared.api.views import GenericModelViewSet
+from apps.shared.api.permissions import (
+    OrPermission,
+    IsAuthenticated,
+    IsAdminRole,
+    IsTeacherRole,
+)
 from apps.requests.request_api.request_serializers.requestSerializer import (
     RequestViewSerializer,
     RequestCreationSerializer,
@@ -16,16 +22,25 @@ class RequestViewSet(GenericModelViewSet):
         - POST: create a request
         - GET(id): get a request by id
         - PUT(id): update a request by id
-        - /search_teacher: GET(Teacher id): Get all requests by teacher id
-        - /search_student: GET(Student id): Get all requests by student id
+        - /search_by_teacher: GET(Teacher id): Get all requests by teacher id
+        - /search_by_student: GET(Student id): Get all requests by student id
     """
 
     serializer_class = RequestViewSerializer
     create_serializer_class = RequestCreationSerializer
     update_serializer_class = RequestCreationSerializer
 
-    @action(detail=False, methods=["get"])
-    def search_teacher(self, request):
+    permission_classes = [IsAuthenticated]
+    list_permission_classes = [OrPermission(IsAdminRole, IsTeacherRole)]
+    retrieve_permission_classes = [OrPermission(IsAdminRole, IsTeacherRole)]
+    create_permission_classes = [IsAdminRole]
+    update_permission_classes = [OrPermission(IsAdminRole, IsTeacherRole)]
+    destroy_permission_classes = [IsAdminRole]
+    search_by_teacher_permission_classes = [OrPermission(IsAdminRole, IsTeacherRole)]
+    search_by_student_permission_classes = [IsAdminRole]
+
+    @action(detail=False, methods=["get"], name="search_by_teacher")
+    def search_by_teacher(self, request):
         """
         Search request by teacher
         """
@@ -39,8 +54,8 @@ class RequestViewSet(GenericModelViewSet):
             {"detail": "No request found"}, status=status.HTTP_400_BAD_REQUEST
         )
 
-    @action(detail=False, methods=["get"])
-    def search_student(self, request):
+    @action(detail=False, methods=["get"], name="search_by_student")
+    def search_by_student(self, request):
         """
         Search request by student
         """

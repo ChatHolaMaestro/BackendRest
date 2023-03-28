@@ -17,6 +17,9 @@ DEBUG = bool(strtobool(os.getenv("DEBUG", "1")))
 allowed_hosts = os.getenv("ALLOWED_HOSTS", "*")
 ALLOWED_HOSTS = list(map(str.strip, allowed_hosts.split(",")))
 
+# SECURITY WARNING: don't run with permissions disabled in production!
+PERMISSIONS_DISABLED = bool(strtobool(os.getenv("PERMISSIONS_DISABLED", "1")))
+
 
 # Applications
 BASE_APPS = [

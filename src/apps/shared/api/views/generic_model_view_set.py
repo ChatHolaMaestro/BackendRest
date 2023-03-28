@@ -1,7 +1,9 @@
+from django.conf import settings
+
 from rest_framework import status, request, serializers, viewsets
 from rest_framework.response import Response
 
-from apps.shared.api.permissions import BasePermission
+from apps.shared.api.permissions import BasePermission, OrPermission
 
 
 class GenericModelViewSet(viewsets.ModelViewSet):
@@ -29,42 +31,34 @@ class GenericModelViewSet(viewsets.ModelViewSet):
 
         return super().get_serializer_class()
 
+    def _get_action_permissions(
+        self, action_permission_classes: list[BasePermission]
+    ) -> list[BasePermission]:
+        return [
+            permission() if not isinstance(permission, OrPermission) else permission
+            for permission in (action_permission_classes + self.permission_classes)
+        ]
+
     def get_permissions(self) -> list[BasePermission]:
+        if settings.PERMISSIONS_DISABLED:
+            return []
+
         if self.action == "list":
-            return [
-                permission()
-                for permission in (
-                    self.list_permission_classes + self.permission_classes
-                )
-            ]
+            return self._get_action_permissions(self.list_permission_classes)
         elif self.action == "retrieve":
-            return [
-                permission()
-                for permission in (
-                    self.retrieve_permission_classes + self.permission_classes
-                )
-            ]
+            return self._get_action_permissions(self.retrieve_permission_classes)
         elif self.action == "create":
-            return [
-                permission()
-                for permission in (
-                    self.create_permission_classes + self.permission_classes
-                )
-            ]
+            return self._get_action_permissions(self.create_permission_classes)
         elif self.action == "update":
-            return [
-                permission()
-                for permission in (
-                    self.update_permission_classes + self.permission_classes
-                )
-            ]
+            return self._get_action_permissions(self.update_permission_classes)
         elif self.action == "destroy":
-            return [
-                permission()
-                for permission in (
-                    self.destroy_permission_classes + self.permission_classes
-                )
-            ]
+            return self._get_action_permissions(self.destroy_permission_classes)
+        # if its a custom @action, the action may pass a name kwarg
+        # and the view may implement an action_name_permission_classes attribute
+        elif hasattr(self, f"{self.action}_permission_classes"):
+            return self._get_action_permissions(
+                getattr(self, f"{self.action}_permission_classes")
+            )
 
         return super().get_permissions()
 

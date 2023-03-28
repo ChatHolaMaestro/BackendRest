@@ -40,6 +40,7 @@ class IsStaffUser(BasePermission):
     def has_permission(self, request: Request, view: any) -> bool:
         return (
             request.user
+            and request.user.is_authenticated
             and request.user.is_staff
             or super().has_permission(request, view)
         )
@@ -53,6 +54,7 @@ class IsAdminRole(BasePermission):
     def has_permission(self, request: Request, view: any) -> bool:
         return (
             request.user
+            and request.user.is_authenticated
             and request.user.role == User.ADMIN
             or super().has_permission(request, view)
         )
@@ -66,6 +68,7 @@ class IsTeacherRole(BasePermission):
     def has_permission(self, request: Request, view: any) -> bool:
         return (
             request.user
+            and request.user.is_authenticated
             and request.user.role == User.TEACHER
             or super().has_permission(request, view)
         )
@@ -79,52 +82,8 @@ class IsSchoolManagerRole(BasePermission):
     def has_permission(self, request: Request, view: any) -> bool:
         return (
             request.user
+            and request.user.is_authenticated
             and request.user.role == User.SCHOOL_MANAGER
-            or super().has_permission(request, view)
-        )
-
-
-class IsAdminOrTeacherRole(BasePermission):
-    """
-    Allows access only to users with the User.ADMIN or User.TEACHER role.
-    """
-
-    def has_permission(self, request: Request, view: any) -> bool:
-        return (
-            request.user
-            and (request.user.role == User.ADMIN or request.user.role == User.TEACHER)
-            or super().has_permission(request, view)
-        )
-
-
-class IsAdminOrSchoolManagerRole(BasePermission):
-    """
-    Allows access only to users with the User.ADMIN or User.SCHOOL_MANAGER role.
-    """
-
-    def has_permission(self, request: Request, view: any) -> bool:
-        return (
-            request.user
-            and (
-                request.user.role == User.ADMIN
-                or request.user.role == User.SCHOOL_MANAGER
-            )
-            or super().has_permission(request, view)
-        )
-
-
-class IsTeacherOrSchoolManagerRole(BasePermission):
-    """
-    Allows access only to users with the User.TEACHER or User.SCHOOL_MANAGER role.
-    """
-
-    def has_permission(self, request: Request, view: any) -> bool:
-        return (
-            request.user
-            and (
-                request.user.role == User.TEACHER
-                or request.user.role == User.SCHOOL_MANAGER
-            )
             or super().has_permission(request, view)
         )
 
@@ -137,6 +96,21 @@ class IsSameUser(BasePermission):
     def has_permission(self, request: Request, view: any) -> bool:
         return (
             request.user
+            and request.user.is_authenticated
             and request.user.id == request.parser_context["kwargs"]["pk"]
             or super().has_permission(request, view)
+        )
+
+
+class IsNotSameUser(BasePermission):
+    """
+    Allows access to resource only if user is not the same as the one in the URL.
+    This permission prevents users from deleting themselves.
+    """
+
+    def has_permission(self, request: Request, view: any) -> bool:
+        return (
+            request.user
+            and request.user.is_authenticated
+            and request.user.id != request.parser_context["kwargs"]["pk"]
         )

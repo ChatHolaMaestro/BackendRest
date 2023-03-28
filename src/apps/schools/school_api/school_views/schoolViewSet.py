@@ -3,6 +3,13 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from apps.shared.api.views import GenericModelViewSet
+from apps.shared.api.permissions import (
+    IsAuthenticated,
+    IsAdminRole,
+    IsTeacherRole,
+    IsSchoolManagerRole,
+    OrPermission,
+)
 from apps.schools.school_api.school_serializers.schoolSerializers import (
     SchoolSerializer,
     SchoolManagerViewSerializer,
@@ -23,8 +30,13 @@ class SchoolViewset(GenericModelViewSet):
 
     serializer_class = SchoolSerializer
 
-    @action(detail=False, methods=["get"])
-    def search_name(self, request):
+    permission_classes = [IsAuthenticated]
+    create_permission_classes = [IsAdminRole]
+    update_permission_classes = [OrPermission(IsAdminRole, IsSchoolManagerRole)]
+    destroy_permission_classes = [IsAdminRole]
+
+    @action(detail=False, methods=["get"], name="search_by_name")
+    def search_by_name(self, request):
         """
         Search school by name
         """
@@ -52,3 +64,10 @@ class SchoolManagerViewset(GenericModelViewSet):
     serializer_class = SchoolManagerViewSerializer
     create_serializer_class = SchoolManagerCreationSerializer
     update_serializer_class = SchoolManagerCreationSerializer
+
+    permission_classes = [IsAuthenticated]
+    list_permission_classes = [IsAdminRole]
+    retrieve_permission_classes = [OrPermission(IsAdminRole, IsSchoolManagerRole)]
+    create_permission_classes = [IsAdminRole]
+    update_permission_classes = [OrPermission(IsAdminRole, IsSchoolManagerRole)]
+    destroy_permission_classes = [IsAdminRole]

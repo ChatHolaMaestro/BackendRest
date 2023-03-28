@@ -6,8 +6,8 @@ from .shared_permissions import (
     IsAdminRole,
     IsTeacherRole,
     IsSchoolManagerRole,
-    IsAdminOrTeacherRole,
-    IsAdminOrSchoolManagerRole,
-    IsTeacherOrSchoolManagerRole,
     IsSameUser,
+    IsNotSameUser,
 )
+
+from .or_permission import OrPermission

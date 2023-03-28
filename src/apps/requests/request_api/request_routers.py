@@ -4,9 +4,8 @@ from apps.requests.request_api.request_views.requestViewSet import RequestViewSe
 
 router = DefaultRouter()
 
-router.register(r'requests', RequestViewSet, basename='requests')
+router.register(r"requests", RequestViewSet, basename="requests")
 
-urlpatterns = [
-]
+urlpatterns = []
 
 urlpatterns += router.urls
