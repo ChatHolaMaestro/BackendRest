@@ -56,3 +56,6 @@ venv
 # Databases
 db.sqlite3
 celerybeat-schedule
+
+#Botpress
+botpress

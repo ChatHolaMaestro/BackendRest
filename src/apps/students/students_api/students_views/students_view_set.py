@@ -73,7 +73,25 @@ class RelativeViewSet(GenericModelViewSet):
         - GET(id): get a relative by id
         - PUT(id): update a relative by id
         - DELETE(id): delete a relative by id
+        - search_identification_number(id_number): search a relative by id_number
     """
+    
+    @action(detail=False, methods=["get"])
+    def search_identification_number(self, request):
+        """
+        Search a relative by identification_number
+        """
+        identification_number = request.query_params.get("identification_number")
+        if identification_number:
+            queryset = self.get_queryset().filter(
+                identification_number__icontains=identification_number
+            )
+            serializer = self.get_serializer(queryset, many=True)
+            if serializer.data:
+                return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(
+            {"detail": "No relative found"}, status=status.HTTP_400_BAD_REQUEST
+        )
 
     serializer_class = RelativeViewSerializer
     serializer_create_class = RelativeCreationSerializer
