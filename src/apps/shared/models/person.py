@@ -41,8 +41,8 @@ class Person(models.Model):
         help_text="Número de identificación sin puntos ni guiones",
         validators=[
             RegexValidator(
-                regex=r"^\d+$",
-                message="El número de identificación debe ser solo números sin puntos, guiones o espacios.",
+                regex=r"^\w+$",
+                message="El número de identificación debe ser solo números y letras sin puntos, guiones o espacios.",
                 code="invalid_identification_number",
             )
         ],

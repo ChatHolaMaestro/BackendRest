@@ -1,7 +1,7 @@
 from django.db import models
 
 from apps.shared.models import SharedModelHistorical, Person
-from apps.schools.school_models.schoolModels import School
+from apps.schools.models import School
 
 from .relative import Relative
 

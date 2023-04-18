@@ -8,10 +8,10 @@ from apps.users.models.user import User, Person
 from apps.students.models import Student, Relative
 
 # School and SchoolManager Model
-from apps.schools.school_models.schoolModels import School, SchoolManager
+from apps.schools.models import School, SchoolManager
 
 # Teacher and Schedule models
-from apps.teachers.teacher_models.teacherModels import Teacher, Schedule
+from apps.teachers.models import Teacher, Schedule
 
 # Request Model
 from apps.requests.request_models.requestModels import Request
