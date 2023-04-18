@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from apps.teachers.teacher_models.teacherModels import Schedule
+from apps.teachers.models import Schedule
 from apps.shared.api.serializers import TeacherSerializerShort
 
 

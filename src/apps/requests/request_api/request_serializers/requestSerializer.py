@@ -6,7 +6,7 @@ from apps.shared.api.serializers import (
     TeacherSerializerShort,
     HomeworkSerializerShort,
 )
-from apps.subjects.subject_api.subject_serializers.subjectSerializer import (
+from apps.subjects.api.serializers import (
     SubjectSerializer,
 )
 

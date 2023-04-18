@@ -5,13 +5,9 @@ from rest_framework.response import Response
 from django.db.models import Q
 
 from apps.shared.api.views import GenericModelViewSet
-from apps.teachers.teacher_api.teacher_serializers.teacherSerializers import (
+from apps.teachers.api.serializers import (
     TeacherViewSerializer,
     TeacherCreationSerializer,
-)
-from apps.teachers.teacher_api.teacher_serializers.scheduleSerializer import (
-    ScheduleViewSerializer,
-    ScheduleCreationSerializer,
 )
 
 
@@ -96,18 +92,3 @@ class TeacherViewSet(GenericModelViewSet):
         return Response(
             {"detail": "No teacher found"}, status=status.HTTP_400_BAD_REQUEST
         )
-
-
-class ScheduleViewSet(GenericModelViewSet):
-    """
-    Generic viewset for schedule model
-        - GET: list all schedules
-        - POST: create a schedule
-        - GET(id): get a schedule by id
-        - PUT(id): update a schedule by id
-        - DELETE(id): delete a schedule by id
-    """
-
-    serializer_class = ScheduleViewSerializer
-    create_serializer_class = ScheduleCreationSerializer
-    update_serializer_class = ScheduleCreationSerializer

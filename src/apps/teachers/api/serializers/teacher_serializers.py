@@ -1,10 +1,10 @@
 from rest_framework import serializers
 
-from apps.teachers.teacher_models.teacherModels import Teacher
-from apps.subjects.subject_api.subject_serializers.subjectSerializer import (
+from apps.shared.api.serializers import ScheduleSerializerShort, UserSerializerShort
+from apps.teachers.models import Teacher
+from apps.subjects.api.serializers import (
     SubjectSerializer,
 )
-from apps.shared.api.serializers import ScheduleSerializerShort, UserSerializerShort
 
 
 class TeacherViewSerializer(serializers.ModelSerializer):

@@ -3,8 +3,8 @@ from django.db import models
 from apps.shared.models import SharedModelHistorical
 from apps.shared.models.choices import RequestType
 from apps.students.models import Student
-from apps.teachers.teacher_models.teacherModels import Teacher
-from apps.subjects.subject_models.subjectModels import Subject
+from apps.teachers.models import Teacher
+from apps.subjects.models import Subject
 
 
 class Request(SharedModelHistorical):
