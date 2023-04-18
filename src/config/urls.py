@@ -21,9 +21,6 @@ schema_view = get_schema_view(
     permission_classes=[permissions.AllowAny],
 )
 
-# Importing apps urls
-from apps.homeworks.homework_api.homework_routers import urlpatterns as homeworks_urls
-
 
 # API urls
 urlpatterns = [
@@ -49,7 +46,7 @@ urlpatterns = [
     path("api/subjects/", include("apps.subjects.api.urls")),
     path("api/teachers/", include("apps.teachers.api.urls")),
     path("api/requests/", include("apps.requests.api.urls")),
-    path("api/homeworks/", include(homeworks_urls)),
+    path("api/homeworks/", include("apps.homeworks.api.urls")),
 ]
 
 # Media files

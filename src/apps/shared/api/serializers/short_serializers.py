@@ -17,7 +17,7 @@ from apps.teachers.models import Teacher, Schedule
 from apps.requests.models import Request
 
 # Homework Model
-from apps.homeworks.homework_models.homeworkModels import Homework
+from apps.homeworks.models import Homework
 
 
 # --------------------------------------------SHORT SERIALIZERS--------------------------------------------

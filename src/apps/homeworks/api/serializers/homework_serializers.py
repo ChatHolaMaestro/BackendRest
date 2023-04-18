@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
-from apps.homeworks.homework_models.homeworkModels import Homework
 from apps.shared.api.serializers import RequestSerializerShort
+from apps.homeworks.models import Homework
 
 
 class HomeworkViewSerializer(serializers.ModelSerializer):

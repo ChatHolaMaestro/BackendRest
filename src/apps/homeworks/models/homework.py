@@ -1,7 +1,7 @@
 from django.db import models
 
 from apps.shared.models import SharedModelHistorical
-from apps.requests.request_models.requestModels import Request
+from apps.requests.models import Request
 
 
 class Homework(SharedModelHistorical):

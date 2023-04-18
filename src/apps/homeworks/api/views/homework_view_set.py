@@ -5,7 +5,7 @@ from apps.shared.api.permissions import (
     IsAdminRole,
     IsTeacherRole,
 )
-from apps.homeworks.homework_api.homework_serializers.homeworkSerializer import (
+from apps.homeworks.api.serializers import (
     HomeworkViewSerializer,
     HomeworkCreationSerializer,
 )
