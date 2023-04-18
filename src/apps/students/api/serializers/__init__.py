@@ -1,8 +1,8 @@
-from .students_serializers import (
+from .student_serializers import (
     StudentViewSerializer,
     StudentCreationSerializer,
 )
-from .relatives_serializers import (
+from .relative_serializers import (
     RelativeViewSerializer,
     RelativeCreationSerializer,
 )
