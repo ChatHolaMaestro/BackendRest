@@ -9,7 +9,7 @@ from apps.shared.api.permissions import (
     IsAdminRole,
     IsTeacherRole,
 )
-from apps.requests.request_api.request_serializers.requestSerializer import (
+from apps.requests.api.serializers import (
     RequestViewSerializer,
     RequestCreationSerializer,
 )

@@ -1,11 +1,11 @@
 from rest_framework import serializers
 
-from apps.requests.request_models.requestModels import Request
 from apps.shared.api.serializers import (
     StudentSerializerShort,
     TeacherSerializerShort,
     HomeworkSerializerShort,
 )
+from apps.requests.models import Request
 from apps.subjects.api.serializers import (
     SubjectSerializer,
 )

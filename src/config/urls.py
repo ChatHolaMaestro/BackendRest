@@ -22,7 +22,6 @@ schema_view = get_schema_view(
 )
 
 # Importing apps urls
-from apps.requests.request_api.request_routers import urlpatterns as requests_urls
 from apps.homeworks.homework_api.homework_routers import urlpatterns as homeworks_urls
 
 
@@ -49,7 +48,7 @@ urlpatterns = [
     path("api/schools/", include("apps.schools.api.urls")),
     path("api/subjects/", include("apps.subjects.api.urls")),
     path("api/teachers/", include("apps.teachers.api.urls")),
-    path("api/requests/", include(requests_urls)),
+    path("api/requests/", include("apps.requests.api.urls")),
     path("api/homeworks/", include(homeworks_urls)),
 ]
 

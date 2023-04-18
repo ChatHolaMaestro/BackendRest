@@ -14,7 +14,7 @@ from apps.schools.models import School, SchoolManager
 from apps.teachers.models import Teacher, Schedule
 
 # Request Model
-from apps.requests.request_models.requestModels import Request
+from apps.requests.models import Request
 
 # Homework Model
 from apps.homeworks.homework_models.homeworkModels import Homework
