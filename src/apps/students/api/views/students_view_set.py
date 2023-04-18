@@ -5,11 +5,11 @@ from rest_framework.response import Response
 from django.db.models import Q
 
 from apps.shared.api.views import GenericModelViewSet
-from apps.students.students_api.students_serializers.students_serializers import (
+from apps.students.api.serializers import (
     StudentViewSerializer,
     StudentCreationSerializer,
 )
-from apps.students.students_api.students_serializers.relatives_serializers import (
+from apps.students.api.serializers import (
     RelativeViewSerializer,
     RelativeCreationSerializer,
 )

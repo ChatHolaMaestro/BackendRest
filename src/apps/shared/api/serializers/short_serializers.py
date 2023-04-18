@@ -5,8 +5,7 @@ from rest_framework import serializers
 from apps.users.models.user import User, Person
 
 # Student and Relative models
-from apps.students.students_models import Student
-from apps.students.students_models import Relative
+from apps.students.models import Student, Relative
 
 # School and SchoolManager Model
 from apps.schools.school_models.schoolModels import School, SchoolManager
@@ -23,9 +22,10 @@ from apps.homeworks.homework_models.homeworkModels import Homework
 
 # --------------------------------------------SHORT SERIALIZERS--------------------------------------------
 
+
 # User and Person serializers
 class UserSerializerShort(serializers.ModelSerializer):
-    '''
+    """
     User serializer SHORT
         - id
         - first_name
@@ -34,14 +34,23 @@ class UserSerializerShort(serializers.ModelSerializer):
         - phone_number
         - identification_type
         - identification_number
-    '''
-    
+    """
+
     class Meta:
         model = User
-        fields = ('id', 'first_name', 'last_name', 'email', 'phone_number', 'identification_type', 'identification_number')
-        
+        fields = (
+            "id",
+            "first_name",
+            "last_name",
+            "email",
+            "phone_number",
+            "identification_type",
+            "identification_number",
+        )
+
+
 class PersonSerializerShort(serializers.ModelSerializer):
-    '''
+    """
     Person serializer SHORT
         - id
         - first_name
@@ -50,12 +59,20 @@ class PersonSerializerShort(serializers.ModelSerializer):
         - phone_number
         - identification_type
         - identification_number
-    '''
-    
+    """
+
     class Meta:
         model = Person
-        fields = ('id', 'first_name', 'last_name', 'email', 'phone_number', 'identification_type', 'identification_number')
-    
+        fields = (
+            "id",
+            "first_name",
+            "last_name",
+            "email",
+            "phone_number",
+            "identification_type",
+            "identification_number",
+        )
+
 
 # Student and Relative serializers
 class StudentSerializerShort(serializers.ModelSerializer):
@@ -96,17 +113,18 @@ class SchoolSerializerShort(serializers.ModelSerializer):
     class Meta:
         model = School
         fields = ("id", "name")
-        
+
+
 class SchoolManagerSerializerShort(serializers.ModelSerializer):
-    '''
+    """
     School Manager serializer SHORT
         - id
         - user (object)
-    '''
-    
+    """
+
     class Meta:
         model = SchoolManager
-        fields = ('id', 'user')
+        fields = ("id", "user")
 
 
 # Teacher and Schedule serializers
@@ -116,10 +134,12 @@ class TeacherSerializerShort(serializers.ModelSerializer):
         - id
         - user (object)
     """
+
     user = UserSerializerShort()
+
     class Meta:
         model = Teacher
-        fields = ("id", 'user')
+        fields = ("id", "user")
 
 
 class ScheduleSerializerShort(serializers.ModelSerializer):

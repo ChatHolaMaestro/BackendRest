@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from apps.students.students_models import Relative
+from apps.students.models import Relative
 from apps.shared.api.serializers import StudentSerializerShort
 
 

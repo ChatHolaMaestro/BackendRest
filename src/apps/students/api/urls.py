@@ -1,6 +1,6 @@
 from django.urls import path
 from rest_framework.routers import DefaultRouter
-from apps.students.students_api.students_views.students_view_set import (
+from apps.students.api.views import (
     StudentViewSet,
     RelativeViewSet,
 )

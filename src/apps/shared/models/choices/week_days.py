@@ -1,4 +1,3 @@
-# Week Days
 class WeekDays:
     MONDAY = "LUNES"
     TUESDAY = "MARTES"
