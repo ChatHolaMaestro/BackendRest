@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from apps.subjects.subject_models.subjectModels import Subject
+
+from apps.subjects.models import Subject
 
 
 class SubjectSerializer(serializers.ModelSerializer):

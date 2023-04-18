@@ -1,6 +1,6 @@
 from django.db import models
 
-from apps.shared.models.shared_model import SharedModelHistorical
+from apps.shared.models import SharedModelHistorical
 
 
 class Subject(SharedModelHistorical):
