@@ -1,11 +1,12 @@
 from django.contrib.auth import authenticate, get_user_model
 
 from rest_framework import serializers
+from rest_framework.serializers import Serializer
 
 User = get_user_model()
 
 
-class LoginSerializer(serializers.Serializer):
+class LoginSerializer(Serializer):
     email = serializers.EmailField()
     password = serializers.CharField()
 
@@ -14,10 +15,8 @@ class LoginSerializer(serializers.Serializer):
 
         Args:
             data (dict): validated data.
-
         Raises:
-            serializers.ValidationError: if the credentials are incorrect.
-
+            ValidationError: if the credentials are incorrect.
         Returns:
             User: User object.
         """

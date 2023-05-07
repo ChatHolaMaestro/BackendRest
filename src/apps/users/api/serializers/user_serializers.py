@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 
 from rest_framework import serializers
 
-from apps.users.models.user import User
+User = get_user_model()
 
 
 class UserViewSerializer(serializers.ModelSerializer):
@@ -28,7 +28,7 @@ class UserViewSerializer(serializers.ModelSerializer):
 
 class UserCreateSerializer(serializers.ModelSerializer):
     """
-    User serializer for creation.
+    User serializer for creating.
     """
 
     class Meta:
@@ -50,7 +50,6 @@ class UserCreateSerializer(serializers.ModelSerializer):
 
         Args:
             validated_data (dict): Data to create the user.
-
         Returns:
             User: User object.
         """
