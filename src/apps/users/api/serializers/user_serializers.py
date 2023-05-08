@@ -5,9 +5,9 @@ from rest_framework import serializers
 User = get_user_model()
 
 
-class UserViewSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     """
-    User serializer for viewing.
+    Default user serializer.
     """
 
     class Meta:

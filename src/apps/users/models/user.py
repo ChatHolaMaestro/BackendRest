@@ -118,36 +118,6 @@ class UserManager(BaseUserManager):
 
         return self._create_user_with_password(email, password, **extra_fields)
 
-    def create_staffuser(self, email: str, password: str, **extra_fields) -> "User":
-        """
-        Creates and saves a staff user with the given email and password.
-        Extra fields may be provided.
-
-        Args:
-            email (str): Email address.
-            password (str): Password.
-
-        Returns:
-            User: User object.
-
-        Raises:
-            ValueError:
-            - If email or password are not provided.
-            - If is_superuser is True.
-            - If is_staff is not True.
-        """
-
-        extra_fields.setdefault("is_superuser", False)
-        extra_fields.setdefault("is_staff", True)
-        if extra_fields.get("is_superuser") is True:
-            raise ValueError("Superuser must be created through create_superuser().")
-        if extra_fields.get("is_staff") is not True:
-            raise ValueError("Staff user must have is_staff=True.")
-        if extra_fields.get("role") != User.ADMIN:
-            raise ValueError("Staff user must have role={}".format(User.ADMIN))
-
-        return self._create_user_with_password(email, password, **extra_fields)
-
     def create_superuser(self, email: str, password: str, **extra_fields) -> "User":
         """
         Creates and saves a superuser with the given email and password.
@@ -209,12 +179,12 @@ class User(AbstractBaseUser, SharedModelHistorical, Person):
     is_staff = models.BooleanField(
         "Staff",
         default=False,
-        help_text="Designates whether the user can log into this admin site.",
+        help_text="Designates whether the user can log into the admin site.",
     )
     role = models.PositiveSmallIntegerField(
         "Rol",
         choices=ROLE_CHOICES,
-        default=TEACHER,
+        default=ADMIN,
     )
 
     objects = UserManager()

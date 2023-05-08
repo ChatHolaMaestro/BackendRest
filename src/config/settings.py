@@ -2,6 +2,7 @@ import os
 
 from distutils.util import strtobool
 from pathlib import Path
+from datetime import timedelta
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -61,6 +62,12 @@ SWAGGER_SETTINGS = {
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": ("knox.auth.TokenAuthentication",),
+}
+
+REST_KNOX = {
+    "TOKEN_TTL": timedelta(days=30),
+    "TOKEN_LIMIT_PER_USER": None,
+    "AUTO_REFRESH": False,
 }
 
 

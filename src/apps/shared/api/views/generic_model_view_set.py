@@ -174,13 +174,14 @@ class GenericModelViewSet(ModelViewSet):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
 
         # returning the created object should use the default serializer_class
         # since the create_serializer_class may have sensitive information
         object = self.get_queryset().get(pk=serializer.instance.pk)
         serializer = self.get_default_serializer(object)
 
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
     def update(self, request: Request, *args, **kwargs) -> Response:
         """Updates an object of the model associated with the view. This is an

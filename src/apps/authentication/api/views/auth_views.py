@@ -1,40 +1,42 @@
-from django.contrib import auth
+from django.contrib.auth import login
 
-from rest_framework import generics, permissions
-from rest_framework.request import Request
+from rest_framework import permissions, request
 from rest_framework.response import Response
 
-from knox.models import AuthToken
+from rest_framework.generics import GenericAPIView
+
+from knox.views import LoginView as KnoxLoginView
 
 from apps.authentication.api.serializers import LoginSerializer
-from apps.users.api.serializers import UserViewSerializer
+from apps.users.api.serializers import UserSerializer
 
 
-class LoginView(generics.GenericAPIView):
-    serializer_class = LoginSerializer
+class LoginView(KnoxLoginView):
+    """Login view that uses knox to generate a token for the user."""
+
     permission_classes = [permissions.AllowAny]
 
-    def post(self, request: Request, *args, **kwargs) -> Response:
-        """Login an user.
+    def get_user_serializer_class(self) -> UserSerializer:
+        """Overwrites super method to return the user serializer.
+
+        Returns:
+            UserSerializer: user serializer class.
+        """
+        return UserSerializer
+
+    def post(self, request: request.Request) -> Response:
+        """Authenticates the user and returns the user, token and expiry date
+        if the credentials are correct.
 
         Args:
             request: request data.
+
         Returns:
-            Response: response with the user and the token.
-        Raises:
-            Exception: if the serializer is not valid.
+            Response: user, token and expiry date.
         """
-
-        serializer = self.get_serializer(data=request.data)
+        serializer = LoginSerializer(data=request.data, context=self.get_context())
         serializer.is_valid(raise_exception=True)
-        user = serializer.validated_data
-        auth.login(request, user)
+        user = serializer.validated_data["user"]
+        login(request, user)
 
-        return Response(
-            {
-                "user": UserViewSerializer(
-                    user, context=self.get_serializer_context()
-                ).data,
-                "token": AuthToken.objects.create(user)[1],
-            }
-        )
+        return super(LoginView, self).post(request, format=None)
