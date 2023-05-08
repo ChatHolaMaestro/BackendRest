@@ -7,7 +7,7 @@ from apps.users.models import User
 class BasePermission(permissions.BasePermission):
     """
     Base permission class for all permissions.
-    By default, if the request has an user that is authenticated and is a superuser,
+    By default, if the request has a user that is authenticated and is a superuser,
     the permission is granted.
     """
 
@@ -90,7 +90,7 @@ class IsSchoolManagerRole(BasePermission):
 
 class IsSameUser(BasePermission):
     """
-    Allows access to resource only if user is the same as the one in the URL.
+    Allows access to resource only if user is the same as the one in the URL pk.
     """
 
     def has_permission(self, request: Request, view: any) -> bool:
@@ -99,18 +99,4 @@ class IsSameUser(BasePermission):
             and request.user.is_authenticated
             and request.user.id == request.parser_context["kwargs"]["pk"]
             or super().has_permission(request, view)
-        )
-
-
-class IsNotSameUser(BasePermission):
-    """
-    Allows access to resource only if user is not the same as the one in the URL.
-    This permission prevents users from deleting themselves.
-    """
-
-    def has_permission(self, request: Request, view: any) -> bool:
-        return (
-            request.user
-            and request.user.is_authenticated
-            and request.user.id != request.parser_context["kwargs"]["pk"]
         )

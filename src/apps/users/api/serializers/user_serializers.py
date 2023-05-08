@@ -7,28 +7,19 @@ User = get_user_model()
 
 class UserSerializer(serializers.ModelSerializer):
     """
-    Default user serializer.
-    """
-
-    class Meta:
-        model = User
-        fields = [
-            "id",
-            "email",
-            "first_name",
-            "last_name",
-            "identification_type",
-            "identification_number",
-            "phone_number",
-            "is_superuser",
-            "is_active",
-            "role",
-        ]
-
-
-class UserCreateSerializer(serializers.ModelSerializer):
-    """
-    User serializer for creating.
+    Serializer for the `User` model. Provides the following fields:
+    - id (read-only)
+    - email
+    - password (write-only)
+    - first_name
+    - last_name
+    - identification_type
+    - identification_number
+    - phone_number
+    - role
+    - is_superuser
+    - is_staff
+    - is_active
     """
 
     class Meta:
@@ -43,7 +34,12 @@ class UserCreateSerializer(serializers.ModelSerializer):
             "identification_number",
             "phone_number",
             "role",
+            "is_superuser",
+            "is_staff",
+            "is_active",
         ]
+        read_only_fields = ["id"]
+        extra_kwargs = {"password": {"write_only": True}}
 
     def create(self, validated_data: dict) -> User:
         """Creates a new user with the given data.
