@@ -1,16 +1,18 @@
 from django.db import models
+from django.contrib.auth import get_user_model
 
 from apps.shared.models import SharedModelHistorical
-from apps.users.models.user import User
 
 from .school import School
+
+User = get_user_model()
 
 
 class SchoolManager(SharedModelHistorical):
     """
-    Model which represents a school manager
+    Model that represents a school manager. A school manager is a user that
+    manages a school.
     """
 
-    # Could be null if the user has not been created yet
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
     school = models.ForeignKey(School, on_delete=models.CASCADE)

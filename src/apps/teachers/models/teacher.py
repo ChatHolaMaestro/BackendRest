@@ -10,9 +10,7 @@ class Teacher(SharedModelHistorical):
     Model which represents a teacher
     """
 
-    user = models.OneToOneField(
-        User, on_delete=models.CASCADE, blank=True, null=True
-    )  # Could be blank and null
+    user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
     subjects = models.ManyToManyField(Subject, related_name="teachers")
 
     class Meta:

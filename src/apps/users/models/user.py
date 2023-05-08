@@ -26,6 +26,13 @@ class UserManager(BaseUserManager):
             ValueError: If email is not provided.
         """
 
+        extra_fields.setdefault("is_superuser", False)
+        extra_fields.setdefault("is_staff", False)
+        if extra_fields.get("is_superuser"):
+            raise ValueError("Non-password user must have is_superuser=False.")
+        if extra_fields.get("is_staff"):
+            raise ValueError("Non-password user must have is_staff=False.")
+
         if not email:
             raise ValueError("User must have an email address")
 
@@ -86,9 +93,9 @@ class UserManager(BaseUserManager):
         extra_fields.setdefault("is_superuser", True)
         extra_fields.setdefault("is_staff", True)
         extra_fields.setdefault("role", User.ADMIN)
-        if extra_fields.get("is_superuser") is not True:
+        if not extra_fields.get("is_superuser"):
             raise ValueError("Superuser must have is_superuser=True.")
-        if extra_fields.get("is_staff") is not True:
+        if not extra_fields.get("is_staff"):
             raise ValueError("Superuser must have is_staff=True.")
         if extra_fields.get("role") != User.ADMIN:
             raise ValueError("Superuser must have role={}".format(User.ADMIN))
