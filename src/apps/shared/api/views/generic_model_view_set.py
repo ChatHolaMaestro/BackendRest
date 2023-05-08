@@ -1,3 +1,5 @@
+from typing import Iterable
+
 from django.conf import settings
 from django.db.models import Model
 
@@ -78,7 +80,7 @@ class GenericModelViewSet(ModelViewSet):
         return serializer_class(*args, **kwargs)
 
     def _get_action_permissions(
-        self, action_permission_classes: list[BasePermission]
+        self, action_permission_classes: Iterable[BasePermission]
     ) -> list[BasePermission]:
         """Each action has its own permission classes, plus the default permission
         classes of the view. They should be merged and instantiated. Additionally,
@@ -86,7 +88,7 @@ class GenericModelViewSet(ModelViewSet):
         (because it already is when it's defined in the view).
 
         Args:
-            action_permission_classes (list[BasePermission]): the action-specific
+            action_permission_classes (Iterable[BasePermission]): the action-specific
             permission classes
 
         Returns:

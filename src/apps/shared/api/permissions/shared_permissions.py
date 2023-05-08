@@ -4,6 +4,15 @@ from rest_framework.request import Request
 from apps.users.models import User
 
 
+class AllowAny(permissions.BasePermission):
+    """
+    Allow any access.
+    """
+
+    def has_permission(self, request: Request, view: any) -> bool:
+        return True
+
+
 class BasePermission(permissions.BasePermission):
     """
     Base permission class for all permissions.
