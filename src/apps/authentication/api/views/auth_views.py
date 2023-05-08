@@ -2,7 +2,6 @@ from django.contrib.auth import login
 
 from rest_framework import permissions, request
 from rest_framework.response import Response
-
 from rest_framework.generics import GenericAPIView
 
 from knox.views import LoginView as KnoxLoginView
@@ -11,9 +10,10 @@ from apps.authentication.api.serializers import LoginSerializer
 from apps.users.api.serializers import UserSerializer
 
 
-class LoginView(KnoxLoginView):
+class LoginView(KnoxLoginView, GenericAPIView):
     """Login view that uses knox to generate a token for the user."""
 
+    serializer_class = LoginSerializer
     permission_classes = [permissions.AllowAny]
 
     def get_user_serializer_class(self) -> UserSerializer:
@@ -34,7 +34,7 @@ class LoginView(KnoxLoginView):
         Returns:
             Response: user, token and expiry date.
         """
-        serializer = LoginSerializer(data=request.data, context=self.get_context())
+        serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data["user"]
         login(request, user)

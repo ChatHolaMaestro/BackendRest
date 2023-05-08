@@ -8,6 +8,8 @@ from datetime import timedelta
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+APPEND_SLASH = True
+
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv("SECRET_KEY", "django-insecure-key")
 
@@ -45,7 +47,7 @@ LOCAL_APPS = [
     "apps.services",
 ]
 
-THIRD_APPS = [
+THIRD_PARTY_APPS = [
     "rest_framework",
     "knox",
     "simple_history",
@@ -53,9 +55,10 @@ THIRD_APPS = [
     "corsheaders",
 ]
 
-INSTALLED_APPS = BASE_APPS + LOCAL_APPS + THIRD_APPS
+INSTALLED_APPS = BASE_APPS + LOCAL_APPS + THIRD_PARTY_APPS
 
 
+# Third party apps settings
 SWAGGER_SETTINGS = {
     "DOC_EXPANSION": "none",
 }
@@ -65,12 +68,13 @@ REST_FRAMEWORK = {
 }
 
 REST_KNOX = {
-    "TOKEN_TTL": timedelta(days=30),
+    "TOKEN_TTL": timedelta(days=int(os.getenv("KNOX_TOKEN_TTL_DAYS", "365"))),
     "TOKEN_LIMIT_PER_USER": None,
-    "AUTO_REFRESH": False,
+    "AUTO_REFRESH": bool(strtobool(os.getenv("KNOX_AUTO_REFRESH", "1"))),
 }
 
 
+# Middleware
 MIDDLEWARE = [
     # CORS
     "corsheaders.middleware.CorsMiddleware",
@@ -112,8 +116,6 @@ WSGI_APPLICATION = "config.wsgi.application"
 
 AUTH_USER_MODEL = "users.User"
 
-# Password validation
-# https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -157,6 +159,8 @@ CACHES = {
     }
 }
 
+
+# Email
 if DEBUG:
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
