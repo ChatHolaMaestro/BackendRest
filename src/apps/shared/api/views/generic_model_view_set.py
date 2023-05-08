@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.db.models import Model
 
 from rest_framework import status
 from rest_framework.viewsets import ModelViewSet
@@ -10,6 +11,16 @@ from apps.shared.api.permissions import BasePermission, OrPermission
 
 
 class GenericModelViewSet(ModelViewSet):
+    http_method_names = [
+        "get",
+        "post",
+        "put",
+        "delete",
+        "head",
+        "options",
+        "trace",
+    ]
+
     serializer_class = None
     create_serializer_class = None
     update_serializer_class = None
@@ -150,12 +161,9 @@ class GenericModelViewSet(ModelViewSet):
         Returns:
             Response: retrieved object of the model or 404 if not found
         """
-        instance = self.get_object()
-        if instance:
-            return Response(
-                self.get_serializer(instance).data, status=status.HTTP_200_OK
-            )
-        return Response({"error": "Object not found"}, status=status.HTTP_404_NOT_FOUND)
+        instance = self.get_object()  # will raise 404 if not found
+        serializer = self.get_serializer(instance)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     def create(self, request: Request, *args, **kwargs) -> Response:
         """Creates an object of the model associated with the view. This is an
@@ -169,7 +177,7 @@ class GenericModelViewSet(ModelViewSet):
             Response: created object of the model
 
         Raises:
-            Exception: If the object is not created
+            Exception: if the object is not created
         """
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -177,11 +185,13 @@ class GenericModelViewSet(ModelViewSet):
         headers = self.get_success_headers(serializer.data)
 
         # returning the created object should use the default serializer_class
-        # since the create_serializer_class may have sensitive information
+        # since the create_serializer_class may have write-only fields
         object = self.get_queryset().get(pk=serializer.instance.pk)
         serializer = self.get_default_serializer(object)
 
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+        return Response(
+            serializer.data, status=status.HTTP_201_CREATED, headers=headers
+        )
 
     def update(self, request: Request, *args, **kwargs) -> Response:
         """Updates an object of the model associated with the view. This is an
@@ -196,21 +206,24 @@ class GenericModelViewSet(ModelViewSet):
             Response: updated object of the model
 
         Raises:
-            Exception: If the object is not updated
+            Exception: if the object is not updated
         """
-        instance = self.get_object()
-        if instance:
-            serializer = self.get_serializer(instance, data=request.data)
-            serializer.is_valid(raise_exception=True)
-            self.perform_update(serializer)
+        instance = self.get_object()  # will raise 404 if not found
 
-            # returning the updated object should use the default serializer_class
-            object = self.get_queryset().get(pk=serializer.instance.pk)
-            serializer = self.get_default_serializer(object)
+        serializer = self.get_serializer(instance, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
 
-            return Response(serializer.data, status=status.HTTP_200_OK)
+        if getattr(instance, "_prefetched_objects_cache", None):
+            # If 'prefetch_related' has been applied to a queryset, we need to
+            # forcibly invalidate the prefetch cache on the instance.
+            instance._prefetched_objects_cache = {}
 
-        return Response({"error": "Object not found"}, status=status.HTTP_404_NOT_FOUND)
+        # returning the updated object should use the default serializer_class
+        object = self.get_queryset().get(pk=serializer.instance.pk)
+        serializer = self.get_default_serializer(object)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     def destroy(self, request: Request, *args, **kwargs) -> Response:
         """Deletes an object of the model associated with the view. This is an
@@ -224,11 +237,22 @@ class GenericModelViewSet(ModelViewSet):
         Returns:
             Response: 200 if the object is deleted, 404 if not found
         """
-        instance = self.get_object()
-        if instance:
-            instance.is_active = False
-            instance.save()
-            return Response(
-                {"message": "Object deleted successfully"}, status=status.HTTP_200_OK
-            )
-        return Response({"error": "Object not found"}, status=status.HTTP_404_NOT_FOUND)
+        instance = self.get_object()  # will raise 404 if not found
+        self.perform_destroy(instance)
+
+        return Response(
+            {"message": "Object deleted successfully"}, status=status.HTTP_200_OK
+        )
+
+    def perform_destroy(self, instance: Model):
+        """Deletes an object according to the `destroy` action. The deletion is
+        done by setting the `is_active` attribute to False.
+
+        Args:
+            instance (Model): object to delete
+        """
+        # prefer either logical or real deletion
+
+        # instance.is_active = False
+        # instance.save()
+        super().perform_destroy(instance)
