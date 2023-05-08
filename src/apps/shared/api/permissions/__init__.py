@@ -1,4 +1,5 @@
 from .shared_permissions import (
+    AllowAny,
     BasePermission,
     IsAuthenticated,
     IsStaffUser,
