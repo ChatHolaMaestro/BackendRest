@@ -98,8 +98,8 @@ class UserSerializer(serializers.NonNullModelSerializer):
         )
 
         if validated_data["role"] == User.SCHOOL_MANAGER:
-            # create school manager (with a school)
             if school is None:
+                user.delete()
                 raise rf_serializers.ValidationError(
                     {"school": ["This field is required when role is school manager"]}
                 )

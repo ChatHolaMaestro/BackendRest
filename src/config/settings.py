@@ -50,6 +50,7 @@ LOCAL_APPS = [
 THIRD_PARTY_APPS = [
     "rest_framework",
     "knox",
+    "django_rest_passwordreset",
     "simple_history",
     "drf_yasg",  # swagger
     "corsheaders",
@@ -72,6 +73,11 @@ REST_KNOX = {
     "TOKEN_LIMIT_PER_USER": None,
     "AUTO_REFRESH": bool(strtobool(os.getenv("KNOX_AUTO_REFRESH", "1"))),
 }
+
+DJANGO_REST_MULTITOKENAUTH_RESET_TOKEN_EXPIRY_TIME = int(
+    os.getenv("MULTITOKENAUTH_RESET_TOKEN_EXPIRY_TIME", "24")
+)
+DJANGO_REST_MULTITOKENAUTH_REQUIRE_USABLE_PASSWORD = False
 
 
 # Middleware

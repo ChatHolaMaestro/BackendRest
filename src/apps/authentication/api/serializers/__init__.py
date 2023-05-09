@@ -1,1 +1,1 @@
-from .auth_serializers import LoginSerializer
+from .auth_serializers import LoginSerializer, RegisterUserSerializer
