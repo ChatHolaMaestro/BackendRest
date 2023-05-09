@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from django.db.models import Q
 
 from apps.shared.api.views import GenericModelViewSet
+from apps.shared.api import permissions
 from apps.teachers.api.serializers import (
     TeacherViewSerializer,
     TeacherCreationSerializer,
@@ -12,22 +13,29 @@ from apps.teachers.api.serializers import (
 
 
 class TeacherViewSet(GenericModelViewSet):
-    """
-    Generic viewset for teacher model
-        - GET: list all teachers
-        - POST: create a teacher
-        - GET(id): get a teacher by id
-        - PUT(id): update a teacher by id
-        - DELETE(id): delete a teacher by id
-        - /search_identification_number: GET (identification_number): search teacher by identification number
-        - /search_name: GET (name): search teacher by name
-        - /search_subject: GET (subject): search teacher by subject
-        - /search_email: GET (email): search teacher by email
+    """Provides functionality for managing teachers. Available actions:
+    - list: Returns a list of teachers. Available for admins.
+    - retrieve: Returns a teachers. Available for admins or if the user
+    is the same as the requested teachers.
+    - create: Creates a new teachers. Available for superusers. To register
+    a new user the common way, use the `auth` endpoint.
+    - update: Updates a teachers. Available for admins.
+    - destroy: Deletes a teachers. Available for admins.
     """
 
+    queryset = TeacherViewSerializer.Meta.model.objects.all()
     serializer_class = TeacherViewSerializer
     create_serializer_class = TeacherCreationSerializer
     update_serializer_class = TeacherCreationSerializer
+
+    permission_classes = [permissions.IsAuthenticated]
+    list_permission_classes = [permissions.IsAdminRole]
+    retrieve_permission_classes = [
+        permissions.OrPermission(permissions.IsAdminRole, permissions.IsSameUser)
+    ]
+    create_permission_classes = [permissions.IsSuperUser]
+    update_permission_classes = [permissions.IsAdminRole]
+    destroy_permission_classes = [permissions.IsAdminRole]
 
     @action(detail=False, methods=["get"])
     def search_identification_number(self, request):
