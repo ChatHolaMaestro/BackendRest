@@ -83,8 +83,8 @@ GOOGLE_CALENDAR_PATH_TO_GOOGLE_CREDENTIALS = os.path.join(
     BASE_DIR, "google-credentials.json"
 )
 GOOGLE_CALENDAR_PATH_TO_TOKEN = os.path.join(BASE_DIR, "token.json")
+GOOGLE_CALENDAR_PATH_TO_CALENDAR_ID = os.path.join(BASE_DIR, "calendar_id.txt")
 GOOGLE_CALENDAR_SCOPES = ["https://www.googleapis.com/auth/calendar"]
-
 
 # Middleware
 MIDDLEWARE = [

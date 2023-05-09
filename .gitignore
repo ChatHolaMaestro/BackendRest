@@ -64,3 +64,4 @@ celerybeat-schedule
 # Google Calendar API
 google-credentials.json
 token.json
+calendar_id.txt
