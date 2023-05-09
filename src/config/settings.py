@@ -44,7 +44,7 @@ LOCAL_APPS = [
     "apps.authentication",
     "apps.requests",
     "apps.homeworks",
-    "apps.services",
+    "apps.calendar",
 ]
 
 THIRD_PARTY_APPS = [
@@ -78,6 +78,12 @@ DJANGO_REST_MULTITOKENAUTH_RESET_TOKEN_EXPIRY_TIME = int(
     os.getenv("MULTITOKENAUTH_RESET_TOKEN_EXPIRY_TIME", "24")
 )
 DJANGO_REST_MULTITOKENAUTH_REQUIRE_USABLE_PASSWORD = False
+
+GOOGLE_CALENDAR_PATH_TO_GOOGLE_CREDENTIALS = os.path.join(
+    BASE_DIR, "google-credentials.json"
+)
+GOOGLE_CALENDAR_PATH_TO_TOKEN = os.path.join(BASE_DIR, "token.json")
+GOOGLE_CALENDAR_SCOPES = ["https://www.googleapis.com/auth/calendar"]
 
 
 # Middleware
