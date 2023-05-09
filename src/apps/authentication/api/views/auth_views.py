@@ -17,6 +17,7 @@ class LoginView(KnoxLoginView, GenericAPIView):
     """Login view that uses knox to generate a token for the user."""
 
     serializer_class = LoginSerializer
+    authentication_classes = []
     permission_classes = [permissions.AllowAny]
 
     def get_user_serializer_class(self) -> UserNestedSerializer:
@@ -42,7 +43,7 @@ class LoginView(KnoxLoginView, GenericAPIView):
         user = serializer.validated_data["user"]
         login(request, user)
 
-        return super(LoginView, self).post(request, format=None)
+        return super().post(request, format=None)
 
 
 class RegisterView(GenericAPIView):
