@@ -11,7 +11,7 @@ from apps.students.models import Student, Relative
 from apps.schools.models import School, SchoolManager
 
 # Teacher and Schedule models
-from apps.teachers.models import Teacher, Schedule
+from apps.teachers.models import Teacher, ScheduleSlot
 
 # Request Model
 from apps.requests.models import Request
@@ -153,7 +153,7 @@ class ScheduleSerializerShort(serializers.ModelSerializer):
     """
 
     class Meta:
-        model = Schedule
+        model = ScheduleSlot
         fields = ("id", "day", "start_hour", "end_hour", "request_type")
 
 

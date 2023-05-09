@@ -19,4 +19,4 @@ class School(SharedModelHistorical):
     )
 
     def __str__(self):
-        return self.name
+        return "{{id: {}, name: {}}}".format(self.id, self.name)

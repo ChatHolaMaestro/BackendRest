@@ -1,16 +1,21 @@
 from django.db import models
+from django.contrib.auth import get_user_model
 
 from apps.shared.models import SharedModelHistorical
 from apps.subjects.models import Subject
-from apps.users.models.user import User
+
+User = get_user_model()
 
 
 class Teacher(SharedModelHistorical):
     """
-    Model which represents a teacher
+    Model that represents a teacher. A teacher is a user that has subjects
+    and a schedule.
     """
 
-    user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
+    user = models.OneToOneField(
+        User, on_delete=models.CASCADE, blank=True, null=True, related_name="teacher"
+    )
     subjects = models.ManyToManyField(Subject, related_name="teachers")
 
     class Meta:
@@ -19,5 +24,5 @@ class Teacher(SharedModelHistorical):
 
     def __str__(self):
         if self.user:
-            return f"Profesor {self.user}"
-        return f"Profesor {self.id}"
+            return self.user
+        return self.id

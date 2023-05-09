@@ -9,7 +9,7 @@ class AllowAny(permissions.BasePermission):
     Allow any access.
     """
 
-    def has_permission(self, request: Request, view: any) -> bool:
+    def has_permission(self, request: Request, view) -> bool:
         return True
 
 
@@ -20,7 +20,7 @@ class BasePermission(permissions.BasePermission):
     the permission is granted.
     """
 
-    def has_permission(self, request: Request, view: any) -> bool:
+    def has_permission(self, request: Request, view) -> bool:
         return (
             request.user and request.user.is_authenticated and request.user.is_superuser
         )
@@ -37,7 +37,7 @@ class IsAuthenticated(BasePermission):
     Allows access only to authenticated users.
     """
 
-    def has_permission(self, request: Request, view: any) -> bool:
+    def has_permission(self, request: Request, view) -> bool:
         return request.user and request.user.is_authenticated
 
 
@@ -46,7 +46,7 @@ class IsStaffUser(BasePermission):
     Allows access only to staff users.
     """
 
-    def has_permission(self, request: Request, view: any) -> bool:
+    def has_permission(self, request: Request, view) -> bool:
         return (
             request.user
             and request.user.is_authenticated
@@ -60,7 +60,7 @@ class IsAdminRole(BasePermission):
     Allows access only to users with the User.ADMIN role.
     """
 
-    def has_permission(self, request: Request, view: any) -> bool:
+    def has_permission(self, request: Request, view) -> bool:
         return (
             request.user
             and request.user.is_authenticated
@@ -74,7 +74,7 @@ class IsTeacherRole(BasePermission):
     Allows access only to users with the User.TEACHER role.
     """
 
-    def has_permission(self, request: Request, view: any) -> bool:
+    def has_permission(self, request: Request, view) -> bool:
         return (
             request.user
             and request.user.is_authenticated
@@ -88,7 +88,7 @@ class IsSchoolManagerRole(BasePermission):
     Allows access only to users with the User.SCHOOL_MANAGER role.
     """
 
-    def has_permission(self, request: Request, view: any) -> bool:
+    def has_permission(self, request: Request, view) -> bool:
         return (
             request.user
             and request.user.is_authenticated
@@ -102,7 +102,7 @@ class IsSameUser(BasePermission):
     Allows access to resource only if user is the same as the one in the URL pk.
     """
 
-    def has_permission(self, request: Request, view: any) -> bool:
+    def has_permission(self, request: Request, view) -> bool:
         return (
             request.user
             and request.user.is_authenticated

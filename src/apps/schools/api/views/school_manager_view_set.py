@@ -1,33 +1,27 @@
+from apps.shared.api import permissions
 from apps.shared.api.views import GenericModelViewSet
-from apps.shared.api.permissions import (
-    IsAuthenticated,
-    IsAdminRole,
-    IsSchoolManagerRole,
-    OrPermission,
-)
-from apps.schools.api.serializers import (
-    SchoolManagerViewSerializer,
-    SchoolManagerCreationSerializer,
-)
+from apps.schools.api.serializers import SchoolManagerSerializer
 
 
 class SchoolManagerViewSet(GenericModelViewSet):
-    """
-    Generic Viewset for School Manager
-        - GET: list all school managers
-        - POST: create a school manager
-        - GET(id): get a school manager by id
-        - PUT(id): update a school manager by id
-        - DELETE(id): delete a school manager by id
+    """Provides functionality for managing school managers. Available actions:
+    - list: Returns a list of school managers. Available for admins.
+    - retrieve: Returns a school manager. Available for admins or if the user
+    is the same as the requested school manager.
+    - create: Creates a new school manager. Available for superusers. To register
+    a new user the common way, use the `auth` endpoint.
+    - update: Updates a school manager. Available for admins.
+    - destroy: Deletes a school manager. Available for admins.
     """
 
-    serializer_class = SchoolManagerViewSerializer
-    create_serializer_class = SchoolManagerCreationSerializer
-    update_serializer_class = SchoolManagerCreationSerializer
+    queryset = SchoolManagerSerializer.Meta.model.objects.all()
+    serializer_class = SchoolManagerSerializer
 
-    permission_classes = [IsAuthenticated]
-    list_permission_classes = [IsAdminRole]
-    retrieve_permission_classes = [OrPermission(IsAdminRole, IsSchoolManagerRole)]
-    create_permission_classes = [IsAdminRole]
-    update_permission_classes = [OrPermission(IsAdminRole, IsSchoolManagerRole)]
-    destroy_permission_classes = [IsAdminRole]
+    permission_classes = [permissions.IsAuthenticated]
+    list_permission_classes = [permissions.IsAdminRole]
+    retrieve_permission_classes = [
+        permissions.OrPermission(permissions.IsAdminRole, permissions.IsSameUser)
+    ]
+    create_permission_classes = [permissions.IsSuperUser]
+    update_permission_classes = [permissions.IsAdminRole]
+    destroy_permission_classes = [permissions.IsAdminRole]

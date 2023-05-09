@@ -26,6 +26,7 @@ class RequestViewSet(GenericModelViewSet):
         - /search_by_student: GET(Student id): Get all requests by student id
     """
 
+    queryset = RequestViewSerializer.Meta.model.objects.all()
     serializer_class = RequestViewSerializer
     create_serializer_class = RequestCreationSerializer
     update_serializer_class = RequestCreationSerializer

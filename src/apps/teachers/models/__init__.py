@@ -1,2 +1,2 @@
 from .teacher import Teacher
-from .schedule import Schedule
+from .schedule_slot import ScheduleSlot

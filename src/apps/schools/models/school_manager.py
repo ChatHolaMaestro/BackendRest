@@ -14,5 +14,18 @@ class SchoolManager(SharedModelHistorical):
     manages a school.
     """
 
-    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
-    school = models.ForeignKey(School, on_delete=models.CASCADE)
+    user = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name="school_manager",
+    )
+    school = models.ForeignKey(
+        School, on_delete=models.CASCADE, related_name="school_managers"
+    )
+
+    def __str__(self):
+        return "{{id: {}, user: {}, school: {}}}".format(
+            self.id, self.user, self.school
+        )

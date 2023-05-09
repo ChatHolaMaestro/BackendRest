@@ -1,15 +1,15 @@
 from django.contrib.auth import get_user_model
 
-from rest_framework import serializers
-
 from apps.subjects.models import Subject
 from apps.teachers.models import Teacher, ScheduleSlot
 from apps.schools.models import School, SchoolManager
 
+from .non_null_model_serializer import NonNullModelSerializer
+
 User = get_user_model()
 
 
-class UserNestedSerializer(serializers.ModelSerializer):
+class UserNestedSerializer(NonNullModelSerializer):
     """Serializer for the `User` model. To be used as a nested serializer.
     Provides the following fields:
     - id
@@ -20,6 +20,9 @@ class UserNestedSerializer(serializers.ModelSerializer):
     - identification_number
     - phone_number
     - role
+    - is_superuser
+    - is_staff
+    - is_active
     """
 
     class Meta:
@@ -33,10 +36,13 @@ class UserNestedSerializer(serializers.ModelSerializer):
             "identification_number",
             "phone_number",
             "role",
+            "is_superuser",
+            "is_staff",
+            "is_active",
         )
 
 
-class ScheduleSlotNestedSerializer(serializers.ModelSerializer):
+class ScheduleSlotNestedSerializer(NonNullModelSerializer):
     """Serializer for the `ScheduleSlot` model. To be used as a nested serializer.
     Provides the following fields:
     - id
@@ -52,7 +58,7 @@ class ScheduleSlotNestedSerializer(serializers.ModelSerializer):
         extra_kwargs = {"id": {"read_only": True}}
 
 
-class SubjectNestedSerializer(serializers.ModelSerializer):
+class SubjectNestedSerializer(NonNullModelSerializer):
     """Serializer for the `Subject` model. To be used as a nested serializer.
     Provides the following fields:
     - id
@@ -64,7 +70,7 @@ class SubjectNestedSerializer(serializers.ModelSerializer):
         fields = ("id", "name")
 
 
-class TeacherNestedSerializer(serializers.ModelSerializer):
+class TeacherNestedSerializer(NonNullModelSerializer):
     """Serializer for the `Teacher` model. To be used as a nested serializer.
     Provides the following fields:
     - id
@@ -80,7 +86,7 @@ class TeacherNestedSerializer(serializers.ModelSerializer):
         fields = ("id", "subjects", "schedule_slots")
 
 
-class SchoolNestedSerializer(serializers.ModelSerializer):
+class SchoolNestedSerializer(NonNullModelSerializer):
     """Serializer for the `School` model. To be used as a nested serializer.
     Provides the following fields:
     - id
@@ -101,7 +107,7 @@ class SchoolNestedSerializer(serializers.ModelSerializer):
         )
 
 
-class SchoolManagerNestedSerializer(serializers.ModelSerializer):
+class SchoolManagerNestedSerializer(NonNullModelSerializer):
     """Serializer for the `SchoolManager` model. To be used as a nested serializer.
     Provides the following fields:
     - id

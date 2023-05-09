@@ -33,10 +33,6 @@ class GenericModelViewSet(ModelViewSet):
     update_permission_classes = []
     destroy_permission_classes = []
 
-    def get_queryset(self):
-        model = self.get_serializer().Meta.model
-        return model.objects.filter(is_active=True)
-
     def _get_default_serializer_class(self) -> ModelSerializer:
         """Returns the default serializer class of the view, which is the
         `serializer_class` attribute. The view must implement this attribute,
@@ -212,7 +208,7 @@ class GenericModelViewSet(ModelViewSet):
         """
         instance = self.get_object()  # will raise 404 if not found
 
-        serializer = self.get_serializer(instance, data=request.data)
+        serializer = self.get_serializer(instance, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
         self.perform_update(serializer)
 

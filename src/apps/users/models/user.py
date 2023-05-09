@@ -148,6 +148,6 @@ class User(AbstractBaseUser, SharedModelHistorical, Person):
         verbose_name_plural = "Usuarios"
 
     def __str__(self) -> str:
-        return "id={}, full_name={}, role={}".format(
+        return "{{id: {}, full_name: {}, role: {}}}".format(
             str(self.id), self.get_full_name(), self.get_role_display()
         )

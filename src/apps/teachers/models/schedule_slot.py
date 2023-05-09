@@ -6,21 +6,22 @@ from apps.shared.models.choices import WeekDays, RequestType
 from .teacher import Teacher
 
 
-class Schedule(SharedModelHistorical):
+class ScheduleSlot(SharedModelHistorical):
     """
-    Model which represents a schedule for a teacher
+    Model that represents a schedule slot. A schedule slot is a time slot in which
+    a teacher is available to attend requests. A teacher has many schedule slots.
     """
 
-    day = models.CharField(
-        "Día",
+    day_of_week = models.CharField(
+        "Día de la semana",
         max_length=10,
         choices=WeekDays.CHOICES,
         default=WeekDays.MONDAY,
         blank=False,
         null=False,
     )
-    start_hour = models.TimeField("Hora de inicio", blank=False, null=False)
-    end_hour = models.TimeField("Hora de finalización", blank=False, null=False)
+    start_time = models.TimeField("Tiempo de inicio", blank=False, null=False)
+    end_time = models.TimeField("Tiempo de finalización", blank=False, null=False)
     request_type = models.CharField(
         "Tipo de solicitud",
         max_length=10,
@@ -29,14 +30,13 @@ class Schedule(SharedModelHistorical):
         blank=False,
         null=False,
     )
-
-    # Teacher field
     teacher = models.ForeignKey(
         Teacher,
-        related_name="schedules",
         on_delete=models.CASCADE,
         blank=False,
         null=False,
+        verbose_name="Profesor",
+        related_name="schedule_slots",
     )
 
     class Meta:

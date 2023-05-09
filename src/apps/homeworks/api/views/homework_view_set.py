@@ -21,6 +21,7 @@ class HomeworkViewSet(GenericModelViewSet):
         - DELETE(id): delete a homework by id
     """
 
+    queryset = HomeworkViewSerializer.Meta.model.objects.all()
     serializer_class = HomeworkViewSerializer
     create_serializer_class = HomeworkCreationSerializer
     update_serializer_class = HomeworkCreationSerializer

@@ -4,7 +4,10 @@ from apps.shared.models import SharedModelHistorical
 
 
 class Subject(SharedModelHistorical):
-    # Model which represents a subject
+    """
+    Model that represents a subject. Teachers have many subjects.
+    """
+
     name = models.CharField("Nombre", max_length=100, blank=False)
 
     class Meta:
@@ -12,4 +15,4 @@ class Subject(SharedModelHistorical):
         verbose_name_plural = "Asignaturas"
 
     def __str__(self) -> str:
-        return str(self.id) + " " + self.name
+        return "{{id: {}, name: {}}}".format(self.id, self.name)

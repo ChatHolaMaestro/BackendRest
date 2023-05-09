@@ -1,11 +1,12 @@
 from django.contrib.auth import login
 
-from rest_framework import permissions, request
+from rest_framework import request
 from rest_framework.response import Response
 from rest_framework.generics import GenericAPIView
 
 from knox.views import LoginView as KnoxLoginView
 
+from apps.shared.api import permissions
 from apps.authentication.api.serializers import LoginSerializer
 from apps.users.api.serializers import UserSerializer
 

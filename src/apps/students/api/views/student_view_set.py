@@ -23,6 +23,7 @@ class StudentViewSet(GenericModelViewSet):
         - search_first_name(name): search a student by first name
     """
 
+    queryset = StudentViewSerializer.Meta.model.objects.all()
     serializer_class = StudentViewSerializer
     create_serializer_class = StudentCreationSerializer
     update_serializer_class = StudentCreationSerializer

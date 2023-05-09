@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from apps.teachers.models import Schedule
+from apps.teachers.models import ScheduleSlot
 from apps.shared.api.serializers import TeacherSerializerShort
 
 
@@ -18,7 +18,7 @@ class ScheduleViewSerializer(serializers.ModelSerializer):
     teacher = TeacherSerializerShort(read_only=True)
 
     class Meta:
-        model = Schedule
+        model = ScheduleSlot
         fields = ("id", "day", "start_hour", "end_hour", "request_type", "teacher")
 
 
@@ -33,5 +33,5 @@ class ScheduleCreationSerializer(serializers.ModelSerializer):
     """
 
     class Meta:
-        model = Schedule
+        model = ScheduleSlot
         fields = ("day", "start_hour", "end_hour", "request_type", "teacher")

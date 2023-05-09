@@ -15,6 +15,7 @@ class RelativeViewSet(GenericModelViewSet):
         - DELETE(id): delete a relative by id
     """
 
+    queryset = RelativeViewSerializer.Meta.model.objects.all()
     serializer_class = RelativeViewSerializer
     create_serializer_class = RelativeCreationSerializer
     update_serializer_class = RelativeCreationSerializer
