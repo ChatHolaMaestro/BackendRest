@@ -15,6 +15,7 @@ from .nested_serializers import (
     SubjectNestedSerializer,
     ScheduleSlotNestedSerializer,
     TeacherNestedSerializer,
+    TeacherOfScheduleSlotNestedSerializer,
     SchoolNestedSerializer,
     SchoolManagerNestedSerializer,
 )

@@ -1,2 +1,2 @@
 from .teacher_serializers import TeacherSerializer
-from .schedule_serializers import ScheduleViewSerializer, ScheduleCreationSerializer
+from .schedule_serializers import ScheduleSlotSerializer

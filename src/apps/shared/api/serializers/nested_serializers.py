@@ -86,6 +86,22 @@ class TeacherNestedSerializer(NonNullModelSerializer):
         fields = ("id", "subjects", "schedule_slots")
 
 
+class TeacherOfScheduleSlotNestedSerializer(NonNullModelSerializer):
+    """Serializer for the `Teacher` model nested inside a `ScheduleSlot` model.
+    Provides the following fields:
+    - id
+    - user (`UserNestedSerializer`)
+    - subjects (list of `SubjectNestedSerializer`)
+    """
+
+    user = UserNestedSerializer(allow_null=True)
+    subjects = SubjectNestedSerializer(many=True)
+
+    class Meta:
+        model = Teacher
+        fields = ("id", "user", "subjects")
+
+
 class SchoolNestedSerializer(NonNullModelSerializer):
     """Serializer for the `School` model. To be used as a nested serializer.
     Provides the following fields:
