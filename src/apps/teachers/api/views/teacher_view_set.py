@@ -1,3 +1,5 @@
+from django.contrib.auth import get_user_model
+
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -6,35 +8,46 @@ from django.db.models import Q
 
 from apps.shared.api.views import GenericModelViewSet
 from apps.shared.api import permissions
-from apps.teachers.api.serializers import (
-    TeacherViewSerializer,
-    TeacherCreationSerializer,
-)
+from apps.teachers.api.serializers import TeacherSerializer
+
+User = get_user_model()
+
+
+class IsSameUserAsTeacher(permissions.BasePermission):
+    """
+    Allows access to the teacher object if the request user is a teacher
+    and its teacher id is the same as the teacher id in the url.
+    """
+
+    def has_permission(self, request, view):
+        return (
+            request.user
+            and request.user.is_authenticated
+            and request.user.role == User.TEACHER
+            and request.user.teacher
+            and request.user.teacher.id == view.kwargs["pk"]
+            or super().has_permission(request, view)
+        )
 
 
 class TeacherViewSet(GenericModelViewSet):
     """Provides functionality for managing teachers. Available actions:
-    - list: Returns a list of teachers. Available for admins.
-    - retrieve: Returns a teachers. Available for admins or if the user
-    is the same as the requested teachers.
-    - create: Creates a new teacher. Available for superusers. To register
+    - list: Returns a list of teachers.
+    - retrieve: Returns a teachers.
+    - create: Creates a new teacher. Available for admins. To register
     a new user the common way, use the `auth` endpoint.
     - update: Updates a teacher. Available for admins.
     - destroy: Deletes a teacher. Available for admins.
     """
 
-    queryset = TeacherViewSerializer.Meta.model.objects.all()
-    serializer_class = TeacherViewSerializer
-    create_serializer_class = TeacherCreationSerializer
-    update_serializer_class = TeacherCreationSerializer
+    queryset = TeacherSerializer.Meta.model.objects.all()
+    serializer_class = TeacherSerializer
 
     permission_classes = [permissions.IsAuthenticated]
-    list_permission_classes = [permissions.IsAdminRole]
-    retrieve_permission_classes = [
-        permissions.OrPermission(permissions.IsAdminRole, permissions.IsSameUser)
+    create_permission_classes = [permissions.IsAdminRole]
+    update_permission_classes = [
+        permissions.OrPermission(permissions.IsAdminRole, IsSameUserAsTeacher)
     ]
-    create_permission_classes = [permissions.IsSuperUser]
-    update_permission_classes = [permissions.IsAdminRole]
     destroy_permission_classes = [permissions.IsAdminRole]
 
     @action(detail=False, methods=["get"])

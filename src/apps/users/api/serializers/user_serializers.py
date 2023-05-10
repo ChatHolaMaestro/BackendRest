@@ -149,8 +149,10 @@ class UserSerializer(serializers.NonNullModelSerializer):
                 teacher.subjects.set(subjects)
             if schedule_slots != []:
                 ScheduleSlot.objects.filter(teacher=teacher).delete()
-                for schedule_slot_data in schedule_slots:
-                    schedule_slot_data["teacher"] = teacher
+                for schedule_slot in schedule_slots:
+                    schedule_slot["teacher"] = teacher
                 ScheduleSlot.objects.bulk_create(
                     [ScheduleSlot(**data) for data in schedule_slots]
                 )
+
+        return user
