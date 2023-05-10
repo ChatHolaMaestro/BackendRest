@@ -23,6 +23,7 @@ class IsSchoolManagerOfSchool(permissions.BasePermission):
             request.user
             and request.user.is_authenticated
             and request.user.role == User.SCHOOL_MANAGER
+            and request.user.school
             and request.user.school.id == view.kwargs["pk"]
             or super().has_permission(request, view)
         )

@@ -1,14 +1,14 @@
 from django.contrib.auth import get_user_model
 
-from rest_framework import serializers
+from rest_framework import serializers as rf_serializers
 
-from apps.shared.api.serializers import UserNestedSerializer, SchoolNestedSerializer
+from apps.shared.api import serializers
 from apps.schools.models import School, SchoolManager
 
 User = get_user_model()
 
 
-class SchoolManagerSerializer(serializers.ModelSerializer):
+class SchoolManagerSerializer(serializers.NonNullModelSerializer):
     """Serializer for the `SchoolManager` model. Provides the following fields:
     - id (read-only)
     - user (read-only, `UserNestedSerializer`)
@@ -17,15 +17,15 @@ class SchoolManagerSerializer(serializers.ModelSerializer):
     - school_id (write-only)
     """
 
-    user = UserNestedSerializer(read_only=True, allow_null=True)
-    user_id = serializers.PrimaryKeyRelatedField(
+    user = serializers.UserNestedSerializer(read_only=True, allow_null=True)
+    user_id = rf_serializers.PrimaryKeyRelatedField(
         queryset=User.objects.all(),
         write_only=True,
         required=False,
         source="user",
     )
-    school = SchoolNestedSerializer(read_only=True, allow_null=True)
-    school_id = serializers.PrimaryKeyRelatedField(
+    school = serializers.SchoolNestedSerializer(read_only=True, allow_null=True)
+    school_id = rf_serializers.PrimaryKeyRelatedField(
         queryset=School.objects.all(),
         write_only=True,
         required=False,
