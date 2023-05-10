@@ -1,10 +1,7 @@
-import os.path
-
 from django.conf import settings
 from django.core.management.base import BaseCommand, CommandError
 
-from google.oauth2.credentials import Credentials
-from googleapiclient.discovery import build
+from apps.calendar import build_calendar_service
 
 
 class Command(BaseCommand):
@@ -12,21 +9,8 @@ class Command(BaseCommand):
     Generates a `token.json` file in the root directory of the project."""
 
     def handle(self, *args, **options):
-        if not os.path.exists(settings.GOOGLE_CALENDAR_PATH_TO_TOKEN):
-            raise CommandError(
-                "Could not find token.json file. Authenticate with `manage.py authgooglecalendar`"
-            )
-
-        creds = Credentials.from_authorized_user_file(
-            settings.GOOGLE_CALENDAR_PATH_TO_TOKEN, settings.GOOGLE_CALENDAR_SCOPES
-        )
-        if not creds or not creds.valid:
-            raise CommandError(
-                "Credentials are invalid. Authenticate with `manage.py authgooglecalendar`"
-            )
-
         try:
-            service = build("calendar", "v3", credentials=creds)
+            service = build_calendar_service()
 
             calendar_list = service.calendarList().list(maxResults=250).execute()
 

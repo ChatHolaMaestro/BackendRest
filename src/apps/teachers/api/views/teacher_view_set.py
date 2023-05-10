@@ -17,10 +17,10 @@ class TeacherViewSet(GenericModelViewSet):
     - list: Returns a list of teachers. Available for admins.
     - retrieve: Returns a teachers. Available for admins or if the user
     is the same as the requested teachers.
-    - create: Creates a new teachers. Available for superusers. To register
+    - create: Creates a new teacher. Available for superusers. To register
     a new user the common way, use the `auth` endpoint.
-    - update: Updates a teachers. Available for admins.
-    - destroy: Deletes a teachers. Available for admins.
+    - update: Updates a teacher. Available for admins.
+    - destroy: Deletes a teacher. Available for admins.
     """
 
     queryset = TeacherViewSerializer.Meta.model.objects.all()
