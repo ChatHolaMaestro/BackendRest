@@ -5,7 +5,6 @@ from django.core.management.base import BaseCommand, CommandError
 
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
-from googleapiclient.errors import HttpError
 
 
 class Command(BaseCommand):
@@ -48,7 +47,12 @@ class Command(BaseCommand):
                 i += 1
             self.stdout.write(
                 self.style.HTTP_INFO(
-                    "{}. Cancel".format(len(calendar_list["items"]) + 1)
+                    "{}. Create a new calendar".format(len(calendar_list["items"]) + 1)
+                )
+            )
+            self.stdout.write(
+                self.style.HTTP_INFO(
+                    "{}. Cancel".format(len(calendar_list["items"]) + 2)
                 )
             )
 
@@ -58,15 +62,24 @@ class Command(BaseCommand):
                 )
                 if (
                     calendar_number > 0
-                    and calendar_number <= len(calendar_list["items"]) + 1
+                    and calendar_number <= len(calendar_list["items"]) + 2
                 ):
                     break
 
-            if calendar_number == len(calendar_list["items"]) + 1:
+            if calendar_number == len(calendar_list["items"]) + 2:
                 self.stdout.write(self.style.NOTICE("Cancelled"))
                 return
 
-            calendar_id = calendar_list["items"][calendar_number - 1]["id"]
+            if calendar_number == len(calendar_list["items"]) + 1:
+                calendar_summary = input("Enter the name of the new calendar: ")
+                calendar_list_entry = (
+                    service.calendars()
+                    .insert(body={"summary": calendar_summary})
+                    .execute()
+                )
+                calendar_id = calendar_list_entry["id"]
+            else:
+                calendar_id = calendar_list["items"][calendar_number - 1]["id"]
 
             with open(
                 settings.GOOGLE_CALENDAR_PATH_TO_CALENDAR_ID, "w"
