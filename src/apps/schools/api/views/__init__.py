@@ -1,0 +1,2 @@
+from .school_view_set import SchoolViewSet
+from .school_manager_view_set import SchoolManagerViewSet

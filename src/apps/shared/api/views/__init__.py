@@ -1,0 +1,1 @@
+from .generic_model_view_set import GenericModelViewSet

@@ -1,1 +1,1 @@
-from .auth_views import LoginView
+from .auth_views import LoginView, RegisterView
