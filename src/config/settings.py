@@ -2,10 +2,13 @@ import os
 
 from distutils.util import strtobool
 from pathlib import Path
+from datetime import timedelta
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+APPEND_SLASH = True
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv("SECRET_KEY", "django-insecure-key")
@@ -16,6 +19,9 @@ DEBUG = bool(strtobool(os.getenv("DEBUG", "1")))
 # SECURITY WARNING: don't run with all hosts allowed in production!
 allowed_hosts = os.getenv("ALLOWED_HOSTS", "*")
 ALLOWED_HOSTS = list(map(str.strip, allowed_hosts.split(",")))
+
+# SECURITY WARNING: don't run with permissions disabled in production!
+PERMISSIONS_DISABLED = bool(strtobool(os.getenv("PERMISSIONS_DISABLED", "1")))
 
 
 # Applications
@@ -38,20 +44,22 @@ LOCAL_APPS = [
     "apps.authentication",
     "apps.requests",
     "apps.homeworks",
-    "apps.services",
+    "apps.calendar",
 ]
 
-THIRD_APPS = [
+THIRD_PARTY_APPS = [
     "rest_framework",
     "knox",
+    "django_rest_passwordreset",
     "simple_history",
     "drf_yasg",  # swagger
     "corsheaders",
 ]
 
-INSTALLED_APPS = BASE_APPS + LOCAL_APPS + THIRD_APPS
+INSTALLED_APPS = BASE_APPS + LOCAL_APPS + THIRD_PARTY_APPS
 
 
+# Third party apps settings
 SWAGGER_SETTINGS = {
     "DOC_EXPANSION": "none",
 }
@@ -60,7 +68,25 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": ("knox.auth.TokenAuthentication",),
 }
 
+REST_KNOX = {
+    "TOKEN_TTL": timedelta(days=int(os.getenv("KNOX_TOKEN_TTL_DAYS", "365"))),
+    "TOKEN_LIMIT_PER_USER": None,
+    "AUTO_REFRESH": bool(strtobool(os.getenv("KNOX_AUTO_REFRESH", "1"))),
+}
 
+DJANGO_REST_MULTITOKENAUTH_RESET_TOKEN_EXPIRY_TIME = int(
+    os.getenv("MULTITOKENAUTH_RESET_TOKEN_EXPIRY_TIME", "24")
+)
+DJANGO_REST_MULTITOKENAUTH_REQUIRE_USABLE_PASSWORD = False
+
+GOOGLE_CALENDAR_PATH_TO_GOOGLE_CREDENTIALS = os.path.join(
+    BASE_DIR, "google-credentials.json"
+)
+GOOGLE_CALENDAR_PATH_TO_TOKEN = os.path.join(BASE_DIR, "token.json")
+GOOGLE_CALENDAR_PATH_TO_CALENDAR_ID = os.path.join(BASE_DIR, "calendar_id.txt")
+GOOGLE_CALENDAR_SCOPES = ["https://www.googleapis.com/auth/calendar"]
+
+# Middleware
 MIDDLEWARE = [
     # CORS
     "corsheaders.middleware.CorsMiddleware",
@@ -102,8 +128,6 @@ WSGI_APPLICATION = "config.wsgi.application"
 
 AUTH_USER_MODEL = "users.User"
 
-# Password validation
-# https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -136,7 +160,7 @@ DATABASES = {
 REDIS_URL = os.getenv("REDIS_URL", "redis://127.0.0.1:6379/0")
 
 CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL", "redis://127.0.0.1:6379/0")
-CELERY_RESULT_BACKEND = os.getenv("CELERY_RESULT_BACKEND", "redis://127.0.1:6379/0")
+CELERY_RESULT_BACKEND = os.getenv("CELERY_RESULT_BACKEND", "redis://127.0.0.1:6379/0")
 
 
 # Cache
@@ -147,6 +171,8 @@ CACHES = {
     }
 }
 
+
+# Email
 if DEBUG:
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 

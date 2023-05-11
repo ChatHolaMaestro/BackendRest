@@ -15,6 +15,7 @@ lib/
 lib64/
 parts/
 sdist/
+target/
 var/
 *.egg-info/
 .installed.cfg
@@ -56,6 +57,12 @@ venv
 # Databases
 db.sqlite3
 celerybeat-schedule
-
-#Botpress
 botpress
+
+# vscode
+.vscode/
+
+# Google Calendar API
+google-credentials.json
+token.json
+calendar_id.txt
