@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.utils.translation import gettext_lazy as _
 
 from rest_framework import serializers as rf_serializers
 
@@ -28,7 +29,7 @@ class UserSerializer(serializers.NonNullModelSerializer):
     - school (write-only)
     - teacher (read-only, nested object)
     - subjects (write-only)
-    - schedule_slots (nested list of objects)
+    - schedules (nested list of objects)
     """
 
     school_manager = serializers.SchoolManagerNestedSerializer(
@@ -47,7 +48,7 @@ class UserSerializer(serializers.NonNullModelSerializer):
         required=False,
         many=True,
     )
-    schedule_slots = serializers.ScheduleSlotNestedSerializer(
+    schedules = serializers.ScheduleSlotNestedSerializer(
         write_only=True, required=False, many=True
     )
 
@@ -70,7 +71,7 @@ class UserSerializer(serializers.NonNullModelSerializer):
             "school",
             "teacher",
             "subjects",
-            "schedule_slots",
+            "schedules",
         )
         extra_kwargs = {"id": {"read_only": True}, "password": {"write_only": True}}
 
@@ -89,7 +90,7 @@ class UserSerializer(serializers.NonNullModelSerializer):
 
         school = validated_data.pop("school", None)
         subjects = validated_data.pop("subjects", [])
-        schedule_slots = validated_data.pop("schedule_slots", [])
+        schedule_slots = validated_data.pop("schedules", [])
 
         user = User.objects.create_user_with_password(
             email=email,
@@ -101,7 +102,11 @@ class UserSerializer(serializers.NonNullModelSerializer):
             if school is None:
                 user.delete()
                 raise rf_serializers.ValidationError(
-                    {"school": ["This field is required when role is school manager"]}
+                    {
+                        "school": [
+                            _("This field is required when role is school manager")
+                        ]
+                    }
                 )
             SchoolManager.objects.create(user=user, school=school)
         elif validated_data["role"] == User.TEACHER:
@@ -131,7 +136,7 @@ class UserSerializer(serializers.NonNullModelSerializer):
 
         school = validated_data.pop("school", None)
         subjects = validated_data.pop("subjects", [])
-        schedule_slots = validated_data.pop("schedule_slots", [])
+        schedule_slots = validated_data.pop("schedules", [])
 
         user = super().update(instance, validated_data)
 
@@ -144,7 +149,7 @@ class UserSerializer(serializers.NonNullModelSerializer):
                 user=user, defaults={"school": school}
             )
         if instance.role == User.TEACHER:
-            teacher, _ = Teacher.objects.get_or_create(user=user)
+            teacher, __ = Teacher.objects.get_or_create(user=user)
             if subjects != []:
                 teacher.subjects.set(subjects)
             if schedule_slots != []:

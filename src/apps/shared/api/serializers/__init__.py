@@ -18,5 +18,6 @@ from .nested_serializers import (
     TeacherOfScheduleSlotNestedSerializer,
     SchoolNestedSerializer,
     SchoolManagerNestedSerializer,
+    SchoolManagerOfSchoolNestedSerializer,
 )
 from .non_null_serializers import NonNullSerializer, NonNullModelSerializer

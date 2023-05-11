@@ -135,3 +135,17 @@ class SchoolManagerNestedSerializer(NonNullModelSerializer):
     class Meta:
         model = SchoolManager
         fields = ("id", "school")
+
+
+class SchoolManagerOfSchoolNestedSerializer(NonNullModelSerializer):
+    """Serializer for the `SchoolManager` model nested inside a `School` model.
+    Provides the following fields:
+    - id
+    - user (`UserNestedSerializer`)
+    """
+
+    user = UserNestedSerializer(allow_null=True)
+
+    class Meta:
+        model = SchoolManager
+        fields = ("id", "user")

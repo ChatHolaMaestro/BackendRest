@@ -8,7 +8,7 @@ from django.db.models import Q
 
 from apps.shared.api.views import GenericModelViewSet
 from apps.shared.api import permissions
-from apps.teachers.api.serializers import TeacherSerializer
+from apps.teachers.api.serializers import TeacherSerializer, WriteTeacherSerializer
 
 User = get_user_model()
 
@@ -42,6 +42,8 @@ class TeacherViewSet(GenericModelViewSet):
 
     queryset = TeacherSerializer.Meta.model.objects.all()
     serializer_class = TeacherSerializer
+    create_serializer_class = WriteTeacherSerializer
+    update_serializer_class = WriteTeacherSerializer
 
     permission_classes = [permissions.IsAuthenticated]
     create_permission_classes = [permissions.IsAdminRole]

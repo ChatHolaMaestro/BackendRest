@@ -1,6 +1,9 @@
 from apps.shared.api import permissions
 from apps.shared.api.views import GenericModelViewSet
-from apps.schools.api.serializers import SchoolManagerSerializer
+from apps.schools.api.serializers import (
+    SchoolManagerSerializer,
+    WriteSchoolManagerSerializer,
+)
 
 
 class SchoolManagerViewSet(GenericModelViewSet):
@@ -15,6 +18,8 @@ class SchoolManagerViewSet(GenericModelViewSet):
 
     queryset = SchoolManagerSerializer.Meta.model.objects.all()
     serializer_class = SchoolManagerSerializer
+    create_serializer_class = WriteSchoolManagerSerializer
+    update_serializer_class = WriteSchoolManagerSerializer
 
     permission_classes = [permissions.IsAuthenticated]
     create_permission_classes = [permissions.IsAdminRole]
