@@ -42,3 +42,15 @@ class ScheduleSlot(SharedModelHistorical):
     class Meta:
         verbose_name = "Horario"
         verbose_name_plural = "Horarios"
+
+    def __str__(self):
+        if self is None:
+            return ""
+        return "{{id: {}, day_of_week: {}, start_time: {}, end_time: {}, request_type: {}, teacher: {}}}".format(
+            str(self.id),
+            str(self.day_of_week),
+            str(self.start_time),
+            str(self.end_time),
+            str(self.request_type),
+            str(self.teacher),
+        )

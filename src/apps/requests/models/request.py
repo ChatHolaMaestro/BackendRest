@@ -55,4 +55,6 @@ class Request(SharedModelHistorical):
         verbose_name_plural = "Solicitudes"
 
     def __str__(self):
-        return f"{self.student} - {self.teacher} - {self.subject}"
+        return "{{id: {}, student: {}, teacher: {}, subject: {}}}".format(
+            str(self.id), str(self.student), str(self.teacher), str(self.subject)
+        )

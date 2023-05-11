@@ -15,4 +15,6 @@ class Subject(SharedModelHistorical):
         verbose_name_plural = "Asignaturas"
 
     def __str__(self) -> str:
-        return "{{id: {}, name: {}}}".format(self.id, self.name)
+        if self is None:
+            return ""
+        return "{{id: {}, name: {}}}".format(str(self.id), str(self.name))

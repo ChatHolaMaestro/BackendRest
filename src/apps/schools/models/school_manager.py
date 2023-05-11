@@ -27,5 +27,5 @@ class SchoolManager(SharedModelHistorical):
 
     def __str__(self):
         return "{{id: {}, user: {}, school: {}}}".format(
-            self.id, self.user, self.school
+            str(self.id), str(self.user), str(self.school)
         )

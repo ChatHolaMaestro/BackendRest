@@ -73,4 +73,6 @@ class Student(SharedModelHistorical, Person):
         verbose_name_plural = "Estudiantes"
 
     def __str__(self) -> str:
-        return "{} {}".format(str(self.id), self.get_full_name())
+        if self is None:
+            return ""
+        return "{{id: {}, full_name: {}}}".format(str(self.id), self.get_full_name())
