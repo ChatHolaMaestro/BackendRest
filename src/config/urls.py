@@ -47,6 +47,7 @@ urlpatterns = [
     path("api/teachers/", include("apps.teachers.api.urls")),
     path("api/requests/", include("apps.requests.api.urls")),
     path("api/homeworks/", include("apps.homeworks.api.urls")),
+    path("api/calendar/", include("apps.calendar.api.urls")),
 ]
 
 # Media files

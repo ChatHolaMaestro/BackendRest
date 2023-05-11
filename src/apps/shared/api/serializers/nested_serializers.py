@@ -4,7 +4,7 @@ from apps.subjects.models import Subject
 from apps.teachers.models import Teacher, ScheduleSlot
 from apps.schools.models import School, SchoolManager
 
-from .non_null_model_serializer import NonNullModelSerializer
+from .non_null_serializers import NonNullModelSerializer
 
 User = get_user_model()
 

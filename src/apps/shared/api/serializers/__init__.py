@@ -19,4 +19,4 @@ from .nested_serializers import (
     SchoolNestedSerializer,
     SchoolManagerNestedSerializer,
 )
-from .non_null_model_serializer import NonNullModelSerializer
+from .non_null_serializers import NonNullSerializer, NonNullModelSerializer

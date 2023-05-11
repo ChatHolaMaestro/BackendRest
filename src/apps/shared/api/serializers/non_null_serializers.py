@@ -2,9 +2,7 @@ from collections import OrderedDict
 from rest_framework import serializers
 
 
-class NonNullModelSerializer(serializers.ModelSerializer):
-    """Serializer that removes null values from the response."""
-
+class NonNullToRepresentationMixin:
     def to_representation(self, instance) -> OrderedDict:
         """Updated serializer method to remove null values from the response.
 
@@ -18,3 +16,11 @@ class NonNullModelSerializer(serializers.ModelSerializer):
         return OrderedDict(
             [(key, result[key]) for key in result if result[key] is not None]
         )
+
+
+class NonNullSerializer(serializers.Serializer, NonNullToRepresentationMixin):
+    """Serializer that removes null values from the response."""
+
+
+class NonNullModelSerializer(serializers.ModelSerializer, NonNullToRepresentationMixin):
+    """ModelSerializer that removes null values from the response."""
