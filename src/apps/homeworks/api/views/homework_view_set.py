@@ -1,10 +1,5 @@
 from apps.shared.api.views import GenericModelViewSet
-from apps.shared.api.permissions import (
-    OrPermission,
-    IsAuthenticated,
-    IsAdminRole,
-    IsTeacherRole,
-)
+from apps.shared.api import permissions
 from apps.homeworks.api.serializers import (
     HomeworkViewSerializer,
     HomeworkCreationSerializer,
@@ -26,9 +21,15 @@ class HomeworkViewSet(GenericModelViewSet):
     create_serializer_class = HomeworkCreationSerializer
     update_serializer_class = HomeworkCreationSerializer
 
-    permission_classes = [IsAuthenticated]
-    list_permission_classes = [OrPermission(IsAdminRole, IsTeacherRole)]
-    retrieve_permission_classes = [OrPermission(IsAdminRole, IsTeacherRole)]
-    create_permission_classes = [IsAdminRole]
-    update_permission_classes = [OrPermission(IsAdminRole, IsTeacherRole)]
-    destroy_permission_classes = [IsAdminRole]
+    permission_classes = [permissions.IsAuthenticated]
+    list_permission_classes = [
+        permissions.OrPermission(permissions.IsAdminRole, permissions.IsTeacherRole)
+    ]
+    retrieve_permission_classes = [
+        permissions.OrPermission(permissions.IsAdminRole, permissions.IsTeacherRole)
+    ]
+    create_permission_classes = [permissions.IsAdminRole]
+    update_permission_classes = [
+        permissions.OrPermission(permissions.IsAdminRole, permissions.IsTeacherRole)
+    ]
+    destroy_permission_classes = [permissions.IsAdminRole]

@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from django.db.models import Q
 
 from apps.shared.api.views import GenericModelViewSet
+from apps.shared.api import permissions
 from apps.students.api.serializers import (
     StudentViewSerializer,
     StudentCreationSerializer,
@@ -27,6 +28,11 @@ class StudentViewSet(GenericModelViewSet):
     serializer_class = StudentViewSerializer
     create_serializer_class = StudentCreationSerializer
     update_serializer_class = StudentCreationSerializer
+
+    permission_classes = [permissions.IsAuthenticated]
+    create_permission_classes = [permissions.IsAdminRole]
+    update_permission_classes = [permissions.IsAdminRole]
+    destroy_permission_classes = [permissions.IsAdminRole]
 
     @action(detail=False, methods=["get"])
     def search_identification_number(self, request):

@@ -3,6 +3,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from apps.shared.api.views import GenericModelViewSet
+from apps.shared.api import permissions
 from apps.students.api.serializers import (
     RelativeViewSerializer,
     RelativeCreationSerializer,
@@ -23,6 +24,11 @@ class RelativeViewSet(GenericModelViewSet):
     serializer_class = RelativeViewSerializer
     create_serializer_class = RelativeCreationSerializer
     update_serializer_class = RelativeCreationSerializer
+
+    permission_classes = [permissions.IsAuthenticated]
+    create_permission_classes = [permissions.IsAdminRole]
+    update_permission_classes = [permissions.IsAdminRole]
+    destroy_permission_classes = [permissions.IsAdminRole]
 
     @action(detail=False, methods=["get"])
     def search_identification_number(self, request):

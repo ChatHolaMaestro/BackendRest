@@ -1,17 +1,8 @@
-from rest_framework import serializers
-
-from apps.shared.api.serializers import (
-    StudentSerializerShort,
-    TeacherSerializerShort,
-    HomeworkSerializerShort,
-)
+from apps.shared.api import serializers
 from apps.requests.models import Request
-from apps.subjects.api.serializers import (
-    SubjectSerializer,
-)
 
 
-class RequestViewSerializer(serializers.ModelSerializer):
+class RequestViewSerializer(serializers.NonNullModelSerializer):
     """
     Request Serializer for View
         - id
@@ -24,10 +15,10 @@ class RequestViewSerializer(serializers.ModelSerializer):
         - subject (object)
     """
 
-    student = StudentSerializerShort()
-    teacher = TeacherSerializerShort()
-    subject = SubjectSerializer()
-    homework = HomeworkSerializerShort()  # could be null
+    student = serializers.StudentSerializerShort()
+    teacher = serializers.TeacherSerializerShort()
+    subject = serializers.SubjectNestedSerializer()
+    homework = serializers.HomeworkSerializerShort()  # could be null
 
     class Meta:
         model = Request
@@ -44,7 +35,7 @@ class RequestViewSerializer(serializers.ModelSerializer):
         ]
 
 
-class RequestCreationSerializer(serializers.ModelSerializer):
+class RequestCreationSerializer(serializers.NonNullModelSerializer):
     """
     Request Serializer for Creation
         - status
