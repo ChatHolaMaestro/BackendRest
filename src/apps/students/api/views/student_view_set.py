@@ -37,15 +37,17 @@ class StudentViewSet(GenericModelViewSet):
     @action(detail=False, methods=["get"])
     def search_identification_number(self, request):
         """
-        Search a student by identification_number
+        Search a student by identification_number and identification_type
         """
         identification_number = request.query_params.get("identification_number")
-        if identification_number:
+        identification_type = request.query_params.get("identification_type")
+        if identification_number and identification_type:
             queryset = self.get_queryset().filter(
-                identification_number__icontains=identification_number
-            )
-            serializer = self.get_serializer(queryset, many=True)
-            if serializer.data:
+                identification_number=identification_number,
+                identification_type=identification_type,
+            ).first()
+            if queryset:
+                serializer = self.get_serializer(queryset, many=False)
                 return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(
             {"detail": "No student found"}, status=status.HTTP_400_BAD_REQUEST
