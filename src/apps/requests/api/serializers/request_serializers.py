@@ -59,13 +59,13 @@ class WriteRequestSerializer(serializers.NonNullModelSerializer):
     """
 
     student = rf_serializers.PrimaryKeyRelatedField(
-        queryset=Student.objects.all(), write_only=True, required=False
+        queryset=Student.objects.all(), write_only=True, required=True
     )
     teacher = rf_serializers.PrimaryKeyRelatedField(
         queryset=Teacher.objects.all(), write_only=True, required=False
     )
     subject = rf_serializers.PrimaryKeyRelatedField(
-        queryset=Subject.objects.all(), write_only=True, required=False
+        queryset=Subject.objects.all(), write_only=True, required=True
     )
     homework = rf_serializers.PrimaryKeyRelatedField(
         queryset=Homework.objects.all(), write_only=True, required=False
