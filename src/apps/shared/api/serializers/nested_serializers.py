@@ -3,6 +3,8 @@ from django.contrib.auth import get_user_model
 from apps.subjects.models import Subject
 from apps.teachers.models import Teacher, ScheduleSlot
 from apps.schools.models import School, SchoolManager
+from apps.students.models import Student
+from apps.homeworks.models import Homework
 
 from .non_null_serializers import NonNullModelSerializer
 
@@ -102,6 +104,20 @@ class TeacherOfScheduleSlotNestedSerializer(NonNullModelSerializer):
         fields = ("id", "user", "subjects")
 
 
+class TeacherOfRequestNestedSerializer(NonNullModelSerializer):
+    """Serializer for the `Teacher` model nested inside a `Request` model.
+    Provides the following fields:
+    - id
+    - user (`UserNestedSerializer`)
+    """
+
+    user = UserNestedSerializer(allow_null=True)
+
+    class Meta:
+        model = Teacher
+        fields = ("id", "user")
+
+
 class SchoolNestedSerializer(NonNullModelSerializer):
     """Serializer for the `School` model. To be used as a nested serializer.
     Provides the following fields:
@@ -149,3 +165,51 @@ class SchoolManagerOfSchoolNestedSerializer(NonNullModelSerializer):
     class Meta:
         model = SchoolManager
         fields = ("id", "user")
+
+
+class StudentNestedSerializer(NonNullModelSerializer):
+    """Serializer for the `Student` model. To be used as a nested serializer.
+    Provides the following fields:
+    - id
+    - first_name
+    - last_name
+    - identification_type
+    - identification_number
+    - phone_number
+    - grade
+    - sex
+    - age
+    - school (`SchoolNestedSerializer`)
+    """
+
+    school = SchoolNestedSerializer(allow_null=True)
+
+    class Meta:
+        model = Student
+        fields = (
+            "id",
+            "first_name",
+            "last_name",
+            "identification_type",
+            "identification_number",
+            "phone_number",
+            "grade",
+            "sex",
+            "age",
+            "school",
+        )
+
+
+class HomeworkNestedSerializer(NonNullModelSerializer):
+    """Serializer for the `Homework` model. To be used as a nested serializer.
+    Provides the following fields:
+    - id
+    - status
+    - topic
+    - details
+    - scheduled_date
+    """
+
+    class Meta:
+        model = Homework
+        fields = ("id", "status", "topic", "details", "scheduled_date")
