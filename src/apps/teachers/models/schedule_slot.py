@@ -30,6 +30,9 @@ class ScheduleSlot(SharedModelHistorical):
         blank=False,
         null=False,
     )
+    is_free = models.BooleanField(
+        "Espacio libre", default=True, blank=False, null=False
+    )
     teacher = models.ForeignKey(
         Teacher,
         on_delete=models.CASCADE,
@@ -46,11 +49,12 @@ class ScheduleSlot(SharedModelHistorical):
     def __str__(self):
         if self is None:
             return ""
-        return "{{id: {}, day_of_week: {}, start_time: {}, end_time: {}, request_type: {}, teacher: {}}}".format(
+        return "{{id: {}, day_of_week: {}, start_time: {}, end_time: {}, request_type: {}, is_free:{}, teacher: {}}}".format(
             str(self.id),
             str(self.day_of_week),
             str(self.start_time),
             str(self.end_time),
             str(self.request_type),
+            str(self.is_free),
             str(self.teacher),
         )
