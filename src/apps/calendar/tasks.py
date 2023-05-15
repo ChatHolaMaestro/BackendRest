@@ -1,3 +1,5 @@
+import datetime
+
 from .service import (
     build_calendar_service,
     get_calendar_id,
@@ -40,3 +42,33 @@ def create_calendar_event(
         )
     except Exception as e:
         raise CalendarServiceException(f"Error creating event: {e}")
+
+
+@celery_app.task
+def clean_up_calendar_events():
+    """Deletes all the events that have already passed from the database. Also
+    updates their schedule slots to be free again and sets their homework / request
+    status to completed.
+
+    This should be a periodic task that runs every day at 00:00.
+    """
+
+    from apps.calendar.models import Event
+    from apps.homeworks.models import Homework
+    from apps.requests.models import Request
+
+    events = Event.objects.filter(end_time__lt=datetime.datetime.now())
+    for event in events:
+        schedule_slot = event.schedule_slot
+        schedule_slot.is_free = True
+        schedule_slot.save()
+
+        homework = event.homework
+        homework.status = Homework.COMPLETED
+        homework.save()
+
+        request = homework.request
+        request.status = Request.STATUS_COMPLETED
+        request.save()
+
+        event.delete()

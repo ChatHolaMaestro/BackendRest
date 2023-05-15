@@ -16,3 +16,10 @@ class WeekDays:
         (SATURDAY, "Sábado"),
         (SUNDAY, "Domingo"),
     )
+
+    @classmethod
+    def from_name_to_number(cls, name):
+        for pos, choice in enumerate(cls.CHOICES):
+            if choice[0] == name:
+                return pos
+        return None
