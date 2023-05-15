@@ -73,7 +73,10 @@ class UserSerializer(serializers.NonNullModelSerializer):
             "subjects",
             "schedules",
         )
-        extra_kwargs = {"id": {"read_only": True}, "password": {"write_only": True}}
+        extra_kwargs = {
+            "id": {"read_only": True},
+            "password": {"write_only": True, "required": False},
+        }
 
     def create(self, validated_data: dict) -> User:
         """Creates a new user with the given data.

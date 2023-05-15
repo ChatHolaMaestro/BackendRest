@@ -1,2 +1,2 @@
 from .teacher_serializers import TeacherSerializer, WriteTeacherSerializer
-from .schedule_serializers import ScheduleSlotSerializer
+from .schedule_serializers import ScheduleSlotSerializer, WriteScheduleSlotSerializer
