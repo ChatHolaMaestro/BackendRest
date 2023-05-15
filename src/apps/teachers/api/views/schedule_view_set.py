@@ -7,7 +7,10 @@ from rest_framework.response import Response
 
 from apps.shared.api.views import GenericModelViewSet
 from apps.shared.api import permissions
-from apps.teachers.api.serializers import ScheduleSlotSerializer
+from apps.teachers.api.serializers import (
+    ScheduleSlotSerializer,
+    WriteScheduleSlotSerializer,
+)
 
 User = get_user_model()
 
@@ -26,6 +29,8 @@ class ScheduleViewSet(GenericModelViewSet):
 
     queryset = ScheduleSlotSerializer.Meta.model.objects.all()
     serializer_class = ScheduleSlotSerializer
+    create_serializer_class = WriteScheduleSlotSerializer
+    update_serializer_class = WriteScheduleSlotSerializer
 
     permission_classes = [permissions.IsAuthenticated]
     create_permission_classes = [
