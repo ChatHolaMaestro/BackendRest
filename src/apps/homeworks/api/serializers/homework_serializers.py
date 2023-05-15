@@ -1,22 +1,23 @@
-from rest_framework import serializers
+from rest_framework import serializers as rf_serializers
 
-from apps.shared.api.serializers import RequestSerializerShort
+from apps.shared.api import serializers
 from apps.homeworks.models import Homework
+from apps.requests.models import Request
 
 
-class HomeworkViewSerializer(serializers.ModelSerializer):
-    """
-    Homework Serializer for view
+class HomeworkSerializer(serializers.NonNullModelSerializer):
+    """Serializer for the `Homework` model intended for list/retrieve actions.
+    Provides the following fields:
         - id
         - status
         - topic
         - details
         - time_spent
         - scheduled_date
-        - request (object)
+        - request (nested object)
     """
 
-    request = RequestSerializerShort()
+    request = serializers.RequestNestedSerializer(read_only=True, allow_null=True)
 
     class Meta:
         model = Homework
@@ -31,10 +32,9 @@ class HomeworkViewSerializer(serializers.ModelSerializer):
         )
 
 
-class HomeworkCreationSerializer(serializers.ModelSerializer):
-    """
-    Homework Serializer for creation
-        - id
+class WriteHomeworkSerializer(serializers.NonNullModelSerializer):
+    """Serializer for the `Homework` model intended for create/update actions.
+    Provides the following fields:
         - status
         - topic
         - details
@@ -43,10 +43,13 @@ class HomeworkCreationSerializer(serializers.ModelSerializer):
         - request (id)
     """
 
+    request = rf_serializers.PrimaryKeyRelatedField(
+        queryset=Request.objects.all(), allow_null=True
+    )
+
     class Meta:
         model = Homework
         fields = (
-            "id",
             "status",
             "topic",
             "details",

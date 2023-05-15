@@ -48,7 +48,6 @@ class RequestSerializer(serializers.NonNullModelSerializer):
 class WriteRequestSerializer(serializers.NonNullModelSerializer):
     """Serializer for the `Request` model intended for create/update actions.
     Provides the following fields:
-    - id
     - status
     - request_type
     - created_date
@@ -75,7 +74,6 @@ class WriteRequestSerializer(serializers.NonNullModelSerializer):
     class Meta:
         model = Request
         fields = (
-            "id",
             "status",
             "request_type",
             "created_date",
@@ -85,4 +83,3 @@ class WriteRequestSerializer(serializers.NonNullModelSerializer):
             "subject",
             "homework",
         )
-        extra_kwargs = {"id": {"read_only": True}}

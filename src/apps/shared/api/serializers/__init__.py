@@ -22,5 +22,6 @@ from .nested_serializers import (
     SchoolManagerOfSchoolNestedSerializer,
     StudentNestedSerializer,
     HomeworkNestedSerializer,
+    RequestNestedSerializer,
 )
 from .non_null_serializers import NonNullSerializer, NonNullModelSerializer

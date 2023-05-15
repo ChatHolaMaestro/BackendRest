@@ -5,6 +5,7 @@ from apps.teachers.models import Teacher, ScheduleSlot
 from apps.schools.models import School, SchoolManager
 from apps.students.models import Student
 from apps.homeworks.models import Homework
+from apps.requests.models import Request
 
 from .non_null_serializers import NonNullModelSerializer
 
@@ -213,3 +214,34 @@ class HomeworkNestedSerializer(NonNullModelSerializer):
     class Meta:
         model = Homework
         fields = ("id", "status", "topic", "details", "scheduled_date")
+
+
+class RequestNestedSerializer(NonNullModelSerializer):
+    """Serializer for the `Request` model. To be used as a nested serializer.
+    Provides the following fields:
+    - id
+    - status
+    - request_type
+    - created_date
+    - contact_times
+    - student (`StudentNestedSerializer`)
+    - teacher (`TeacherNestedSerializer`)
+    - subject (`SubjectNestedSerializer`)
+    """
+
+    student = StudentNestedSerializer(allow_null=True)
+    teacher = TeacherOfRequestNestedSerializer(allow_null=True)
+    subject = SubjectNestedSerializer(allow_null=True)
+
+    class Meta:
+        model = Request
+        fields = (
+            "id",
+            "status",
+            "request_type",
+            "created_date",
+            "contact_times",
+            "student",
+            "teacher",
+            "subject",
+        )
