@@ -1,1 +1,1 @@
-from .request_serializers import RequestViewSerializer, RequestCreationSerializer
+from .request_serializers import RequestSerializer, WriteRequestSerializer

@@ -26,7 +26,7 @@ class Request(SharedModelHistorical):
     status = models.CharField(
         max_length=20,
         choices=REQUEST_STATUS_CHOICES,
-        default="CONTACTADO",
+        default=STATUS_CONTACTED,
         null=False,
         blank=False,
     )

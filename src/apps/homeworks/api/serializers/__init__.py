@@ -1,1 +1,1 @@
-from .homework_serializers import HomeworkViewSerializer, HomeworkCreationSerializer
+from .homework_serializers import HomeworkSerializer, WriteHomeworkSerializer

@@ -13,6 +13,7 @@ class ScheduleSlotSerializer(serializers.NonNullModelSerializer):
     - start_time
     - end_time
     - request_type
+    - is_free
     - teacher (read-only, nested object)
     - teacher_id (write-only)
     """
@@ -36,6 +37,7 @@ class ScheduleSlotSerializer(serializers.NonNullModelSerializer):
             "end_time",
             "request_type",
             "teacher",
+            "is_free",
             "teacher_id",
         )
         extra_kwargs = {"id": {"read_only": True}}

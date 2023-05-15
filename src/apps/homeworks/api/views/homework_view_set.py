@@ -1,9 +1,6 @@
 from apps.shared.api.views import GenericModelViewSet
 from apps.shared.api import permissions
-from apps.homeworks.api.serializers import (
-    HomeworkViewSerializer,
-    HomeworkCreationSerializer,
-)
+from apps.homeworks.api.serializers import HomeworkSerializer, WriteHomeworkSerializer
 
 
 class HomeworkViewSet(GenericModelViewSet):
@@ -16,10 +13,10 @@ class HomeworkViewSet(GenericModelViewSet):
         - DELETE(id): delete a homework by id
     """
 
-    queryset = HomeworkViewSerializer.Meta.model.objects.all()
-    serializer_class = HomeworkViewSerializer
-    create_serializer_class = HomeworkCreationSerializer
-    update_serializer_class = HomeworkCreationSerializer
+    queryset = HomeworkSerializer.Meta.model.objects.all()
+    serializer_class = HomeworkSerializer
+    create_serializer_class = WriteHomeworkSerializer
+    update_serializer_class = WriteHomeworkSerializer
 
     permission_classes = [permissions.IsAuthenticated]
     list_permission_classes = [

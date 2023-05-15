@@ -4,10 +4,7 @@ from rest_framework.response import Response
 
 from apps.shared.api.views import GenericModelViewSet
 from apps.shared.api import permissions
-from apps.requests.api.serializers import (
-    RequestViewSerializer,
-    RequestCreationSerializer,
-)
+from apps.requests.api.serializers import RequestSerializer, WriteRequestSerializer
 
 
 class RequestViewSet(GenericModelViewSet):
@@ -21,10 +18,10 @@ class RequestViewSet(GenericModelViewSet):
         - /search_by_student: GET(Student id): Get all requests by student id
     """
 
-    queryset = RequestViewSerializer.Meta.model.objects.all()
-    serializer_class = RequestViewSerializer
-    create_serializer_class = RequestCreationSerializer
-    update_serializer_class = RequestCreationSerializer
+    queryset = RequestSerializer.Meta.model.objects.all()
+    serializer_class = RequestSerializer
+    create_serializer_class = WriteRequestSerializer
+    update_serializer_class = WriteRequestSerializer
 
     permission_classes = [permissions.IsAuthenticated]
     list_permission_classes = [
