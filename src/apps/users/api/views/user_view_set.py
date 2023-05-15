@@ -36,7 +36,7 @@ class UserViewSet(GenericModelViewSet):
 
     def update(self, request: request.Request, *args, **kwargs) -> Response:
         """Updates a user. Only superusers can update other superusers. Only
-        superusers can update `password`, `is_superuser`, `is_staff`, `is_active`
+        superusers can update `is_superuser`, `is_staff`, `is_active`
         of other users. A user can't update its own `role`. If the user is not
         found, a 404 response is returned.
 
@@ -54,7 +54,7 @@ class UserViewSet(GenericModelViewSet):
                 {"error": _("Only superusers can update other superusers")},
                 status=status.HTTP_400_BAD_REQUEST,
             )
-        for field in ["password", "is_superuser", "is_staff", "is_active"]:
+        for field in ["is_superuser", "is_staff", "is_active"]:
             if field in request.data:
                 if not request.user.is_superuser:
                     return Response(
