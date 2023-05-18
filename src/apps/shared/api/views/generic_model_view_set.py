@@ -178,8 +178,8 @@ class GenericModelViewSet(ModelViewSet):
             Exception: if the object is not created
         """
         serializer = self.get_serializer(data=request.data)
-        if(not serializer.is_valid()):
-            print(serializer.errors)
+        #if(not serializer.is_valid()):
+        #   print(serializer.errors)
         
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
