@@ -101,6 +101,7 @@ class UserSerializer(serializers.NonNullModelSerializer):
             **validated_data,
         )
 
+        '''
         if validated_data["role"] == User.SCHOOL_MANAGER:
             if school is None:
                 user.delete()
@@ -121,6 +122,7 @@ class UserSerializer(serializers.NonNullModelSerializer):
             ScheduleSlot.objects.bulk_create(
                 [ScheduleSlot(**data) for data in schedule_slots]
             )
+        '''
 
         return user
 
