@@ -1,0 +1,137 @@
+[
+  {
+    "model": "teachers.scheduleslot",
+    "pk": 1,
+    "fields": {
+      "teacher": 1,
+      "day_of_week": "LUNES",
+      "start_time": "08:00:00",
+      "end_time": "09:00:00",
+      "request_type": "TAREAS",
+      "is_free": true,
+      "is_active": true,
+      "created_date": "2021-01-01T00:00:00Z",
+      "modified_date": "2021-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "teachers.scheduleslot",
+    "pk": 2,
+    "fields": {
+      "teacher": 1,
+      "day_of_week": "MARTES",
+      "start_time": "08:00:00",
+      "end_time": "09:00:00",
+      "request_type": "TAREAS",
+      "is_free": true,
+      "is_active": true,
+      "created_date": "2021-01-01T00:00:00Z",
+      "modified_date": "2021-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "teachers.scheduleslot",
+    "pk": 3,
+    "fields": {
+      "teacher": 1,
+      "day_of_week": "MIERCOLES",
+      "start_time": "08:00:00",
+      "end_time": "09:00:00",
+      "request_type": "CUALQUIERA",
+      "is_free": true,
+      "is_active": true,
+      "created_date": "2021-01-01T00:00:00Z",
+      "modified_date": "2021-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "teachers.scheduleslot",
+    "pk": 4,
+    "fields": {
+      "teacher": 2,
+      "day_of_week": "JUEVES",
+      "start_time": "08:00:00",
+      "end_time": "09:00:00",
+      "request_type": "TAREAS",
+      "is_free": true,
+      "is_active": true,
+      "created_date": "2021-01-01T00:00:00Z",
+      "modified_date": "2021-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "teachers.scheduleslot",
+    "pk": 5,
+    "fields": {
+      "teacher": 2,
+      "day_of_week": "VIERNES",
+      "start_time": "08:00:00",
+      "end_time": "09:00:00",
+      "request_type": "TAREAS",
+      "is_free": true,
+      "is_active": true,
+      "created_date": "2021-01-01T00:00:00Z",
+      "modified_date": "2021-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "teachers.scheduleslot",
+    "pk": 6,
+    "fields": {
+      "teacher": 2,
+      "day_of_week": "SABADO",
+      "start_time": "08:00:00",
+      "end_time": "09:00:00",
+      "request_type": "CUALQUIERA",
+      "is_free": true,
+      "is_active": true,
+      "created_date": "2021-01-01T00:00:00Z",
+      "modified_date": "2021-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "teachers.scheduleslot",
+    "pk": 7,
+    "fields": {
+      "teacher": 3,
+      "day_of_week": "LUNES",
+      "start_time": "08:00:00",
+      "end_time": "09:00:00",
+      "request_type": "TAREAS",
+      "is_free": true,
+      "is_active": true,
+      "created_date": "2021-01-01T00:00:00Z",
+      "modified_date": "2021-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "teachers.scheduleslot",
+    "pk": 8,
+    "fields": {
+      "teacher": 3,
+      "day_of_week": "MIERCOLES",
+      "start_time": "08:00:00",
+      "end_time": "09:00:00",
+      "request_type": "TAREAS",
+      "is_free": true,
+      "is_active": true,
+      "created_date": "2021-01-01T00:00:00Z",
+      "modified_date": "2021-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "teachers.scheduleslot",
+    "pk": 9,
+    "fields": {
+      "teacher": 3,
+      "day_of_week": "VIERNES",
+      "start_time": "08:00:00",
+      "end_time": "09:00:00",
+      "request_type": "CUALQUIERA",
+      "is_free": true,
+      "is_active": true,
+      "created_date": "2021-01-01T00:00:00Z",
+      "modified_date": "2021-01-01T00:00:00Z"
+    }
+  }
+]

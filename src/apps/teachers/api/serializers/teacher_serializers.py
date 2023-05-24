@@ -56,6 +56,21 @@ class WriteTeacherSerializer(serializers.NonNullModelSerializer):
         model = Teacher
         fields = ("user", "subjects", "schedules")
 
+    def validate(self, data):
+        user = data.get("user")
+
+        if user:
+            if Teacher.objects.filter(user=user).exists():
+                raise rf_serializers.ValidationError(_("User is already a teacher."))
+
+        if not self.instance:
+            if not user:
+                raise rf_serializers.ValidationError(
+                    _("User is required when creating a teacher.")
+                )
+
+        return data
+
     def create(self, validated_data: dict) -> Teacher:
         """Creates a new `Teacher` instance.
 
@@ -66,19 +81,15 @@ class WriteTeacherSerializer(serializers.NonNullModelSerializer):
             Teacher: created teacher
         """
 
-        if "user" not in validated_data:
-            raise rf_serializers.ValidationError(
-                {"user": [_("This field is required.")]}
-            )
+        user = validated_data.pop("user")
 
-        subjects = validated_data.pop("subjects", [])
-        schedule_slots = validated_data.pop("schedule_slots", [])
+        teacher = Teacher.objects.create(user=user)
 
-        teacher, __ = Teacher.objects.get_or_create(**validated_data)
-
-        if subjects != []:
-            teacher.subjects.set(subjects)
-        if schedule_slots != []:
+        if "subjects" in validated_data:
+            teacher.subjects.set(validated_data["subjects"])
+            teacher.save()
+        if "schedule_slots" in validated_data:
+            schedule_slots = validated_data.pop("schedule_slots")
             ScheduleSlot.objects.filter(teacher=teacher).delete()
             for schedule_slot in schedule_slots:
                 schedule_slot["teacher"] = teacher
@@ -106,6 +117,7 @@ class WriteTeacherSerializer(serializers.NonNullModelSerializer):
             teacher.save()
         if "subjects" in validated_data:
             teacher.subjects.set(validated_data["subjects"])
+            teacher.save()
         if "schedule_slots" in validated_data:
             schedule_slots = validated_data.pop("schedule_slots")
             ScheduleSlot.objects.filter(teacher=teacher).delete()

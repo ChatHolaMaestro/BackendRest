@@ -47,8 +47,6 @@ class WriteSchoolManagerSerializer(serializers.NonNullModelSerializer):
         model = SchoolManager
         fields = ("user", "school")
 
-    # validate user isnt already a school manager
-
     def validate(self, data):
         user = data.get("user")
 
