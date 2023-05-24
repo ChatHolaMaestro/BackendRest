@@ -1,0 +1,32 @@
+[
+  {
+    "model": "subjects.subject",
+    "pk": 1,
+    "fields": {
+      "name": "Math",
+      "is_active": true,
+      "created_date": "2021-01-01T00:00:00Z",
+      "modified_date": "2021-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "subjects.subject",
+    "pk": 2,
+    "fields": {
+      "name": "English",
+      "is_active": true,
+      "created_date": "2021-01-01T00:00:00Z",
+      "modified_date": "2021-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "subjects.subject",
+    "pk": 3,
+    "fields": {
+      "name": "Science",
+      "is_active": true,
+      "created_date": "2021-01-01T00:00:00Z",
+      "modified_date": "2021-01-01T00:00:00Z"
+    }
+  }
+]

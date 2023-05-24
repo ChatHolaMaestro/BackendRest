@@ -8,7 +8,7 @@ class Subject(SharedModelHistorical):
     Model that represents a subject. Teachers have many subjects.
     """
 
-    name = models.CharField("Nombre", max_length=100, blank=False)
+    name = models.CharField("Nombre", max_length=100, blank=False, unique=True)
 
     class Meta:
         verbose_name = "Asignatura"
