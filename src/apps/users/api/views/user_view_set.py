@@ -1,8 +1,5 @@
 from django.utils.translation import gettext_lazy as _
 
-from rest_framework import status, request
-from rest_framework.response import Response
-
 from apps.shared.api import permissions
 from apps.shared.api.views import GenericModelViewSet
 from apps.users.api.serializers import UserSerializer

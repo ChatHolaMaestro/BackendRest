@@ -1,0 +1,173 @@
+[
+  {
+    "model": "users.user",
+    "pk": 1,
+    "fields": {
+      "email": "john@example.com",
+      "password": "Complexpass123",
+      "first_name": "John",
+      "last_name": "Admin",
+      "identification_type": "CC",
+      "identification_number": "111111111",
+      "phone_number": "111111111",
+      "role": 1,
+      "is_superuser": true,
+      "is_staff": true,
+      "is_active": true,
+      "created_date": "2021-01-01T00:00:00Z",
+      "modified_date": "2021-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 2,
+    "fields": {
+      "email": "jane@example.com",
+      "password": "Complexpass123",
+      "first_name": "Jane",
+      "last_name": "Admin",
+      "identification_type": "CC",
+      "identification_number": "222222222",
+      "phone_number": "222222222",
+      "role": 1,
+      "is_superuser": false,
+      "is_staff": true,
+      "is_active": true,
+      "created_date": "2021-01-01T00:00:00Z",
+      "modified_date": "2021-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 3,
+    "fields": {
+      "email": "carl@example.com",
+      "password": "Complexpass123",
+      "first_name": "Carl",
+      "last_name": "Admin",
+      "identification_type": "CC",
+      "identification_number": "333333333",
+      "phone_number": "333333333",
+      "role": 1,
+      "is_superuser": false,
+      "is_staff": true,
+      "is_active": true,
+      "created_date": "2021-01-01T00:00:00Z",
+      "modified_date": "2021-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 4,
+    "fields": {
+      "email": "mary@example.com",
+      "password": "Complexpass123",
+      "first_name": "Mary",
+      "last_name": "Teacher",
+      "identification_type": "CC",
+      "identification_number": "444444444",
+      "phone_number": "444444444",
+      "role": 2,
+      "is_superuser": false,
+      "is_staff": false,
+      "is_active": true,
+      "created_date": "2021-01-01T00:00:00Z",
+      "modified_date": "2021-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 5,
+    "fields": {
+      "email": "douglas@example.com",
+      "password": "Complexpass123",
+      "first_name": "Douglas",
+      "last_name": "Teacher",
+      "identification_type": "CC",
+      "identification_number": "555555555",
+      "phone_number": "555555555",
+      "role": 2,
+      "is_superuser": false,
+      "is_staff": false,
+      "is_active": true,
+      "created_date": "2021-01-01T00:00:00Z",
+      "modified_date": "2021-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 6,
+    "fields": {
+      "email": "steve@example.com",
+      "password": "Complexpass123",
+      "first_name": "Steve",
+      "last_name": "Teacher",
+      "identification_type": "CC",
+      "identification_number": "666666666",
+      "phone_number": "666666666",
+      "role": 2,
+      "is_superuser": false,
+      "is_staff": false,
+      "is_active": true,
+      "created_date": "2021-01-01T00:00:00Z",
+      "modified_date": "2021-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 7,
+    "fields": {
+      "email": "jules@example.com",
+      "password": "Complexpass123",
+      "first_name": "Jules",
+      "last_name": "Manager",
+      "identification_type": "CC",
+      "identification_number": "777777777",
+      "phone_number": "777777777",
+      "role": 3,
+      "is_superuser": false,
+      "is_staff": false,
+      "is_active": true,
+      "created_date": "2021-01-01T00:00:00Z",
+      "modified_date": "2021-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 8,
+    "fields": {
+      "email": "susan@example.com",
+      "password": "Complexpass123",
+      "first_name": "Susan",
+      "last_name": "Manager",
+      "identification_type": "CC",
+      "identification_number": "888888888",
+      "phone_number": "888888888",
+      "role": 3,
+      "is_superuser": false,
+      "is_staff": false,
+      "is_active": true,
+      "created_date": "2021-01-01T00:00:00Z",
+      "modified_date": "2021-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 9,
+    "fields": {
+      "email": "max@example.com",
+      "password": "Complexpass123",
+      "first_name": "Max",
+      "last_name": "Manager",
+      "identification_type": "CC",
+      "identification_number": "999999999",
+      "phone_number": "999999999",
+      "role": 3,
+      "is_superuser": false,
+      "is_staff": false,
+      "is_active": true,
+      "created_date": "2021-01-01T00:00:00Z",
+      "modified_date": "2021-01-01T00:00:00Z"
+    }
+  }
+]
