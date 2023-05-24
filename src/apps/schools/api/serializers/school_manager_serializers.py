@@ -46,3 +46,24 @@ class WriteSchoolManagerSerializer(serializers.NonNullModelSerializer):
     class Meta:
         model = SchoolManager
         fields = ("user", "school")
+
+    # validate user isnt already a school manager
+
+    def validate(self, data):
+        user = data.get("user")
+
+        if user:
+            if SchoolManager.objects.filter(user=user).exists():
+                raise rf_serializers.ValidationError(
+                    "User is already a school manager."
+                )
+
+        if not self.instance:
+            school = data.get("school")
+
+            if not school:
+                raise rf_serializers.ValidationError(
+                    "School is required when creating a school manager."
+                )
+
+        return data

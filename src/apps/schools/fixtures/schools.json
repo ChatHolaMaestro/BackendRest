@@ -1,0 +1,41 @@
+[
+  {
+    "model": "schools.school",
+    "pk": 1,
+    "fields": {
+      "name": "School 1",
+      "address": "Address 1",
+      "has_morning_hours": true,
+      "has_afternoon_hours": true,
+      "is_active": true,
+      "created_date": "2021-01-01T00:00:00Z",
+      "modified_date": "2021-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "schools.school",
+    "pk": 2,
+    "fields": {
+      "name": "School 2",
+      "address": "Address 2",
+      "has_morning_hours": true,
+      "has_afternoon_hours": true,
+      "is_active": true,
+      "created_date": "2021-01-01T00:00:00Z",
+      "modified_date": "2021-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "schools.school",
+    "pk": 3,
+    "fields": {
+      "name": "School 3",
+      "address": "Address 3",
+      "has_morning_hours": true,
+      "has_afternoon_hours": true,
+      "is_active": true,
+      "created_date": "2021-01-01T00:00:00Z",
+      "modified_date": "2021-01-01T00:00:00Z"
+    }
+  }
+]
