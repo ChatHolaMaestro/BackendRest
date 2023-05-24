@@ -1,0 +1,47 @@
+[
+  {
+    "model": "homeworks.homework",
+    "pk": 1,
+    "fields": {
+      "status": "PENDIENTE",
+      "topic": "Tarea 1",
+      "details": "Tarea 1",
+      "time_spent": 1,
+      "scheduled_date": "2021-01-01",
+      "request": 1,
+      "is_active": true,
+      "created_date": "2021-01-01T00:00:00Z",
+      "modified_date": "2021-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "homeworks.homework",
+    "pk": 2,
+    "fields": {
+      "status": "PENDIENTE",
+      "topic": "Tarea 2",
+      "details": "Tarea 2",
+      "time_spent": 1,
+      "scheduled_date": "2021-01-01",
+      "request": 2,
+      "is_active": true,
+      "created_date": "2021-01-01T00:00:00Z",
+      "modified_date": "2021-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "homeworks.homework",
+    "pk": 3,
+    "fields": {
+      "status": "PENDIENTE",
+      "topic": "Tarea 3",
+      "details": "Tarea 3",
+      "time_spent": 1,
+      "scheduled_date": "2021-01-01",
+      "request": 3,
+      "is_active": true,
+      "created_date": "2021-01-01T00:00:00Z",
+      "modified_date": "2021-01-01T00:00:00Z"
+    }
+  }
+]
