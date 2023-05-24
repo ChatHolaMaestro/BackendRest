@@ -1,0 +1,62 @@
+[
+  {
+    "model": "students.student",
+    "pk": 1,
+    "fields": {
+      "first_name": "James",
+      "last_name": "Doe",
+      "identification_type": "TI",
+      "identification_number": "100000000",
+      "phone_number": "100000000",
+      "grade": "7",
+      "sex": "M",
+      "age": 12,
+      "working_hours": "M",
+      "school": 1,
+      "relatives": [1],
+      "is_active": true,
+      "created_date": "2021-01-01T00:00:00Z",
+      "modified_date": "2021-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "students.student",
+    "pk": 2,
+    "fields": {
+      "first_name": "Cameron",
+      "last_name": "Doe",
+      "identification_type": "TI",
+      "identification_number": "200000000",
+      "phone_number": "200000000",
+      "grade": "8",
+      "sex": "F",
+      "age": 13,
+      "working_hours": "M",
+      "school": 2,
+      "relatives": [2],
+      "is_active": true,
+      "created_date": "2021-01-01T00:00:00Z",
+      "modified_date": "2021-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "students.student",
+    "pk": 3,
+    "fields": {
+      "first_name": "Julieta",
+      "last_name": "Davis",
+      "identification_type": "TI",
+      "identification_number": "300000000",
+      "phone_number": "300000000",
+      "grade": "6",
+      "sex": "F",
+      "age": 11,
+      "working_hours": "M",
+      "school": 3,
+      "relatives": [3],
+      "is_active": true,
+      "created_date": "2021-01-01T00:00:00Z",
+      "modified_date": "2021-01-01T00:00:00Z"
+    }
+  }
+]

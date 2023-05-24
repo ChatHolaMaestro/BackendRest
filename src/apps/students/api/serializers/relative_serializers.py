@@ -1,5 +1,7 @@
+from rest_framework import serializers as rf_serializers
+
 from apps.shared.api import serializers
-from apps.students.models import Relative
+from apps.students.models import Relative, Student
 
 
 class RelativeViewSerializer(serializers.NonNullModelSerializer):
@@ -31,6 +33,10 @@ class RelativeCreationSerializer(serializers.NonNullModelSerializer):
         - phone_number
         - students (numbers)
     """
+
+    students = rf_serializers.PrimaryKeyRelatedField(
+        many=True, queryset=Student.objects.all(), required=False, write_only=True
+    )
 
     class Meta:
         model = Relative
